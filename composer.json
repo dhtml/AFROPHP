@@ -7,7 +7,7 @@
 	"support": {
 		"forum": "http://afrophp.com/forums/",
 		"wiki": "https://github.com/dhtml/afrophp/wiki",
-		"irc": "http://afrophp.com/irc",
+		"irc": "irc://irc.freenode.net/afrophp",
 		"source": "https://github.com/dhtml/afrophp"
 	},
   "authors": [
