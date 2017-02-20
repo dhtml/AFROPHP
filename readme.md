@@ -30,6 +30,7 @@ of the AfroPHP User Guide.
 ## Resources
 
 -  [User Guide] (http://afrophp.com/user_guide)
+-  [Support Forums] (http://afrophp.com/forums)
 
 
 ## Acknowledgement
