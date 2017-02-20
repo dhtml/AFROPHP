@@ -1,5 +1,5 @@
 ###################
-What is AFROPHP
+What is AFROPHP?
 ###################
 
 AFOPHP is an Content Management Framework - designed specially with CMS and simplicity in mind. Its goal is to enable you to develop projects
@@ -14,7 +14,7 @@ latest stable release please visit the `AFROPHP Downloads
 <http://afrophp.com/download>`_ page.
 
 **************************
-Changelog and New Features
+Changelog and Features
 **************************
 
 You can find a list of all changes for each release in the `user
@@ -34,7 +34,7 @@ issues, as well as missing features.
 Installation
 ************
 
-Please see the `installation section <http://afrophp.com/user_guide/>`_
+Please see the `installation section <http://afrophp.com/user_guide/welcome/installation.html>`_
 of the AfroPHP User Guide.
 
 *******
