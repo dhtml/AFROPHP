@@ -1,0 +1,27 @@
+{
+	"description": "The AfroPHP framework",
+	"name": "afrophp/framework",
+	"type": "project",
+	"homepage": "http://afrophp.com",
+	"license": "MIT",
+	"support": {
+		"forum": "http://afrophp.com/forums/",
+		"wiki": "https://github.com/dhtml/afrophp/wiki",
+		"irc": "irc://irc.freenode.net/afrophp",
+		"source": "https://github.com/dhtml/afrophp"
+	},
+  "authors": [
+      {
+          "name": "Anthony Ogundipe",
+          "email": "diltony@yahoo.com",
+          "homepage": "http://africoders.com",
+          "role": "Developer"
+      }
+  ],
+  	"require": {
+		"php": ">=5.2.4"
+	},
+	"suggest": {
+		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
+	}
+}
