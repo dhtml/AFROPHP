@@ -18,8 +18,8 @@
           "role": "Developer"
       }
   ],
-  	"require": {
-		"php": ">=5.2.4"
+  	 "require": {
+ 		"php": ">=5.2.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
