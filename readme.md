@@ -2,21 +2,15 @@
 # What is AFROPHP?
 
 
-AFOPHP is an Content Management Framework - designed specially with CMS and simplicity in mind. Its goal is to enable you to develop projects
+AFOPHP is a Content Management Framework - designed specially with CMS and simplicity in mind. Its goal is to enable you to develop projects
 much faster with great ease.
 
 
-## Release Information
-
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `AFROPHP [Downloads]
-(http://afrophp.com/download) page.
 
 
 ## Changelog
 
-You can find a list of all changes for each release in the [user
-guide change log] (https://github.com/dhtml/AfroPhp/blob/develop/changelog.rst).
+You can find a list of all changes for each release in the [change log] (https://github.com/dhtml/AFROPHP/blob/master/changes.md).
 
 ## Server Requirements
 
@@ -31,7 +25,7 @@ of the AfroPHP User Guide.
 
 ## License
 
-MIT License
+[MIT License] (https://github.com/dhtml/AFROPHP/blob/master/license.md)
 
 ## Resources
 
