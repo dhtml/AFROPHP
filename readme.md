@@ -20,7 +20,7 @@ It should work on 5.3 as well though not recommended.
 
 ## Installation
 
-Please see the [installation section] (http://afrophp.com/user_guide/welcome/installation.html)
+Please see the [installation section] (http://afrophp.com/user_guide/welcome/downloading.html)
 of the AfroPHP User Guide.
 
 ## License
