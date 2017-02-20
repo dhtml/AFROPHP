@@ -1,0 +1,3 @@
+<FilesMatch "\.(html|htm|txt|php|log)$">
+Deny from all
+</FilesMatch>

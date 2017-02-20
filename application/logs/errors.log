@@ -1,0 +1,561 @@
+[19-Feb-2017 09:45:48 UTC] error: 
+Type: ErrorException
+Message: 782
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/common.php
+Line number: 782
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 782 
+Function: scandir 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 614 
+Function: browse 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 590 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 558 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 534 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 197 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/bin/afrophp.php 
+Line: 110 
+Function: run 
+
+[19-Feb-2017 09:52:06 UTC] error: 
+Type: ErrorException
+Message: 114
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 114
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 114 
+Function: define 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 09:52:58 UTC] error: 
+Type: ErrorException
+Message: 114
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 114
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 114 
+Function: define 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 09:54:03 UTC] error: 
+Type: ErrorException
+Message: 114
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 114
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 114 
+Function: define 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 09:54:39 UTC] error: 
+Type: ErrorException
+Message: 114
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 114
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 114 
+Function: define 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 10:16:58 UTC] error: 
+Type: ErrorException
+Message: 218
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php
+Line number: 218
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 218 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 10:17:22 UTC] error: 
+Type: ErrorException
+Message: 370
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/common.php
+Line number: 370
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 370 
+Function: header 
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 336 
+Function: dhtmlconsole 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 218 
+Function: stdout 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 10:18:05 UTC] error: 
+Type: ErrorException
+Message: 370
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/common.php
+Line number: 370
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 370 
+Function: header 
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 336 
+Function: dhtmlconsole 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 222 
+Function: stdout 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 10:18:37 UTC] error: 
+Type: ErrorException
+Message: 219
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php
+Line number: 219
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 219 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 213 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 10:29:32 UTC] error: 
+Type: ErrorException
+Message: 7
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/theme.php
+Line number: 7
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 10:43:44 UTC] error: 
+Type: ErrorException
+Message: 221
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php
+Line number: 221
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 221 
+Function: array_keys 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 212 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 11:03:24 UTC] error: 
+Type: ErrorException
+Message: 375
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/common.php
+Line number: 375
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 375 
+Function: header 
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 341 
+Function: dhtmlconsole 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 228 
+Function: stdout 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 212 
+Function: profiling 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 12:18:48 UTC] error: 
+Type: ErrorException
+Message: 38
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/c972f99ddc6693f81bb942bd090890886a3325e5_0.file.default.html.php
+Line number: 38
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 12:19:26 UTC] error: 
+Type: ErrorException
+Message: 38
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/c972f99ddc6693f81bb942bd090890886a3325e5_0.file.default.html.php
+Line number: 38
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 12:20:07 UTC] error: 
+Type: ErrorException
+Message: 20
+Filename: /Users/dhtml/Sites/www/afrophp.com/themes/gentele/bool/decorator.func.php
+Line number: 20
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 12:20:41 UTC] error: 
+Type: ErrorException
+Message: 28
+Filename: /Users/dhtml/Sites/www/afrophp.com/themes/gentele/bool/decorator.func.php
+Line number: 28
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 12:38:08 UTC] error: 
+Type: ErrorException
+Message: 38
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/c972f99ddc6693f81bb942bd090890886a3325e5_0.file.default.html.php
+Line number: 38
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 12:59:23 UTC] error: 
+Type: ErrorException
+Message: 47
+Filename: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_undefined.php
+Line number: 47
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 13:00:11 UTC] error: 
+Type: ErrorException
+Message: 47
+Filename: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_undefined.php
+Line number: 47
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 124 
+Function: exception_error_handler 
+
+[19-Feb-2017 14:12:56 UTC] error: 
+Type: ErrorException
+Message: 416
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/common.php
+Line number: 416
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/common.php 
+Line: 416 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/base/prototype.php 
+Line: 42 
+Function: show_error 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 413 
+Function: __call 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 413 
+Function: check_config 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 393 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 369 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 196 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 16:24:16 UTC] error: 
+Type: ErrorException
+Message: 52
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 52
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 52 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/plugins/cms/init.php 
+Line: 107 
+Function: addRoute 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 479 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 427 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 395 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 193 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[19-Feb-2017 17:17:30 UTC] error: 
+Type: ErrorException
+Message: 164
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 164
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[19-Feb-2017 17:28:00 UTC] error: 
+Type: ErrorException
+Message: 163
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[19-Feb-2017 19:50:38 UTC] error: 
+Type: ErrorException
+Message: 123
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php
+Line number: 123
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[19-Feb-2017 19:51:17 UTC] error: 
+Type: ErrorException
+Message: 124
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php
+Line number: 124
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[19-Feb-2017 22:05:24 UTC] debug: /Users/dhtml/Sites/www/afrophp.com/plugins/hello/plugin.xml must contain an array with name config
+[19-Feb-2017 22:17:56 UTC] error: 
+Type: ErrorException
+Message: 164
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 164
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[19-Feb-2017 23:08:36 UTC] error: 
+Type: ErrorException
+Message: 2
+Filename: /Users/dhtml/Sites/www/afrophp.com/plugins/helloworld/init.php
+Line number: 2
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[20-Feb-2017 06:14:57 UTC] error: 
+Type: ErrorException
+Message: 25
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php
+Line number: 25
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php 
+Line: 25 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58aa8825360876_16679998 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp/system/core/theme.php 
+Line: 226 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 173 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 210 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[20-Feb-2017 06:15:21 UTC] error: 
+Type: ErrorException
+Message: 25
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php
+Line number: 25
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php 
+Line: 25 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58aa8825360876_16679998 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp/system/core/theme.php 
+Line: 226 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 173 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 210 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[20-Feb-2017 06:16:40 UTC] error: 
+Type: ErrorException
+Message: 25
+Filename: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php
+Line number: 25
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/templates_c/74f375cd9e3a6251df3c833275ad73cd7d110468_0.file.default.html.php 
+Line: 25 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58aa8825360876_16679998 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp/system/core/theme.php 
+Line: 226 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp/system/core/router.php 
+Line: 173 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp/system/core/afrophp.php 
+Line: 210 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/index.php 
+Line: 107 
+Function: run 
+
+[20-Feb-2017 06:20:53 UTC] error: 
+Type: ErrorException
+Message: 168
+Filename: /Users/dhtml/Sites/www/afrophp/system/core/router.php
+Line number: 168
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+

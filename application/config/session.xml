@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+	<key name="session_handler">
+		<value>dbase</value>
+	</key>
+	<key name="session_match_ip">
+		<value>false</value>
+	</key>
+	<key name="session_match_fingerprint">
+		<value>false</value>
+	</key>
+	<key name="session_match_token">
+		<value>false</value>
+	</key>
+	<key name="session_table">
+		<value>session</value>
+	</key>
+	<key name="session_name">
+		<value>afro_session</value>
+	</key>
+	<key name="session_id">
+		<value>null</value>
+	</key>
+	<key name="session_cookie_path">
+		<value>null</value>
+	</key>
+	<key name="session_cookie_domain">
+		<value>null</value>
+	</key>
+	<key name="session_cookie_secure">
+		<value>null</value>
+	</key>
+	<key name="session_cookie_httponly">
+		<value>null</value>
+	</key>
+	<key name="session_cookie_regenerate">
+		<value>300</value>
+	</key>
+	<key name="session_expiration">
+		<value>7200</value>
+	</key>
+	<key name="session_gc_probability">
+		<value>100</value>
+	</key>
+</resources>

@@ -1,0 +1,18 @@
+[
+    {
+        "id": "1",
+        "role_id": "4",
+        "username": "admin",
+        "email": "admin@website.com",
+        "phone": "",
+        "password": ""
+    },
+    {
+        "id": "2",
+        "role_id": "1",
+        "username": "Guest",
+        "email": "anonymous@website.com",
+        "phone": "",
+        "password": ""
+    }
+]

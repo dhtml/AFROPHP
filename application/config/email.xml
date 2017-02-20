@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<key name="smtp_host">
+		<value>smtp.gmail.com</value>
+	</key>
+	<key name="smtp_username">
+		<value>diltony@gmail.com</value>
+	</key>
+	<key name="smtp_password">
+		<value>xxxx</value>
+	</key>
+	<key name="smtp_port">
+		<value>465</value>
+	</key>
+	<key name="smtp_secure">
+		<value>ssl</value>
+	</key>
+	<key name="smtp_enabled">
+		<value>0</value>
+	</key>
+	<key name="send_enabled">
+		<value>1</value>
+	</key>
+</resources>
