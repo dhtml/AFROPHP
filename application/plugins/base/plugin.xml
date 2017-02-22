@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <name>Base</name>
+    <description>Base plugin of afrophp</description>
+    <author>Anthony Ogundipe</author>
+    <authorEmail>info@africoders.com</authorEmail>
+    <authorUrl>http://www.africoders.com</authorUrl>
+    <package>core</package>
+    <version>1</version>
+    <build>1</build>
+    <enable>1</enable>
+    <copyright>© 2017 All rights reserved.</copyright>
+</plugin>

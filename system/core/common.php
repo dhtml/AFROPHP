@@ -406,7 +406,12 @@ function show_error($message, $status_code = 500, $heading='Error', $type=1)
     $errline=$caller['line'];
     $errfile=$caller['file'];
 
-    if(is_cli()) {
+
+    if($caller['function']=='show_error' && is_cli()) {
+      $summary.="Message: $message\n";
+    } else  if($caller['function']=='show_error' && !is_cli()) {
+        $summary.="<p>Message: $message</p>\n";
+    } else if(is_cli()) {
       $summary.="Message: $message\n";
       $summary.="Filename: $errfile\n";
       $summary.="Function: $errfunc\n";
@@ -452,7 +457,7 @@ function show_error($message, $status_code = 500, $heading='Error', $type=1)
 
     $data = array(
           'heading' => $heading,
-          'message' => "$summary . $report",
+          'message' => "$summary $report",
         );
 
     $view='error_general';
@@ -1827,15 +1832,15 @@ function directory_usable($dir, $chmod='0777') {
 
 	//If it doesn't exist - make it!
 	if(!is_dir($dir)) {
-		if(!mkdir($dir, $chmod, true)) {
-			trigger_error('Could not create the directory: <b>'. $dir. '</b>', E_USER_WARNING);
+		if(!@mkdir($dir, $chmod, true)) {
+			show_error('Could not create the directory: <b>'. $dir. '</b>');
 			return;
 		}
 	}
 
 	//Make it writable
 	if(!is_writable($dir)) {
-			trigger_error("<b>$dir</b> is not writable.", E_USER_WARNING);
+			show_error("<b>$dir</b> is not writable.");
 			return;
 	}
 

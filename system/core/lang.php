@@ -3,9 +3,6 @@ namespace System\Core;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include BASEPATH."base/stichoza/autoload.php";
-
-use Stichoza\GoogleTranslate\TranslateClient;
 
 class lang extends \System\Base\Singleton
 {
@@ -88,6 +85,7 @@ class lang extends \System\Base\Singleton
     */
     public function translate($text,$to=null,$from='auto')
     {
+
       $langfile=APPPATH."config/translation.xml";
       static $_data;
       if (empty($_data) && file_exists($langfile)) {
@@ -95,6 +93,8 @@ class lang extends \System\Base\Singleton
       }
 
       if(!is_array($_data)) {$_data=array();}
+
+
 
 
 
@@ -106,7 +106,9 @@ class lang extends \System\Base\Singleton
       if(isset($_data[$key])) {return $_data[$key];}
 
       //initiate translation
-      $tr = new TranslateClient(); // Default is from 'auto' to 'en'
+      include_once BASEPATH."base/stichoza/autoload.php";
+
+      $tr = new \Stichoza\GoogleTranslate\TranslateClient(); // Default is from 'auto' to 'en'
       $tr->setSource($from);
       $tr->setTarget($to);
 

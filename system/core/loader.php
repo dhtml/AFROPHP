@@ -370,7 +370,7 @@ public function views($view, $vars=array(), $return = false)
     * @return   object loader
     */
     public function plugins() {
-      $this->parse_plugins(FCPATH."plugins");
+      $this->parse_plugins(APPPATH."plugins");
       return $this;
     }
 
@@ -484,7 +484,9 @@ public function views($view, $vars=array(), $return = false)
       }
 
       //load initialization file
-      include $plugin['path']."/init.php";
+      if(file_exists($plugin['path']."/plugin.php")) {
+        include $plugin['path']."/plugin.php";
+      }
 
       return $this;
     }

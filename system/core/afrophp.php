@@ -204,9 +204,9 @@ class Afrophp  extends \System\Base\Singleton
 
         $this->events->trigger('match');
 
-        $this->events->trigger('menu');
-
         $this->theme->theme_init();
+
+        $this->events->trigger('menu');
 
         $this->events->trigger('theme');
 

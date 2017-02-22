@@ -1929,3 +1929,886 @@ File: /Users/dhtml/Sites/www/afrophp.com/sandbox/bin/console
 Line: 111 
 Function: run 
 
+[22-Feb-2017 12:44:02 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:44:03 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:45:28 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:45:44 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:45:58 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:46:33 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:47:50 UTC] error: 
+Type: ErrorException
+Message: <b>/Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates</b> is not writable.
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 1838
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 1838 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 79 
+Function: directory_usable 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 197 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:52:45 UTC] error: 
+Type: ErrorException
+Message: include(/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/init.php): failed to open stream: No such file or directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php
+Line number: 487
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 12:53:30 UTC] error: 
+Type: ErrorException
+Message: include(/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/cms/plugin.php): failed to open stream: No such file or directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php
+Line number: 487
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 15:06:21 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:/Users/dhtml/Sites/www/afrophp.com/sandbox/themes/garland/page.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:06:38 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:08:01 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:08:30 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:08:33 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:08:38 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:08:52 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:09:41 UTC] error: 
+Type: ErrorException
+Message: Undefined property: Theme::$theme
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/Smarty.class.php
+Line number: 1403
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/Smarty.class.php 
+Line: 1403 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 209 
+Function: __get 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 16:11:08 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Unable to load template 'file:child.html' in '/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html' <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php
+Line number: 163
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:12:33 UTC] error: 
+Type: ErrorException
+Message: Declaration of Theme::fetch() should be compatible with Smarty_Internal_TemplateBase::fetch($template = NULL, $cache_id = NULL, $compile_id = NULL, $parent = NULL)
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
+Line number: 14
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 14 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 178 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 16:13:34 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Theme->render() undefined method <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_undefined.php
+Line number: 47
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 16:30:16 UTC] error: 
+Type: ErrorException
+Message: include(/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/plugin.php): failed to open stream: No such file or directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php
+Line number: 487
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 16:30:28 UTC] error: 
+Type: ErrorException
+Message: include(/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/plugin.php): failed to open stream: No such file or directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php
+Line number: 487
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 487 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 16:34:10 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: Plugin "text" not callable <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_method_registerplugin.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:02:05 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '<'
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/themes/gentele/theme.php
+Line number: 11
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:37:48 UTC] error: 
+Type: ErrorException
+Message: Class 'System\Core\Stichoza\GoogleTranslate\TranslateClient' not found
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
+Line number: 110
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:37:57 UTC] error: 
+Type: ErrorException
+Message: Class 'System\Core\Stichoza\GoogleTranslate\TranslateClient' not found
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
+Line number: 110
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:38:53 UTC] error: 
+Type: ErrorException
+Message: Class 'System\Core\Stichoza\GoogleTranslate\TranslateClient' not found
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
+Line number: 111
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:39:07 UTC] error: 
+Type: ErrorException
+Message: Class 'System\Core\Stichoza\GoogleTranslate\TranslateClient' not found
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
+Line number: 111
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 18:45:48 UTC] error: 
+Type: ErrorException
+Message: Trying to get property of non-object
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php
+Line number: 245
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 245 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/prototype.php 
+Line: 38 
+Function: call_user_func_array 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/text.func.php 
+Line: 4 
+Function: __call 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/text.func.php 
+Line: 4 
+Function: registerPlugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 471 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 18:51:51 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '$init' (T_VARIABLE)
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
+Line number: 494
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:02:19 UTC] error: 
+Type: ErrorException
+Message: Undefined variable: smarty
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
+Line number: 110
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 110 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/prototype.php 
+Line: 23 
+Function: smarty_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 463 
+Function: __get 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:02:38 UTC] error: 
+Type: ErrorException
+Message: Call to undefined method Theme::assign()
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php
+Line number: 148
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:05:49 UTC] error: 
+Type: ErrorException
+Message: Cannot access parent:: when current class scope has no parent
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
+Line number: 460
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:06:32 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:08:47 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:08:50 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:09:28 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:09:30 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:09:40 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: block tag 'translate' not callable or registered <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/d9195b145c1d3059fcbcbf2aa12f881ada3d9b68_0.file.default.html.php
+Line number: 31
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+
+[22-Feb-2017 19:09:54 UTC] error: 
+Type: ErrorException
+Message: Undefined index: afro_benchmark
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php 
+Line: 45 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58ad8a0366dd47_60312498 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 460 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 262 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:10:15 UTC] error: 
+Type: ErrorException
+Message: Undefined index: afro_benchmark
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php 
+Line: 45 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58ad8a0366dd47_60312498 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 460 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 262 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:11:57 UTC] error: 
+Type: ErrorException
+Message: Undefined index: afro_benchmark
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php 
+Line: 45 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58ad8a0366dd47_60312498 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 460 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 262 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:12:54 UTC] error: 
+Type: ErrorException
+Message: Undefined index: afro_benchmark
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php 
+Line: 45 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58ad8a0366dd47_60312498 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 460 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 262 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:12:57 UTC] error: 
+Type: ErrorException
+Message: Undefined index: afro_benchmark
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php
+Line number: 45
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/c5c420e674c9a18c0f32f610355c89ab3f497281_0.file.default.html.php 
+Line: 45 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_resource_base.php 
+Line: 128 
+Function: content_58ad8a0366dd47_60312498 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_template_compiled.php 
+Line: 170 
+Function: getRenderedTemplateCode 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_template.php 
+Line: 184 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 199 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 99 
+Function: _execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 460 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
+Line: 262 
+Function: fetch 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 177 
+Function: render 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 213 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[22-Feb-2017 19:18:30 UTC] error: 
+Type: ErrorException
+Message: Trying to get property of non-object
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php
+Line number: 245
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php 
+Line: 245 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/text.func.php 
+Line: 4 
+Function: registerPlugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 471 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 424 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 392 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 373 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 199 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+

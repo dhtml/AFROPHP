@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<resources>
+  <key name="greet">
+     <value>Hola</value>
+  </key>
+
+  <key name="cache_clear">
+     <value>La caché se ha eliminado correctamente</value>
+  </key>
+  <key name="cache_list">
+     <value>Tiene 20 elementos en su caché</value>
+  </key>
+  <key name="response">
+     <value>Respuesta</value>
+  </key>
+</resources>

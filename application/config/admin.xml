@@ -7,6 +7,6 @@
 		<value>gentele</value>
 	</key>
 	<key name="admin_path">
-		<value>cp</value>
+		<value>admin</value>
 	</key>
 </resources>

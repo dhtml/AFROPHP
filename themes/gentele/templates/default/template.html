@@ -11,14 +11,17 @@
                 </div>
                 <div class="clearfix"></div>
 
-                {decorator name="theme+side_bar_profile.html"}
+
+                {* load the sidebar template here *}
+                {include file="side_profile.html"}
 
 
 
                 <br />
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                   <div class="menu_section">
-                    {decorator name="theme+decorators/sidebar.php"}
+                    {* load the main navigation here *}
+                    {side_navigation}
                   </div>
                 </div>
 

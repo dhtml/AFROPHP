@@ -1,26 +1,27 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-02-22 06:48:53
+/* Smarty version 3.1.30, created on 2017-02-22 18:06:41
   from "/Users/dhtml/Sites/www/afrophp.com/sandbox/themes/gentele/templates/default/template.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_58ad34556975b1_85764494',
+  'unifunc' => 'content_58add331731d41_16098212',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '722413809ef8952c6a22c6536a6b330f57a5fdce' => 
     array (
       0 => '/Users/dhtml/Sites/www/afrophp.com/sandbox/themes/gentele/templates/default/template.html',
-      1 => 1487468652,
+      1 => 1487786797,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
+    'file:side_profile.html' => 1,
   ),
 ),false)) {
-function content_58ad34556975b1_85764494 (Smarty_Internal_Template $_smarty_tpl) {
+function content_58add331731d41_16098212 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div class="container body">
 
@@ -35,7 +36,10 @@ function content_58ad34556975b1_85764494 (Smarty_Internal_Template $_smarty_tpl)
                 </div>
                 <div class="clearfix"></div>
 
-                <?php echo theme_decorator_func(array('name'=>"theme+side_bar_profile.html"),$_smarty_tpl);?>
+
+                
+                <?php $_smarty_tpl->_subTemplateRender("file:side_profile.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+?>
 
 
 
@@ -43,7 +47,8 @@ function content_58ad34556975b1_85764494 (Smarty_Internal_Template $_smarty_tpl)
                 <br />
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                   <div class="menu_section">
-                    <?php echo theme_decorator_func(array('name'=>"theme+decorators/sidebar.php"),$_smarty_tpl);?>
+                    
+                    <?php echo theme_side_navigation_func(array(),$_smarty_tpl);?>
 
                   </div>
                 </div>

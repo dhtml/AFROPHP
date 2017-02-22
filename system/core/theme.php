@@ -76,19 +76,16 @@ class Theme extends Smarty
     */
     public function __construct()
     {
-      directory_usable(APPPATH.'templates');
       directory_usable(APPPATH.'templates_c');
 
       //set directories
-      $this->setTemplateDir(APPPATH.'templates')
-             ->setCompileDir(APPPATH.'templates_c')
-             ->setCacheDir(APPPATH.'cache');
+      $this->setCompileDir(APPPATH.'templates_c');
 
-        parent::__construct();
+      parent::__construct();
 
 
       // registering the object (will be by reference)
-      $this->registerObject('afrophp', $this);
+      //$this->registerObject('afrophp', $this);
 
       //$this->registerPlugin("block","translate", [$this,"do_translation"]);
     }
@@ -206,9 +203,10 @@ class Theme extends Smarty
       $theme=current_theme;
 
 
-
       //if no theme is getting used
       if(is_cli() || is_null($theme) || empty($theme)) {
+
+
         $view=$this->fetch($vpath);
         $this->render_output($view);
         return;
@@ -217,6 +215,11 @@ class Theme extends Smarty
 
 
       $this->assign('theme_url',theme_url);
+      $this->assign('template_url',template_url);
+
+      $this->assign('theme_path',theme_path);
+      $this->assign('template_path',template_path);
+
       $this->assign('page_lang',config_item('language','en'));
       $this->assign('page_title',set_title());
       $this->assign('headData',$this->headData);
@@ -240,19 +243,27 @@ class Theme extends Smarty
 
       //attempt to pass things through the current template.html if it exists
       $template_file=template_path.'template.html';
-      if(file_exists($template_file)) {
-        $this->assign('page_content',$page_content);
-        $page_content=$this->fetch($template_file);
-      }
 
-      //assign the page content for page.html to get
       $this->assign('page_content',$page_content);
 
-      $pageBody=$this->fetch(theme_path."page.html");
+      if(file_exists($template_file)) {
+        //load template
+        $pageBody=$this->fetch($template_file);
+      } else if(file_exists(theme_path."page.html")) {
+        //load normal page.html
+        $pageBody=$this->fetch(theme_path."page.html");
+      } else {
+        $pageBody=$page_content;
+      }
 
+      //assign page body
       $this->assign('pageBody',$pageBody);
 
-      $output=$this->fetch(theme_path."master.html");
+      if(file_exists(theme_path."master.html")) {
+        $output=$this->fetch(theme_path."master.html");
+      } else {
+        $output=$pageBody;
+      }
 
       $this->render_output($output);
     }
@@ -412,6 +423,21 @@ class Theme extends Smarty
       return $this;
     }
 
+    /**
+    * fetches a smarty template and returns the content
+    * it also sets the current directory to that view path
+    *
+    * @param string $template  the template path
+    * @param string $cache_id  the cache id
+    * @param string $compile_id  the compile id
+    * @param string $parent  the parent
+    *
+    * @return string
+    */
+    function fetch($template = NULL, $cache_id = NULL, $compile_id = NULL, $parent = NULL) {
+    $this->setTemplateDir(pathinfo($template,PATHINFO_DIRNAME));
+    return parent::fetch($template,$cache_id,$compile_id,$parent);
+    }
 
     /**
     * Attempts to complete a uri to a full url if it is not done already
