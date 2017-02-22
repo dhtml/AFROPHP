@@ -1,0 +1,339 @@
+body  {
+    background-image: url(../images/mainback.jpg);
+    background-repeat:repeat-x;
+    background-position: top;
+    background-size:cover;
+    font-family:Calibri;
+    margin:0 auto;
+    font-size:1.5em;
+    color: #666666;
+}
+
+h1,h2,h3,h4, {
+  font-family:Calibri;
+  font-weight: bold;
+  margin:0;
+}
+h1 {
+  font-size:3em;
+  line-height:0.9em;
+  letter-spacing:-1px;
+  font-weight:800;
+  color:#272727;
+}
+h2 {
+  font-size:2em;
+  letter-spacing:-1px;
+  line-height:26px;
+  margin:0;
+  color:#fff;
+}
+h4 {
+	display:block;
+	margin-bottom:0.7em;
+	font-weight:700;
+	font-size:1.7em;
+	font: Calibri;
+	color: #fff;
+	line-height:1em;
+  padding:0px 0px 2px 0px;
+}
+h3 {
+  font-size:1.6em;
+  line-height:1em;
+  
+  margin:0;
+  display:block;
+  margin-bottom:3em;
+ 
+}
+h5 {
+   font-size:1.5em;
+  line-height:27px;
+  letter-spacing:-1px;
+  margin:0;
+  color:#fff;
+   display:block;
+  margin-bottom:9px;
+}
+h6 {
+	margin:0;
+	font-weight:700;
+	font-size:1.3em;
+	font: Calibri;
+	color: #313131;
+  padding:0px 0px 2px 0px;
+}
+
+
+
+.app-top {
+    background: #3D3C3C;
+    box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+    -webkit-box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+    -moz-box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+    padding: 1.4em 2em;
+}
+
+.app-date {
+    padding: 12px;
+}
+
+.app-navigate .blockchain-cont {
+    color: #58717E;
+}
+
+.app-navigate a {
+    color: #fff;
+}
+
+.app-navigate {
+    padding: 0.8em;
+    border: #445762 1px dotted;
+}
+.app-navigate:hover {
+    background: #159EEB;
+    color: #F8F8F8;
+}
+
+.app-logo {
+    background: rgb(28, 39, 75);
+    color: rgb(82, 82, 82);
+}
+
+.app-logo .app-logo2 {
+    padding: 2em;
+}
+
+.app-logo .app-logo3 {
+    padding: 2.9em 2em;
+}
+
+.app-nav-cont {
+    background: #29486D;
+    border: 0px;
+    color: #ECEBEB;
+    border-radius: 0px;
+    padding: 1em;
+    box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+    -webkit-box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+    -moz-box-shadow: rgba(0,0,0, 0.2) 0px 0px 22px;
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4555;
+}
+
+.app-nav {
+    background: transparent;
+    border: 0px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.app-nav a {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff !important;
+}
+
+.app-nav a:visited {
+    text-decoration: none;
+    color: #1E5D97;
+}
+
+.app-nav a:hover {
+    background: #459F2F !important;
+    color: #F4F4F4 !important;
+}
+
+div.collapse {
+    padding: 0px;
+}
+
+@media screen and (max-width: 940px) {
+    input.viewport {
+        display: none;
+        color: red;
+        visibility: hidden;
+    }
+    .nav>li>a {
+        font-size: 1em;
+        font-weight: 300;
+        padding: 13px 13px;
+    }
+
+    .app-nav-cont {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 34555;
+        padding-top: 0px;        
+        padding-bottom: 0px;        
+    }
+    
+    .container-fluid {
+        padding-top: 50px;
+    }
+
+    div.collapse {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+.app-sub {
+    background: #F9F9F9 url(../images/back.jpg);
+}
+
+.app-sub .col-xs-12 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+}
+
+.app-sub.visible-md-block a, .app-sub.visible-lg-block a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 800;
+    margin-right: 14px;
+    width: 222px;
+    font-size: 17px;
+    /*height: 22px;*/
+}
+
+.app-sub.visible-md-block a:hover, .app-sub.visible-lg-block a:hover, .app-sub.visible-sm-block a:hover, .app-sub.visible-xs-block a:hover {
+    background: #D75715;
+    border-color: #D75715;
+}
+.app-sub.visible-sm-block, .app-sub.visible-xs-block {
+    padding-top: 15px;
+    padding-bottom: 15px; 
+}
+.app-sub.visible-sm-block a, .app-sub.visible-xs-block a{
+    margin-bottom: 10px;
+}
+
+.app-sub.visible-sm-block a:last-of-type, .app-sub.visible-xs-block a:last-of-type {
+    margin-bottom: 0px;
+}
+
+.app-sub a.ph {
+    background: #729210;
+    border-color: #729210;
+}
+
+.app-sub a.gh {
+    background: #83254E;
+    border-color: #83254E;
+}
+
+.app-sub a.hiw {
+    background: #767575;
+    border-color: #767575;
+    margin-right: 0px;
+}
+
+.app-sub a.hiw:hover, .app-sub a.hiw:hover {
+    background: #619B14;
+    border-color: #619B14;
+}
+
+div.app-breadcrumbs {
+    padding-top: 1.7em;
+    padding-bottom: 1.7em;
+    background: #29486D;
+    color: #CCC
+}
+
+div.app-breadcrumbs a{
+    padding: 0.8em;
+    background: #29486D;
+    color: #E1E1E1;
+    display: block;
+    float: left;
+    margin-right: 0.4em;
+    font-size: 13px;
+
+    box-shadow: rgba(0,0,0, 0.3) 0px 0px 15px;
+    -webkit-box-shadow: rgba(0,0,0, 0.3) 0px 0px 15px;
+    -moz-box-shadow: rgba(0,0,0, 0.3) 0px 0px 15px;
+}
+
+div.app-breadcrumbs a:last-of-type {
+    margin-right: 0px;
+}
+
+div.app-breadcrumbs a:hover {
+    background: #0097B7;
+    text-decoration: none;
+    color: #fff;
+}
+
+div.app-content {
+    padding-top: 3em;
+    padding-bottom: 4em;
+    background: #fff;
+    overflow-y: hidden;
+}
+
+form.app-signup input[type="text"], form.app-signup input[type="password"] {
+    background: #DFDFDF;
+    border: none;
+    border-radius: 0px;
+}
+form.app-signup input[type="text"]:hover, form.app-signup input[type="password"]:hover {
+    background: #DFDFDF;
+    border: none;
+    border-radius: 0px;
+}
+
+form.app-signup button[type="submit"], form.app-signup button[type="reset"] {
+    margin-right: 20px;
+    border-radius: 0px;
+    color: #fff;
+    background: #0065AD;
+}
+
+form.app-signup button[type="submit"]:hover {
+    background: #4B8311;
+}
+
+form.app-signup button[type="reset"]:hover {
+    background: darkred;
+}
+.app-content2 {
+    padding: 0px;
+    background: #E9E9E9;
+    color: #737171;
+    font-size: 15px;
+    overflow-y: hidden;
+}
+.app-content2 .app-copy {
+    padding-top: 1.3em;
+    padding-bottom: 1.3em;
+    background: #F8F8F8;
+    height: auto;
+    color: #494949;
+    margin: 0 auto;
+    
+}
+
+.app-stripe a {
+    padding: 0.3em 1em;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.app-content2 .app-padded {
+    padding: 4em 3em;
+    padding-bottom: 2em;
+    overflow-y: hidden;
+}
+
+

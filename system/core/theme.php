@@ -76,7 +76,16 @@ class Theme extends Smarty
     */
     public function __construct()
     {
+      directory_usable(APPPATH.'templates');
+      directory_usable(APPPATH.'templates_c');
+
+      //set directories
+      $this->setTemplateDir(APPPATH.'templates')
+             ->setCompileDir(APPPATH.'templates_c')
+             ->setCacheDir(APPPATH.'cache');
+
         parent::__construct();
+
 
       // registering the object (will be by reference)
       $this->registerObject('afrophp', $this);
@@ -127,16 +136,16 @@ class Theme extends Smarty
       define('theme_url',site_url($path));
       define('current_template',$template);
 
+      define('template_path',theme_path.'templates/'.$template.'/');
+      define('template_url',theme_url.'templates/'.$template.'/');
+
+
       if(!is_cli() || !is_null(current_theme)) {
         //load the Information file from the template
-        $this->data=parse_info_format(file_get_contents(theme_path.'theme.info'));
+        $this->data=parse_info_format(theme_path.'theme.info');
 
-        //load template information where possible
-        $template_info_path=theme_path."templates/{$template}.info";
-        if(file_exists($template_info_path)) {
-          $_data=parse_info_format(file_get_contents($template_info_path));
-          $this->data=array_merge($this->data,$_data);
-        }
+        //load template information if it exists
+        $this->data=array_merge($this->data,parse_info_format(template_path.'template.info'));
 
         $stylesheets=theme_item('stylesheets');
         $scripts=theme_item('scripts');
@@ -163,18 +172,21 @@ class Theme extends Smarty
           $this->preload_assets($scripts['bottom'],'js','bottom');
         }
 
-        //load php files from the bool directory
-        $files=browse(theme_path.'bool',array('/is','/sd','/sd'),'*.php');
-        foreach($files as $file) {
+        //load php files from the bool directory of current theme
+        foreach((browse(theme_path.'bool',array('/is','/sd','/ss'),'*.php')) as $file) {
             include ($file);
         }
 
+        //load php files from the bool directory of current template
+        foreach((browse(template_path.'bool',array('/is','/sd','/ss'),'*.php')) as $file) {
+            include ($file);
+        }
 
         //load theme initializer if it exists i.e theme.php
         if(file_exists(theme_path.'theme.php')) {include theme_path.'theme.php';}
 
         //load template initialize if it exists i.e template_name.php
-        if(file_exists(theme_path."templates/{$template}.php")) {include theme_path."templates/{$template}.php";}
+        if(file_exists(template_path.'template.php')) {include template_path.'template.php';}
       }
     }
 
@@ -226,14 +238,11 @@ class Theme extends Smarty
       $page_content=$this->fetch($vpath);
 
 
-      //check if template exists
-      $template=current_template;
-      $template_path=theme_path."templates/{$template}.html";
-
-      //if template exists, use it to parse the current data
-      if(file_exists($template_path)) {
+      //attempt to pass things through the current template.html if it exists
+      $template_file=template_path.'template.html';
+      if(file_exists($template_file)) {
         $this->assign('page_content',$page_content);
-        $page_content=$this->fetch($template_path);
+        $page_content=$this->fetch($template_file);
       }
 
       //assign the page content for page.html to get

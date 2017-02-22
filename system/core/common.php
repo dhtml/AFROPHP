@@ -833,7 +833,7 @@ function is_cli()
 *
 * The example below will list only php files recursively, and not list dotted files and subdirectories
 * <code>
-* browse('/wamp/www',array('/is','/sd','/sd'),'*.php')
+* browse('/wamp/www',array('/is','/sd','/ss'),'*.php')
 * </code>
 *
 * @return array   An array containing the file matches
@@ -1063,12 +1063,15 @@ function array2xml($array, $root='root')
 *
 * parses drupal style info formats
 *
-* @param    string    $data       The raw content of the information
+* @param    string    $data       The raw content of the information (or file name)
 *
 * @return array
 */
 function parse_info_format($data)
 {
+  if(is_file($data)) {
+    $data=file_get_contents($data);
+  }
     $info = array();
 
     if (preg_match_all('
@@ -1805,4 +1808,118 @@ if (! function_exists('array_column')) {
         }
         return $array;
     }
+}
+
+
+
+//added as at 1.0
+
+/**
+ * Checks that a directory exists and is writable. If the directory does
+ * not exist, the function will try to create it and/or change the
+ * CHMOD settings on it.
+ *
+ * @param string $dir	directory you want to check
+ * @param string $chmod	he CHMOD value you want to make it
+ * @return unknown
+ */
+function directory_usable($dir, $chmod='0777') {
+
+	//If it doesn't exist - make it!
+	if(!is_dir($dir)) {
+		if(!mkdir($dir, $chmod, true)) {
+			trigger_error('Could not create the directory: <b>'. $dir. '</b>', E_USER_WARNING);
+			return;
+		}
+	}
+
+	//Make it writable
+	if(!is_writable($dir)) {
+			trigger_error("<b>$dir</b> is not writable.", E_USER_WARNING);
+			return;
+	}
+
+	return true;
+}
+
+
+
+/**
+ * A function to recursively delete files and folders
+ * @thanks: dev at grind [[DOT]] lv
+ *
+ * @param string	$dir	The path of the directory you want deleted
+ * @param boolean	$remove	Remove Files (false) or Folder and Files (true)
+ * @return boolean
+ */
+function destroy_directory($dir='', $remove=true) {
+
+	//Try to open the directory handle
+	if(!$dh = opendir($dir)) {
+		trigger_error('<b>'. $dir. '</b> cannot be opened or does not exist', E_USER_WARNING);
+		return;
+	}
+
+	//While there are files and directories in this directory
+	while (false !== ($obj = readdir($dh))) {
+
+		//Skip the object if it is the linux current (.) or parent (..) directory
+		if($obj=='.' || $obj=='..') continue;
+
+		$obj = $dir. $obj;
+
+		//If the object is a directory
+		if(is_dir($obj)) {
+
+			//If we could NOT delete this directory
+			if(!destroy_directory($obj, $remove)) {
+				return;
+			}
+
+			//Else it must be a file
+		} else {
+			unlink($obj) or trigger_error('Could not remove file <b>'. $obj. '</b>', E_USER_WARNING);
+		}
+
+	}
+
+	//Close the handle
+	closedir($dh);
+
+	if ($remove){
+		rmdir($dir) or trigger_error('Could not remove directory <b>'. $dir. '</b>');
+	}
+
+	return true;
+}
+
+
+/**
+ * Gzip/Compress Output
+ * Original function came from wordpress.org
+ * @return void
+ */
+function gzip_compression() {
+
+	//If no encoding was given - then it must not be able to accept gzip pages
+	if(!isset($_SERVER['HTTP_ACCEPT_ENCODING'])) { return false; }
+
+	//If zlib is not ALREADY compressing the page - and ob_gzhandler is set
+	if (( ini_get('zlib.output_compression') == 'On'
+	|| ini_get('zlib.output_compression_level') > 0 )
+	|| ini_get('output_handler') == 'ob_gzhandler' ) {
+		return false;
+	}
+
+	//Else if zlib is loaded start the compression.
+	if ( (extension_loaded( 'zlib' ))
+	&& (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ) {
+		ob_start('ob_gzhandler');
+	}
+	/*
+	 print $_SERVER['HTTP_ACCEPT_ENCODING']. '<br />'.
+	 'extension_loaded("zlib") = '. extension_loaded( 'zlib' ). '<br />'.
+	 'ini_get("zlib.output_compression") = '. ini_get('zlib.output_compression'). '<br />'.
+	 'ini_get("output_handler") = '. ini_get('output_handler'). '<br />';
+	 */
 }

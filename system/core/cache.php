@@ -47,7 +47,10 @@ private $cache_dir;
 */
 public function __construct()
 {
-  $this->cache_dir=FCPATH.'/cache';
+  $this->cache_dir=APPPATH.'cache';
+
+  directory_usable($this->cache_dir);
+
   $this->cache_time=config_item('cache_time',0,true);
 }
 

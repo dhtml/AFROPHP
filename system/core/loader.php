@@ -370,10 +370,7 @@ public function views($view, $vars=array(), $return = false)
     * @return   object loader
     */
     public function plugins() {
-      $this->parse_plugins(BASEPATH."plugins");
-      $this->parse_plugins(APPPATH."plugins");
       $this->parse_plugins(FCPATH."plugins");
-
       return $this;
     }
 
@@ -462,7 +459,6 @@ public function views($view, $vars=array(), $return = false)
       $lpath=$plugin['path']."/languages/".config_item('language','en');
 
       $files=browse($lpath,array('/is','/sd','/sd'),'*.xml');
-      //stdout($files);
       foreach($files as $file) {
           $this->lang->load($plugin['name'],$file);
       }
@@ -475,11 +471,24 @@ public function views($view, $vars=array(), $return = false)
           include ($file);
       }
 
+      if(MODE=='cli') {
+        global $console_directives;
+
+        //load all console commands
+        $bpath=$plugin['path']."/console/";
+
+        $files=browse($bpath,array('/is','/sd','/sd'),'*.php');
+        foreach($files as $file) {
+          $console_directives[]=$file;
+        }
+      }
+
       //load initialization file
       include $plugin['path']."/init.php";
 
       return $this;
     }
+
 
     /**
     * returns an array of plugins (both enabled and disabled)

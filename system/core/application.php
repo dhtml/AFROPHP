@@ -32,5 +32,9 @@ include dirname(__DIR__)."/base/singleton.php";
 //load core application class
 include __DIR__."/common.php";
 include __DIR__."/loader.php";
-include __DIR__."/exceptions.php";
+
+if(!is_cli()) {
+  include __DIR__."/exceptions.php";
+}
+
 include __DIR__."/afrophp.php";

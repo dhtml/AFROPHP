@@ -75,6 +75,10 @@
 	// The name of THIS file
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
+  // Path to the loading directory
+  define('LPATH',dirname(__FILE__));
+
+
 	// Path to the system directory
 	define('BASEPATH', $system_path);
 

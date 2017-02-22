@@ -23,13 +23,13 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
     $_class=get_class($exception);
 
     $html_report.="<p>Type: $_class</p>\n";
-    $html_report.="<p>Message: $errline</p>\n";
+    $html_report.="<p>Message: $errstr</p>\n";
     $html_report.="<p>Filename: $errfile</p>\n";
     $html_report.="<p>Line number: $errline</p><br/>\n";
 
 
     $cli_report.="\nType: $_class\n";
-    $cli_report.="Message: $errline\n";
+    $cli_report.="Message: $errstr\n";
     $cli_report.="Filename: $errfile\n";
     $cli_report.="Line number: $errline\n\n";
   }

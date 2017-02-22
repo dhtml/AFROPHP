@@ -133,6 +133,10 @@ class Router extends \System\Base\Singleton
     {
 
       if($this->_current==null) {
+
+        if(MODE=='cli') {
+          run_symphony_console();
+        }
         show_404();
         return;
       }
