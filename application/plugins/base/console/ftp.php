@@ -34,7 +34,7 @@ class FTPConsole extends Command
 
   public $ftp_config= array(
     'host'=>'localhost',
-    'user'=>'user',
+    'user'=>'user', 
     'pass'=>'test',
     'port'=>'21',
     'dir'=>'/public_html',
