@@ -1928,3 +1928,19 @@ function gzip_compression() {
 	 'ini_get("output_handler") = '. ini_get('output_handler'). '<br />';
 	 */
 }
+
+
+/**
+* @param string $filename <p>file name including folder.
+* example :: /path/to/file/filename.ext or filename.ext</p>
+* @param string $data <p> The data to write.
+* </p>
+* @param int $flags same flags used for file_put_contents.
+* more info: http://php.net/manual/en/function.file-put-contents.php
+* @return bool <b>TRUE</b> file created succesfully <br> <b>FALSE</b> failed to create file.
+*/
+function file_force_contents($filename, $data, $flags = 0){
+    if(!is_dir(dirname($filename)))
+        mkdir(dirname($filename).'/', 0777, TRUE);
+    return file_put_contents($filename, $data,$flags);
+}

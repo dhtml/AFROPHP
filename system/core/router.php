@@ -131,19 +131,19 @@ class Router extends \System\Base\Singleton
     */
     public function execute()
     {
+      define('time_stop',microtime(true));
+      $benchmark=time_stop-time_start;
+      define('afro_benchmark',round($benchmark,2));
+
+      if(MODE=='cli') {
+        include BASEPATH."core/console.php";
+      }
 
       if($this->_current==null) {
-
-        if(MODE=='cli') {
-          run_symphony_console();
-        }
         show_404();
         return;
       }
 
-      define('time_stop',microtime(true));
-      $benchmark=time_stop-time_start;
-      define('afro_benchmark',round($benchmark,2));
 
       $this->theme->assign('afro_benchmark',afro_benchmark);
       $this->theme->assign('afro_version',afro_version);

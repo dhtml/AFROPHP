@@ -177,9 +177,6 @@ class Afrophp  extends \System\Base\Singleton
         include __DIR__."/lang.php";
         include __DIR__."/theme.php";
 
-        if(MODE=='cli') {
-          include __DIR__."/console.php";
-        }
 
         //initiallize system wide objects
         $this->navigation =  \System\Core\navigation::instance();
