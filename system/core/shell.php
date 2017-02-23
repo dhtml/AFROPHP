@@ -60,7 +60,7 @@ class Shell extends Command
     $arguments = array(
         'command' => 'ftp',
         'params'    => '--help',
-    );
+    ); 
 
     $greetInput = new ArrayInput($arguments);
     $returnCode = $command->run($greetInput, $output);
