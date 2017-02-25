@@ -1395,7 +1395,7 @@ function site_url($uri = '')
     } elseif (substr($uri, 0, 6)=='https:') {
         return $uri;
     } elseif (strpos($uri, FCPATH)!==false) {
-        return str_replace(FCPATH, base_url, $uri);
+        return str_replace('\\','/',str_replace(FCPATH, base_url, $uri));
     }
 
     $uri=trim($uri,'/');

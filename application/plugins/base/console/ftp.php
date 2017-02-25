@@ -56,24 +56,16 @@ class FTPConsole extends Command
 
   protected function configure()
   {
-      $this->setName('ftp')
-       ->setDescription('Default ftp client of AFROPHP')
 
-       ->addArgument(
-        'params',
-           InputArgument::IS_ARRAY,
-           "Params can be any of the following:\n
-           init - will initialize the ftp connection\n
-           commit - will commit the changes to your server
-           test - will test your ftp connection
-           chmod application/cache 0755
-           "
-          )
-          ->setHelp('FTP Console for AfroPHP');
-
-      // ->addArgument('params', InputArgument::OPTIONAL, 'Who do you want to greet?')
-       //->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
-   ;
+    (new afro_cli_config($this))
+    ->setName('ftp')
+    ->setHelp('FTP Console for AfroPHP')
+    ->setDescription("This ftp client provides you with the ability to synchronize your developmental server files with your live server.\nYou can push all your files to your remote server, it can detect what files are changed and upload them via the commit command.")
+    ->setArguments("init: will initialize the ftp connection
+               commit: will commit the changes to your server
+               test: will test your ftp connection for validity.
+               chmod: this will change the file permissions e.g. chmod application/cache 0755
+               ");
   }
 
 
@@ -122,8 +114,6 @@ class FTPConsole extends Command
       $this->ftp_chmod($this->param("1","index.php"),$this->param("2","0755"));
       break;
       default:
-      stdout($this->getDefinition());
-      die('x');
       $this->output->writeln(Shell::errorText('ftp',2));
       return 1;
       break;

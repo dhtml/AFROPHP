@@ -12,6 +12,8 @@ use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
+
 
 //taking user inputs e.g. bundle name
 use Symfony\Component\Console\Question\Question;
@@ -62,6 +64,12 @@ class Shell extends Command
 
     $style = new OutputFormatterStyle('blue', 'default', array('bold'));
     $output->getFormatter()->setStyle('p', $style);
+
+    $style = new OutputFormatterStyle('red', 'default', array('bold'));
+    $output->getFormatter()->setStyle('h', $style);
+
+    $style = new OutputFormatterStyle('default', 'default', array('bold'));
+    $output->getFormatter()->setStyle('b', $style);
 
 
     $helper = $this->getHelper('question');
@@ -142,10 +150,50 @@ class Shell extends Command
     try {
     $cmd = $this->getApplication()->find($command);
 
+    switch (strtolower(trim($params))) {
+      case '--help':
+      case '--h':
+      case '-help':
+      case '-h':
+
+      $output->writeln('<h>'.$cmd->getHelp().'</h>');
+      $output->writeln('<b>'.$cmd->getDescription().'</b>');
+      $output->writeln("\n<b>The parameters are displayed below:</b>");
+
+      $params=$cmd->getDefinition()->getArgument('params')->getDescription();
+      $params=trim($params);
+      $e=explode("\n",$params);
+
+      $tab=array();
+
+      foreach($e as $line) {
+        $l=explode(':',$line);
+        $l=array_map('trim',$l);
+
+        $title=$l[0];
+        unset($l[0]);
+        $def=implode(':',$l);
+
+        $tab[]=array($title,$def);
+      }
+
+      $table = new Table($this->output);
+      $table
+          ->setHeaders(array('Parameter', 'Description'))
+          ->setRows($tab)
+      ;
+      $table->render();
+
+      return;
+      break;
+    }
+
+
     $arguments = array(
         'command' => $command,
         'params'    => $params,
     );
+
 
 
     $cmdInput = new ArrayInput($arguments);
@@ -271,5 +319,22 @@ public static function wipe_config($file) {
       stdout($files,$stop);
     }
 
+
+}
+
+
+class afro_cli_config {
+  function __construct($command) {
+    $this->command=$command;
+  }
+
+  function setName($name) {$this->command->setName($name);return $this;}
+  function setHelp($help) {$this->command->setHelp($help);return $this;}
+  function setDescription($description) {$this->command->setDescription($description);return $this;}
+
+  function setArguments($description) {
+    $this->command->addArgument('params',InputArgument::IS_ARRAY,$description);
+    return $this;
+  }
 
 }
