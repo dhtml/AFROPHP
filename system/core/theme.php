@@ -127,7 +127,7 @@ class Theme extends Smarty
 
       define('current_theme',$theme);
 
-      $path=FCPATH."themes/{$theme}/";
+      $path=APPPATH."themes/{$theme}/";
 
       define('theme_path',$path);
       define('theme_url',site_url($path));

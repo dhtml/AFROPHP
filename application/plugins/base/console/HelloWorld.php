@@ -12,7 +12,7 @@ class HelloWorld extends Command
   {
     $this
     // the name of the command (the part after "bin/console")
-    ->setName('app:hello-world')
+    ->setName('hellow')
 
     // the short description shown while running "php bin/console list"
     ->setDescription('Prints helloworld.')

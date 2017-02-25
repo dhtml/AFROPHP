@@ -25,7 +25,8 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Helper\Table;
 
 
-
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Console\ConsoleEvents;
 
 
 class Shell extends Command
@@ -50,6 +51,8 @@ class Shell extends Command
   {
     $this->input=$input;$this->output=$output;
 
+    $dispatcher = new EventDispatcher();
+
 
     $this->exec_command("ftp --help");
 
@@ -60,7 +63,7 @@ class Shell extends Command
     $arguments = array(
         'command' => 'ftp',
         'params'    => '--help',
-    ); 
+    );
 
     $greetInput = new ArrayInput($arguments);
     $returnCode = $command->run($greetInput, $output);
@@ -163,8 +166,55 @@ class Shell extends Command
       return "$command: unknown error ocurred";
       break;
     }
-
-
   }
+
+
+  /**
+  * saves config data into an array
+  *
+  * @param string $file    The name of the file
+  * @param array  $array   The array data
+  *
+  * returns the array
+  */
+  public static function save_config($file,$array=array())
+  {
+    $output = '<?' . 'php ' . 'return ' . var_export($array, true) . ';';
+    file_force_contents($file,$output);
+    return (array) $array;
+  }
+
+
+public static function wipe_config($file) {
+  self::save_config($file);
+}
+
+
+    /**
+    * loads config data into an array
+    *
+    * @param string $file   The name of the file
+    *
+    * returns the array
+    */
+    public static function load_config($file)
+    {
+      $result=array();
+      if(file_exists($file)) {
+        $result=include $file;
+      }
+      return (array) $result;
+    }
+
+    public static function dump_files($files,$stop=false)
+    {
+        foreach ($files as $key => $value) {
+          $files[$key] = str_replace(FCPATH,'',$value);
+        }
+
+
+      stdout($files,$stop);
+    }
+
 
 }

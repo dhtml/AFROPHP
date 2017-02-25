@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require BASEPATH.'/base/symphony/autoload.php';
+require BASEPATH.'/base/symphony/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+
 
 global $console_directives;
 
