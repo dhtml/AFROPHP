@@ -1944,3 +1944,16 @@ function file_force_contents($filename, $data, $flags = 0){
         mkdir(dirname($filename).'/', 0777, TRUE);
     return file_put_contents($filename, $data,$flags);
 }
+
+
+/**
+* checks if a uri is the current uri/url
+*
+* @param string $uri  The uri to test
+*
+* @return boolean
+*/
+function is_current_url($uri)
+{
+ return site_url($uri)==site_url(request_uri) ? true : false;
+}

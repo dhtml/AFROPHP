@@ -15,6 +15,7 @@ $console = new Application();
 $console->setAutoExit(false);
 
 //execute the shell
+include __DIR__."/afrocommand.php";
 include __DIR__."/shell.php";
 
 $command = new Console\Shell();

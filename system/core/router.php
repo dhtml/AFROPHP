@@ -138,7 +138,7 @@ class Router extends \System\Base\Singleton
 
       //if system cannot match route, then run cli mode
       if((request_uri=='' && MODE=='cli') or ($this->_current==null && MODE=='cli')) {
-        include BASEPATH."core/console.php";
+        include BASEPATH."cli/console.php";
       }
 
       if($this->_current==null) {

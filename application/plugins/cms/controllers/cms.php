@@ -33,7 +33,7 @@ exit();
         public function admin()
         {
 
-          /*
+
           addScript("alert('This is a serious matter');",null,'inline');
           addScript("alert('Testing the mike');",'bottom','inline');
           addScript("alert('Testing the top');",'top','inline');
@@ -43,7 +43,7 @@ exit();
           addScript("js/bootstrap.min.js");
           addScript("js/bootstrap.min.js",'bottom','plugin');
           addScript("js/test.js",'top','theme');
-          addScript("js/forum.js",'top','forums');
+          addScript("js/forum.js",'top','base2');
 
           addStyle(".test {color:red;background:gray;}",null,'inline');
           addStyle(".test2 {color:red;background:green;}",'bottom','inline');
@@ -52,7 +52,7 @@ exit();
 
           addTag('<meta name="keywords" values="tony,ayo,jide">');
           addTag('<meta name="keywords" values="tony,ayo,jide">','bottom');
-          */
+
 
           set_title("Hello World");
         }

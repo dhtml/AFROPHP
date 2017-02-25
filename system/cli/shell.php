@@ -321,20 +321,3 @@ public static function wipe_config($file) {
 
 
 }
-
-
-class afro_cli_config {
-  function __construct($command) {
-    $this->command=$command;
-  }
-
-  function setName($name) {$this->command->setName($name);return $this;}
-  function setHelp($help) {$this->command->setHelp($help);return $this;}
-  function setDescription($description) {$this->command->setDescription($description);return $this;}
-
-  function setArguments($description) {
-    $this->command->addArgument('params',InputArgument::IS_ARRAY,$description);
-    return $this;
-  }
-
-}
