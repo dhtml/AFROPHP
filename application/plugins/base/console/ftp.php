@@ -56,7 +56,7 @@ class FTPConsole extends Afrocommand
   protected function configure()
   {
 
-    (new afro_cli_config($this))
+    $this
     ->setName('ftp')
     ->setHelp('FTP Console for AfroPHP')
     ->setDescription("This ftp client provides you with the ability to synchronize your developmental server files with your live server.\nYou can push all your files to your remote server, it can detect what files are changed and upload them via the commit command.")
@@ -70,11 +70,13 @@ class FTPConsole extends Afrocommand
 
   public function execute(InputInterface $input, OutputInterface $output)
   {
-    $this->input=$input;$this->output=$output;
-    $args = Shell::getParams($this->input);
-    $this->args=$args;
+    //import to enable some functions
+    parent::execute($input,$output);
 
-    $action= isset($args['0']) ? $args['0'] : '';
+
+
+    $action= $this->param(0,null);
+
 
     if(empty($action)) {$this->output->writeln(Shell::errorText('ftp',2));return 0;}
 
@@ -778,14 +780,6 @@ return true; //file is truly invalid
   return $response;
   }
 
-/**
-* This allows you to fetch an argument
-*
-*
-*/
-public function param($key,$default=null)
-{
-return isset($this->args[$key]) ? $this->args[$key] : $default;
-}
+
 
 }

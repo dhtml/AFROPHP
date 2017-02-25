@@ -1947,13 +1947,25 @@ function file_force_contents($filename, $data, $flags = 0){
 
 
 /**
-* checks if a uri is the current uri/url
+* checks if a uri is the current uri
 *
 * @param string $uri  The uri to test
 *
 * @return boolean
 */
-function is_current_url($uri)
+function is_current_uri($uri)
+{
+ return site_url($uri)==site_url(request_uri) ? true : false;
+}
+
+/**
+* checks if a url is the current uri
+*
+* @param string $uri  The uri to test
+*
+* @return boolean
+*/
+function is_current_url($url)
 {
  return site_url($uri)==site_url(request_uri) ? true : false;
 }
