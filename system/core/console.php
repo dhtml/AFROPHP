@@ -12,6 +12,7 @@ global $console_directives;
 
 $console = new Application();
 
+$console->setAutoExit(false);
 
 //execute the shell
 include __DIR__."/shell.php";
@@ -23,6 +24,13 @@ $console->setDefaultCommand($command->getName());
 
 
 //execute each directive file
+$command=explode('/',request_uri);
+$command=$command[0];
+
+
+//stdout($command);
+
+$found=false;
 foreach($console_directives as $file) {
   $classes = get_declared_classes();
   include $file;
@@ -36,6 +44,10 @@ foreach($console_directives as $file) {
   eval($str);
 }
 
-$console->run();
+if(!empty($command) && !$console->has($command)) {
+  echo $command.": command not found.\n";
+} else {
+  $console->run();
+}
 
 exit();

@@ -1,0 +1,12 @@
+[25-Feb-2017 14:30:36 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty: 0():Missing '$template' parameter <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php
+Line number: 154
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 101 
+Function: exception_error_handler 
+

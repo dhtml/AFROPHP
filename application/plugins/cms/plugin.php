@@ -12,8 +12,11 @@ bind('menu', function () {
   //first menu
     menu::get('cms_home')
       ->setTitle('Home')
+      ->setID('20')
       ->setIcons(['fa fa-home', 'fa fa-chevron-down'])
       ->setPriority(0);
+
+      //stdout(menu::get('cms_home')->getID());
 
     menu::get('cms_home_dash_board')
       ->setParent('cms_home')

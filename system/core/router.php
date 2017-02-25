@@ -135,7 +135,9 @@ class Router extends \System\Base\Singleton
       $benchmark=time_stop-time_start;
       define('afro_benchmark',round($benchmark,2));
 
-      if(MODE=='cli') {
+
+      //if system cannot match route, then run cli mode
+      if((request_uri=='' && MODE=='cli') or ($this->_current==null && MODE=='cli')) {
         include BASEPATH."core/console.php";
       }
 

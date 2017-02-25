@@ -29,11 +29,14 @@ class FTPConsole extends Command
 
   public $conn_id=false;
 
-  public $ftp_list_in =APPPATH."config/ftp/in.php";
-  public $ftp_list_out = APPPATH."config/ftp/out.php";
-  public $ftp_list_conf = APPPATH."config/ftp/conf.php";
+  public $ftp_list_in =APPPATH."config/console/ftp/in.php";
+  public $ftp_list_out = APPPATH."config/console/ftp/out.php";
+  public $ftp_list_conf = APPPATH."config/console/ftp/conf.php";
 
-  public $ftp_config= array(
+  public $ftp_config= array();
+
+
+  public $ftp_default_config = array(
     'host'=>'localhost',
     'user'=>'user',
     'pass'=>'test',
@@ -90,6 +93,12 @@ class FTPConsole extends Command
     get_instance()->load->helper('inflect');
 
 
+    //if there is no ftp config
+    if(empty($this->ftp_config) && $action!='init') {
+      $this->ftp_config=$this->ftp_default_config;
+      $this->ftp_init();
+    }
+
     switch($action) {
       case 'init':
       $this->ftp_init();
@@ -113,6 +122,8 @@ class FTPConsole extends Command
       $this->ftp_chmod($this->param("1","index.php"),$this->param("2","0755"));
       break;
       default:
+      stdout($this->getDefinition());
+      die('x');
       $this->output->writeln(Shell::errorText('ftp',2));
       return 1;
       break;
@@ -214,8 +225,10 @@ public function ftp_test()
 /**
 * Commit ftp client
 *
+* @param boolean $synced  Should the local and remote cache be synched
+*
 */
-public function ftp_commit()
+public function ftp_commit($synced=false)
 {
   $base=browse($this->local_dir(),array('/sd','/ss'));
 
@@ -234,8 +247,13 @@ public function ftp_commit()
       $this->ftp_in["$file"]=sha1_file($file);
   }
 
-  //stdout($this->ftp_in,true);
   Shell::save_config($this->ftp_list_in,$this->ftp_in);
+
+  if($synced) {
+    Shell::save_config($this->ftp_list_out,$this->ftp_in);
+    return;
+  }
+
 
 //get out files
 $this->ftp_out=Shell::load_config($this->ftp_list_out);
@@ -244,8 +262,9 @@ $this->ftp_out=Shell::load_config($this->ftp_list_out);
 //stdout($this->ftp_out);
   //lets compare with online
 $comp=$this->compare_files($this->ftp_in,$this->ftp_out);
-//stdout($comp);
+//Shell::dump_files($comp,true);
 
+//exit();
 
 //clear duplicates
   $comp['upload']=array_unique($comp['upload']);
@@ -475,34 +494,45 @@ function ftp_sync ($dir) {
 public function ftp_reset()
 {
   $helper = $this->getHelper('question');
-  //$question = new ConfirmationQuestion('Continue with this action?', false);
+
+  $options=array(
+  '1'=>'Reset sync data to current',
+  '2'=>'Wipe sync sync data',
+  '3'=>'Wipe connection data',
+  '0'=>'Quit ftp reset menu');
 
 
-  $question = new ConfirmationQuestion(
-      'Do you wish to reset ftp sync data? (yes or no) ',
-      false,
-      '/^(y|j)/i'
-  );
+  $question = new ChoiceQuestion("Afro FTP Reset Options:",$options,0);
+  $question->setErrorMessage('Option %s is invalid.');
+  $opt = $helper->ask($this->input, $this->output, $question);
 
-  if ($helper->ask($this->input, $this->output, $question)) {
-          Shell::wipe_config($this->ftp_list_in);
-          Shell::wipe_config($this->ftp_list_out);
-          $this->output->writeln('Sync data has been reset.');
+  $response=array_search($opt, $options);
+
+  switch($response) {
+  case "0":
+  return;
+  break;
+  case "1":
+  $this->output->write('Reseting sync data...');
+  $this->ftp_commit(true);
+  $this->output->writeln('done');
+  break;
+  case "2":
+  $this->output->write('Wiping sync data...');
+
+  Shell::wipe_config($this->ftp_list_in);
+  Shell::wipe_config($this->ftp_list_out);
+
+  $this->output->writeln('done');
+  break;
+  case "3":
+  $this->output->write('Wiping connection data...');
+  Shell::wipe_config($this->ftp_list_conf);
+  $this->output->writeln('done');
+  break;
   }
 
-
-
-  $question = new ConfirmationQuestion(
-      'Do you wish to reset ftp connection details? (yes or no) ',
-      false,
-      '/^(y|j)/i'
-  );
-
-  if ($helper->ask($this->input, $this->output, $question)) {
-          Shell::wipe_config($this->ftp_list_conf);
-          $this->output->writeln('ftp connection data has been reset.');
-  }
-
+  return;
 }
 
 
@@ -517,7 +547,7 @@ public function ftp_status()
 
   $data['pass']=str_repeat('*',strlen($data['pass']));
 
-  $data['*local_path'].= $this->local_dir();
+  $data['*local_path'] = $this->local_dir();
 
   $this->output->writeln("Ftp Config Status:");
 
@@ -594,26 +624,32 @@ public function filter_files($files) {
 */
 public function ftp_ignore($file)
 {
-$invalid_list=array(
-'.ds_store','.log','.zip'
-);
+
+//list of files to ignore
+$invalid_file_list=array('.ds_store','.log','.zip');
+
+//list of folders to accept
+$valid_folder_list=array(APPPATH,FCPATH.'bin',BASEPATH);
+
+//list of folders to ignore
+$invalid_folder_list=array(APPPATH.'config/console',APPPATH.'templates_c',APPPATH.'cache',APPPATH.'logs');
 
 //exclude the ftp config directory
-if(pathinfo($file,PATHINFO_DIRNAME)==APPPATH.'config/ftp')
-{
-return true;
+$dir=pathinfo($file,PATHINFO_DIRNAME);
+
+//ignore folders/subfolders that match
+foreach ($invalid_folder_list as $item) {
+  if(strpos($file,$item)!==false) {return true;}
 }
 
 
-$valid_list=array(APPPATH,FCPATH.'bin',BASEPATH);
-
-//ignore extensions that match
-foreach ($invalid_list as $item) {
-  if(strpos($file,$item)!=false) {return true;}
+//ignore files/extensions that match
+foreach ($invalid_file_list as $item) {
+  if(strpos($file,$item)!==false) {return true;}
 }
 
 //if any matches, then return false, as it is valid
-foreach ($valid_list as $item) {
+foreach ($valid_folder_list as $item) {
   if(strpos($file,$item)!==false) {return false;}
 }
 

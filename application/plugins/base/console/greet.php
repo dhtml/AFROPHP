@@ -13,53 +13,27 @@ class GreetingsConsole extends Command
   protected function configure()
   {
       $this->setName('greet')
-       ->setDescription('Greet someone')
+       ->setDescription('Greet someone from afrophp')
 
        ->addArgument(
         'params',
            InputArgument::IS_ARRAY,
           "
-          ftp init - will initialize the ftp connection\n
-          ftp commit - will commit the changes to your server
-          ftp test - will test your ftp connection 
+          greet tony - greets a person\n
+          greet tony ayo jide - greets more than one person\n
           "
           )
           // the "--help" option
-          ->setHelp('FTP Console for AfroPHP');
+          ->setHelp('Greet a person from AfroPHP');
   }
 
 
   public function execute(InputInterface $input, OutputInterface $output)
   {
     $args = Shell::getParams($input);
+    $person=implode(' ',$args);
 
-    var_dump($args);
-
-    $output->writeln('greeting person');
+    $output->writeln('greetings '.$person);
     return;
-    /*
-    $args = $input->getArgument('params'); $params='';
-    if (count($args) > 0) {
-      $params = ' '.implode(', ', $args);
-    }
-    $output->writeln($params);
-    exit();
-    */
-
-    $name = $input->getArgument('params');
-          if ($name) {
-              $text = 'Hello '.$name;
-          } else {
-              $text = 'Hello';
-          }
-
-          /*
-
-          if ($input->getOption('yell')) {
-              $text = strtoupper($text);
-          }
-          */
-
-          $output->writeln($text);
-    }
+  }
 }

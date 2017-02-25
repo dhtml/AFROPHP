@@ -203,11 +203,17 @@ class Theme extends Smarty
       $theme=current_theme;
 
 
+      if(!file_exists($vpath)) {$vpath=null;}
+
       //if no theme is getting used
       if(is_cli() || is_null($theme) || empty($theme)) {
 
+        if($vpath==null) {
+          $view="";
+        } else {
+         $view=$this->fetch($vpath);
+        }
 
-        $view=$this->fetch($vpath);
         $this->render_output($view);
         return;
       }
@@ -238,7 +244,7 @@ class Theme extends Smarty
       }
 
       //load view and assign
-      $page_content=$this->fetch($vpath);
+      $page_content= $vpath==null ? "" : $this->fetch($vpath);
 
 
       //attempt to pass things through the current template.html if it exists

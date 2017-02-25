@@ -20,17 +20,23 @@ use Symfony\Component\Console\Question\Question;
 //choice questions
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 //table helper
 use Symfony\Component\Console\Helper\Table;
 
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Console\ConsoleEvents;
 
 
 class Shell extends Command
 {
+
+ public $shell_config_file = APPPATH."config/console/default/conf.php";
+
+ public $shell_config;
+
+
   protected function configure()
   {
     $this
@@ -49,42 +55,72 @@ class Shell extends Command
 
   public function execute(InputInterface $input, OutputInterface $output)
   {
+    $this->shell_config=Shell::load_config($this->shell_config_file);
+
+    $style = new OutputFormatterStyle('red', 'default', array('bold'));
+    $output->getFormatter()->setStyle('c', $style);
+
+    $style = new OutputFormatterStyle('blue', 'default', array('bold'));
+    $output->getFormatter()->setStyle('p', $style);
+
+
+    $helper = $this->getHelper('question');
+
     $this->input=$input;$this->output=$output;
 
-    $dispatcher = new EventDispatcher();
+    $output->writeln("<c>Welcome to the AfroPHP Command Line Interface (AFRO CLI).</c>");
+    $output->writeln("<c>For more information, type \"help\" or \"bye\" </c> \n");
 
+    while(true) {
+    $question = new Question('<p>Afro console$ </p>', '');
+    $question->setAutocompleterValues($this->shell_config);
 
-    $this->exec_command("ftp --help");
+    $response = $helper->ask($input, $output, $question);
 
-    return;
-    try {
-    $command = $this->getApplication()->find('greet');
+    if(!empty($response) && !in_array($response, $this->shell_config))  {
+      $this->shell_config[]=$response;
 
-    $arguments = array(
-        'command' => 'ftp',
-        'params'    => '--help',
-    );
+      $this->shell_config=array_unique($this->shell_config);
 
-    $greetInput = new ArrayInput($arguments);
-    $returnCode = $command->run($greetInput, $output);
-    $output->writeLn($returnCode);
+      //save autocomplete data
+      Shell::save_config($this->shell_config_file,$this->shell_config);
+    }
 
-  } catch(CommandNotFoundException $e)
-  {
-    $output->writeln("command not found");
-  }  catch(InvalidArgumentException $e)
-  {
-        $output->writeLn("Invalid arguments exception");
-  }
+    $this->exec_command($response);
+    }
 
-
+    //$this->exec_command("ftp status");
   }
 
   /**
   * Runs a command e.g ftp init, ftp --help
+  * displays output on the console
   *
+  * @return exit code
   */
   function exec_command($string) {
+    $internal=strtolower(trim($string));
+
+
+    switch($internal) {
+      case 'clear':
+      case 'cls':
+
+      $_cmd=$this->toggle_os_command('clear','cls');
+      system($_cmd);
+      return;
+
+      case 'bye':
+      case 'exit':
+      case 'quit':
+      //$this->output->writeln("Goodbye");
+      exit();
+      return;
+      break;
+    }
+
+
+
     $input=$this->input;
     $output=$this->output;
 
@@ -96,35 +132,54 @@ class Shell extends Command
     $params= implode(' ',$args);
 
 
-    stdout($command);
-    stdout($params);
-    exit();
+    //stdout($command);
+    //stdout($params);
+    //exit();
 
+    $returnCode=-1;
 
 
     try {
-    $command = $this->getApplication()->find('greet');
+    $cmd = $this->getApplication()->find($command);
 
     $arguments = array(
-        'command' => 'ftp',
-        'params'    => '--help',
+        'command' => $command,
+        'params'    => $params,
     );
 
-    $greetInput = new ArrayInput($arguments);
-    $returnCode = $command->run($greetInput, $output);
-    $output->writeLn($returnCode);
 
+    $cmdInput = new ArrayInput($arguments);
+    $returnCode = $cmd->run($cmdInput, $output);
   } catch(CommandNotFoundException $e)
   {
-    $output->writeln("command not found");
+    system($string);
+    //$output->writeln($command.": command not found");
   }  catch(InvalidArgumentException $e)
   {
-        $output->writeLn("Invalid arguments exception");
+        $output->writeLn($command.": invalid arguments exception");
+  } catch(\Exception $err){
+        $output->writeLn($command.": unknown error - ".$err->getMessage());
   }
 
+  return $returnCode;
+}
 
-
+/**
+* Toggles a string based on os
+*
+* @param  string $os The result in mac/linus or non-windows
+* @param  string $win The result in a windows os
+*
+* return string
+*/
+function toggle_os_command($os,$win)
+{
+  if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+      return $win;
+  } else {
+      return $os;
   }
+}
 
 
   /**
