@@ -56,10 +56,14 @@ class Afrophp  extends \System\Base\Singleton
             $base_root=str_replace('/index.php', '/', $_SERVER['PHP_SELF']);
 
 
-            $rewrite_base = rewrite_slash(str_replace($_SERVER['DOCUMENT_ROOT'],'',FCPATH));
+            define('REWRITE_BASE',$base_root);
+
+            //$rewrite_base = rewrite_slash(str_replace($_SERVER['DOCUMENT_ROOT'],'',$_SERVER['SCRIPT_FILENAME']));
+            //$r=explode('index.php',$rewrite_base);
+            //$rewrite_base=$r[0];
 
 
-            define('REWRITE_BASE','/'.trim($rewrite_base,'/').'/');
+            //define('REWRITE_BASE','/'.trim($rewrite_base,'/').'/');
 
 
             //create htaccess if it does not exist
