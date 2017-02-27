@@ -11,5 +11,5 @@
 	'default_timezone' => 'UTC',
 	'csrf_protection' => 0,
 	'devmode' => true,
-	'profiling' => 1,
+	'profiling' => 0,
 );
