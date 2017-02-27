@@ -1,13 +1,22 @@
 Options +FollowSymLinks
 
-RewriteEngine On
+<FilesMatch "\.(xml|conf)$">
+ Order allow,deny
+</FilesMatch>
 
-RewriteBase /afrophp.com/
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+ order allow,deny
+ deny from all
+ satisfy all
+</Files>
 
-
-RewriteCond %{REQUEST_FILENAME} !-d
-
-RewriteCond %{REQUEST_FILENAME} !-f
-
-
-RewriteRule (.*) index.php
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+    RewriteEngine On
+    RewriteBase /afrophp.com/sandbox/
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule (.*) index.php
+</IfModule>

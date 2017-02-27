@@ -62,6 +62,11 @@ class Afrophp  extends \System\Base\Singleton
             define('REWRITE_BASE','/'.trim($rewrite_base,'/').'/');
 
 
+            //create htaccess if it does not exist
+            if(!file_exists(FCPATH.'.htaccess')) {
+              create_htaccess(REWRITE_BASE);
+            }
+
             //stdout(REWRITE_BASE,true);
 
                 if (config_item('enable_query_strings',false,true)) {

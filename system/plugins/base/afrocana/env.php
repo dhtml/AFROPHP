@@ -16,6 +16,13 @@ use Symfony\Component\Console\Input\InputArgument;
   (new afroenvironment($cmd,$input,$output))->init();
 });
 
+(new afrocana())
+->setName("env:hta")
+->setDescription('creates htaccess in the root of the installation')
+->setHelp('This will create/recreate the .htaccess')
+->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afroenvironment($cmd,$input,$output))->hta();
+});
 
 
 
@@ -45,8 +52,15 @@ class afroenvironment {
     while(!file_exists(env_data)) {
       sleep(2);
     }
-    $this->output->writeln("Your server environment has been detected");
+    $this->output->writeln("Initialization complete");
+  }
 
+  public function hta()
+  {
+    if(!file_exists(env_data)) {$this->init();}
+    $env=array_get_contents(env_data);
+    create_htaccess($env['rewrite_base']);
+    $this->output->writeln("Created ".FCPATH.'.htaccess successfully');
   }
 
 

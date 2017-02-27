@@ -2047,3 +2047,45 @@ function rewrite_slash($path)
 {
   return str_replace('\\','/',$path);
 }
+
+/**
+* creates the root htaccess file
+*
+* @param string $rewrite_base  The rewrite_base to use
+*
+* @return void
+*/
+function create_htaccess($rewrite_base='')
+{
+
+if(!empty($rewrite_base)) {
+$rewrite_base="RewriteBase $rewrite_base";
+}
+
+$data=<<<end
+Options +FollowSymLinks
+
+<FilesMatch "\.(xml|conf)$">
+ Order allow,deny
+</FilesMatch>
+
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+ order allow,deny
+ deny from all
+ satisfy all
+</Files>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+    RewriteEngine On
+    {$rewrite_base}
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule (.*) index.php
+</IfModule>
+end;
+
+file_force_contents(FCPATH.'.htaccess',$data);
+}
