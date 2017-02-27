@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
 (new afrocana())
-->setName("greet")
+->setName("app:greet")
 ->setDescription('Greet someone from afrophp')
 ->setHelp('Greet a person from AfroPHP')
 ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
@@ -26,6 +26,4 @@ function greetme(InputInterface $input, OutputInterface $output, $cmd)
     }
 
     $output->writeln($text.'!');
-
-  //$output->writeln("This is me greeting a nigga");
 }
