@@ -8,24 +8,12 @@ namespace System\Base;
  */
 class Singleton extends \System\Base\Prototype
 {
-    /**
-     * Call this method to get singleton
-     */
-    public static function instance()
-    {
-        static $instance = false;
-        if ($instance === false) {
-            // Late static binding (PHP 5.3+)
-        $instance = new static();
-        }
 
-        return $instance;
-    }
 
     /**
      * Make constructor private, so nobody can call "new Class".
      */
-    private function __construct()
+    public function __construct()
     {
     }
 

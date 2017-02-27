@@ -4,7 +4,10 @@
 */
 defined('BASEPATH') or exit('No direct script access allowed');
 
-define('afro_version','1.0.0');
+define('NAME','AfroPHP Content Management Framework');
+define('VERSION','1.0.0');
+
+define('afro_version',VERSION);
 
 class Afrophp  extends \System\Base\Singleton
 {
@@ -27,6 +30,9 @@ class Afrophp  extends \System\Base\Singleton
         include __DIR__."/config.php";
         $this->config=new Config();
 
+        //define environment
+        define('env_init',APPPATH.'config/console/default/env.init.php');
+        define('env_data',APPPATH.'config/console/default/env.php');
 
         //configure some php settings
         ini_set('display_errors', config_item('display_errors', 0));
@@ -49,10 +55,14 @@ class Afrophp  extends \System\Base\Singleton
 
             $base_root=str_replace('/index.php', '/', $_SERVER['PHP_SELF']);
 
-            //stdout($base_root,true);
 
-            //if (strlen($base_root)>1) {
+            $rewrite_base = rewrite_slash(str_replace($_SERVER['DOCUMENT_ROOT'],'',FCPATH));
 
+
+            define('REWRITE_BASE','/'.trim($rewrite_base,'/').'/');
+
+
+            //stdout(REWRITE_BASE,true);
 
                 if (config_item('enable_query_strings',false,true)) {
                     //query string mode enabled
@@ -71,12 +81,14 @@ class Afrophp  extends \System\Base\Singleton
         } else {
             //cli mode
             define('cli', true);
-            unset($argv[0]);
+            $args=$argv;
+
+            unset($args[0]);
             $base_url="http://localhost";
             $protocol="http";
             $host="localhost";
             $base_root="/";
-            $request_uri= implode('/', $argv);
+            $request_uri= implode('/', $args);
         }
 
         $current_url=$base_url.$request_uri;
@@ -101,6 +113,18 @@ class Afrophp  extends \System\Base\Singleton
 
         //the full url e.g. http://localhost/afrophp.com/cache/clear?v=1
         define('current_url', $current_url);
+
+        if(!cli && file_exists(env_init)) {
+          $env=array(
+            'base_url'=>base_url,
+            'request_uri'=>request_uri,
+            'request_url'=>request_url,
+            'current_url'=>current_url,
+            'rewrite_base'=>REWRITE_BASE,
+          );
+          array_put_contents(env_data,$env);
+          unlink(env_init);
+        }
     }
 
 
@@ -163,6 +187,7 @@ class Afrophp  extends \System\Base\Singleton
         $this->render_cache();
 
         //load mvc structrue
+        include FCPATH."3rdparty/vendor/autoload.php";
         include __DIR__."/model.php";
         include __DIR__."/my_model.php";
         include __DIR__."/controller.php";
@@ -225,12 +250,13 @@ class Afrophp  extends \System\Base\Singleton
     public function profiling()
     {
       $data=array(
-        'Benchmark Time'=>afro_benchmark . ' seconds',
-        'Memory usage'=>bytes2string(memory_get_usage(true)),
+        'Benchmark'=>afro_benchmark . ' seconds',
+        'Memory'=>bytes2string(memory_get_usage(true)),
         'Files'=>get_included_files(),
         'Constants'=>get_defined_constants(true)['user'],
-        'Current Objects'=>array_keys(get_object_vars($this)),
-        'Config Values'=>config_item('*'),
+        'Objects'=>array_keys(get_object_vars($this)),
+        'Config'=>config_item('*'),
+        'Server'=>$_SERVER,
       );
 
       stdout($data);

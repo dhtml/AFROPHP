@@ -48,8 +48,6 @@ function &get_instance()
 }
 
 /**
-* load_class
-*
 * Loads a new instance of a class
 *
 * @param	string   clsName   The filename/class name to convert
@@ -63,6 +61,7 @@ function &load_class($clsName, $params=null)
     $obj=$reflectionClass->newInstanceArgs((array)$params);
     return $obj;
 }
+
 
 /**
 * toClassName
@@ -92,21 +91,16 @@ function &get_config(array $replace = array(), $file_path=null)
 {
     static $config;
     if ($file_path!=null) {
-        $found = false;
-        if (file_exists($file_path)) {
-            $found = true;
-
-            $replace= xmlstring2array($file_path);
-        }
-        if (! is_array($replace)) {
-            show_error('Your config file does not appear to be formatted correctly.', 200, 'Configuration Issue');
-        }
+            //$replace= xmlstring2array($file_path);
+            $replace= array_get_contents($file_path);
     }
   // Are any values being dynamically added or replaced?
-  foreach ($replace as $key => $val) {
+  if(!empty($replace)) {
+    foreach ($replace as $key => $val) {
       if(is_array($val)&&empty($val)) {$val='';}
       if($val=='null') {$val=null;}
       $config[$key] = $val;
+    }
   }
     return $config;
 }
@@ -397,6 +391,8 @@ function show_error($message, $status_code = 500, $heading='Error', $type=1)
 {
   $bt = debug_backtrace();
   $caller = array_shift($bt);
+
+  $report='';
 
   $summary="";
 
@@ -1899,7 +1895,7 @@ function destroy_directory($dir='', $remove=true) {
 }
 
 
-/**
+/**©
  * Gzip/Compress Output
  * Original function came from wordpress.org
  * @return void
@@ -1967,5 +1963,87 @@ function is_current_uri($uri)
 */
 function is_current_url($url)
 {
- return site_url($uri)==site_url(request_uri) ? true : false;
+ return site_url($url)==site_url(request_uri) ? true : false;
+}
+
+
+
+/**
+* saves array config data into file
+*
+* @param string $file    The name of the file
+* @param array  $array   (Optional) The array data
+*
+* returns the array
+*/
+function array_put_contents($file,$array=array())
+{
+  $array= (array) $array;
+  $output = '<?' . 'php ' . 'return ' . var_export($array, true) . ';';
+  file_force_contents($file,$output);
+  return $array;
+}
+
+/**
+* loads file to arrays (assume content to be saved with array_put_contents)
+*
+* @param string $file   The name of the file
+*
+* returns the array
+*/
+function array_get_contents($file)
+{
+  $result=array();
+  if(file_exists($file)) {
+    $result=include $file;
+  }
+  return (array) $result;
+}
+
+/**
+* Dumps an array of files to the output
+*
+* @param array $files The array of files e.g. 'file1','file2'
+* @param boolean $stop Should execution be stopped after dumping?
+*
+* @return void
+*/
+function stdout_files($files,$stop=false)
+{
+    foreach ($files as $key => $value) {
+      $files[$key] = str_replace(FCPATH,'',$value);
+    }
+
+
+  stdout($files,$stop);
+}
+
+/**
+* Toggles a string based on os
+*
+* @param  string $os The result in mac/linus or non-windows
+* @param  string $win The result in a windows os
+*
+* return string
+*/
+function toggle_os_command($os,$win)
+{
+  if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+      return $win;
+  } else {
+      return $os;
+  }
+}
+
+
+/**
+* Changes back to forward slash
+*
+* @param  string $path The path to work on
+*
+* return string
+*/
+function rewrite_slash($path)
+{
+  return str_replace('\\','/',$path);
 }

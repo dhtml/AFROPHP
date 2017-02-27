@@ -370,6 +370,7 @@ public function views($view, $vars=array(), $return = false)
     * @return   object loader
     */
     public function plugins() {
+      $this->parse_plugins(BASEPATH."plugins");
       $this->parse_plugins(APPPATH."plugins");
       return $this;
     }
@@ -475,7 +476,7 @@ public function views($view, $vars=array(), $return = false)
         global $console_directives;
 
         //load all console commands
-        $bpath=$plugin['path']."/console/";
+        $bpath=$plugin['path']."/afrocana/";
 
         $files=browse($bpath,array('/is','/sd','/sd'),'*.php');
         foreach($files as $file) {

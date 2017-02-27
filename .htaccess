@@ -2,7 +2,7 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
-#RewriteBase /
+RewriteBase /afrophp.com/
 
 
 RewriteCond %{REQUEST_FILENAME} !-d

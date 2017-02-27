@@ -5,8 +5,6 @@
 */
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once BASEPATH."base/smarty/Smarty.class.php";
-
 /**
 * Theme class
 */

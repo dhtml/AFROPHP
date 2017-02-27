@@ -9,6 +9,21 @@ namespace System\Base;
 class Prototype
 {
 
+
+  /**
+   * Call this method to get singleton
+   */
+  public static function instance()
+  {
+      static $instance = false;
+      if ($instance === false) {
+          // Late static binding (PHP 5.3+)
+      $instance = new static();
+      }
+
+      return $instance;
+  }
+  
     /**
     * __get
     *

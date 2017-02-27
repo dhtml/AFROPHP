@@ -73,24 +73,24 @@
  * -------------------------------------------------------------------
  */
 	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+	define('SELF', str_replace('\\','/',pathinfo(__FILE__, PATHINFO_BASENAME)));
 
   // Path to the loading directory
-  define('LPATH',dirname(__FILE__));
+  define('LPATH',str_replace('\\','/',dirname(__FILE__)).'/');
 
 
 	// Path to the system directory
-	define('BASEPATH', $system_path);
+	define('BASEPATH',str_replace('\\','/', $system_path));
 
 	// Path to the front controller (this file) directory
-	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	define('FCPATH', str_replace('\\','/',dirname(__FILE__).DIRECTORY_SEPARATOR));
 
 
 	define('APPPATH', FCPATH.strtr(
     trim($application_folder, '/\\'),
     '/\\',
     DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-  ).DIRECTORY_SEPARATOR);
+  ).'/');
 
 /*
  * --------------------------------------------------------------------

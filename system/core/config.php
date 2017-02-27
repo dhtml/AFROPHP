@@ -35,11 +35,10 @@ class Config
     public function load($path)
     {
       $ext=pathinfo($path,PATHINFO_EXTENSION);
-      if($ext!='xml') {
+      if($ext!='php') {
         //loads all xml config in the path
-        $files=browse($path,array('/is','/sd','/sd'),'*.xml');
+        $files=browse($path,array('/sd'),'*.php');
         foreach($files as $file) {
-          if(strpos($file,'translation.xml')!==false) {continue;}
           $this->load($file);
         }
         return;

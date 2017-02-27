@@ -1,0 +1,15 @@
+<?php return array (
+  'site_name' => 'AFROPHP Framework',
+	'uri_protocol' => 'REQUEST_URI',
+	'enable_query_strings' => false,
+	'controller_trigger' => 'q',
+	'language' => 'en',
+	'charset' => 'UTF-8',
+	'display_errors' => 1,
+	'error_reporting' => E_ALL,
+	'log_threshold' => '2',
+	'default_timezone' => 'UTC',
+	'csrf_protection' => 0,
+	'devmode' => true,
+	'profiling' => 1,
+);
