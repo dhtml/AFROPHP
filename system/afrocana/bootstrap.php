@@ -25,6 +25,9 @@ $console = new Application(NAME,VERSION);
 
 $console->setAutoExit(false);
 
+//error_reporting(0);
+
+
 include __DIR__."/afrocana.php";
 
 include __DIR__."/afroconsole.php";
@@ -91,6 +94,11 @@ $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $
 
 
 $console->setDispatcher($dispatcher);
+
+
+$console->setCatchExceptions(false);
+
 $console->run(null,$output);
+
 
 exit();

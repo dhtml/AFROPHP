@@ -11,14 +11,14 @@ use Symfony\Component\Console\Input\InputArgument;
 (new afrocana())
 ->setName("env:init")
 ->setDescription('initializes your environment variable')
-->setHelp('This will create .environment in your root folder')
+->setHelp('This will capture the url of your application')
 ->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroenvironment($cmd,$input,$output))->init();
 });
 
 (new afrocana())
 ->setName("env:hta")
-->setDescription('creates htaccess in the root of the installation')
+->setDescription('creates htaccess in the root of your installation')
 ->setHelp('This will create/recreate the .htaccess')
 ->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroenvironment($cmd,$input,$output))->hta();
@@ -59,8 +59,13 @@ class afroenvironment {
   {
     if(!file_exists(env_data)) {$this->init();}
     $env=array_get_contents(env_data);
-    create_htaccess($env['rewrite_base']);
-    $this->output->writeln("Created ".FCPATH.'.htaccess successfully');
+    $bool=create_htaccess($env['rewrite_base']);
+
+    if($bool) {
+      $this->output->writeln("Created ".FCPATH.'.htaccess successfully');
+    } else {
+      $this->output->writeln("<error>Unable to created ".FCPATH.'.htaccess</error>');
+    }
   }
 
 

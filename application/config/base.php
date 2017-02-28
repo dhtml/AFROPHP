@@ -11,5 +11,6 @@
 	'default_timezone' => 'UTC',
 	'csrf_protection' => 0,
 	'devmode' => true,
+  'autohtaccess' => false,
 	'profiling' => 0,
 );

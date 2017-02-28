@@ -67,7 +67,7 @@ class Afrophp  extends \System\Base\Singleton
 
 
             //create htaccess if it does not exist
-            if(!file_exists(FCPATH.'.htaccess')) {
+            if(!file_exists(FCPATH.'.htaccess') && config_item('autohtaccess',true)) {
               create_htaccess(REWRITE_BASE);
             }
 

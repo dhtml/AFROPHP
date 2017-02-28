@@ -2053,10 +2053,17 @@ function rewrite_slash($path)
 *
 * @param string $rewrite_base  The rewrite_base to use
 *
-* @return void
+* @return boolean
 */
 function create_htaccess($rewrite_base='')
 {
+$target=FCPATH.'.htaccess';
+
+if(file_exists($target)) {
+  @unlink($target);
+}
+
+if(file_exists($target)) {return false;}
 
 if(!empty($rewrite_base)) {
 $rewrite_base="RewriteBase $rewrite_base";
@@ -2087,5 +2094,8 @@ Options +FollowSymLinks
 </IfModule>
 end;
 
-file_force_contents(FCPATH.'.htaccess',$data);
+file_force_contents($target,$data);
+
+if(file_exists($target)) {return true;} else {return false;}
+
 }
