@@ -15,7 +15,7 @@ Options +FollowSymLinks
         Options -MultiViews
     </IfModule>
     RewriteEngine On
-    RewriteBase /afrophp.com/sandbox/
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule (.*) index.php
