@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 ->setHelp('Greet a person from AfroPHP')
 ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
 ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?')
-->execute('\Console\greetme');
+->exec('\Console\greetme');
 
 function greetme(InputInterface $input, OutputInterface $output, $cmd)
 {

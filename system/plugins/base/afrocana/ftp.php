@@ -29,7 +29,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:init")
 ->setDescription('initialzes ftp connection')
 ->setHelp('It allows you to configure/reconfigure your ftp details')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_init();
 });
 
@@ -38,7 +38,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:test")
 ->setDescription('tests ftp connection')
 ->setHelp('It allows you to determine the validity of your connections')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_test();
 });
 
@@ -47,7 +47,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:status")
 ->setDescription('display ftp config status')
 ->setHelp('It allows you to determine the validity of your connections')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_status();
 });
 
@@ -55,7 +55,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:reset")
 ->setDescription('resets some ftp data')
 ->setHelp('You can update your various ftp data')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_reset();
 });
 
@@ -65,7 +65,7 @@ use Symfony\Component\Console\Helper\Table;
 ->addArgument('file', InputArgument::REQUIRED, 'The name of the remote file e.g. index.php?')
 ->addArgument('mode', InputArgument::REQUIRED, 'The new file mange e.g. 0755?')
 ->setHelp('This will change the file permissions e.g. ftp:chmod index 0755')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_chmod($input->getArgument('file'),$input->getArgument('mode'));;
 });
 
@@ -74,7 +74,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:commit")
 ->setDescription('commits changes to the remote server')
 ->setHelp('Saves all changes made to the remote server')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_commit();
 });
 
@@ -82,7 +82,7 @@ use Symfony\Component\Console\Helper\Table;
 ->setName("ftp:pull")
 ->setDescription('Pulls all data from remote to local server')
 ->setHelp('Transfers all the files on remote to local server')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new ftp_console($cmd,$input,$output))->ftp_pull();
 });
 

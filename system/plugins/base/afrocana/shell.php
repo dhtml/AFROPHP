@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
         InputArgument::IS_ARRAY | InputArgument::REQUIRED,
         'This allows you to run os commands e.g. ./afrocana shell ls'
     )
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroshell($cmd,$input,$output))->exec();
 });
 

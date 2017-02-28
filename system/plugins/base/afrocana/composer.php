@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
         InputArgument::IS_ARRAY | InputArgument::REQUIRED,
         'This allows you to run regular composer commands e.g. ./afrocana composer require package'
     )
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afrocomposer($cmd,$input,$output))->exec();
 });
 

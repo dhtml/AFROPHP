@@ -38,7 +38,7 @@ use Symfony\Component\Console\ConsoleEvents;
 ->setName("history:list")
 ->setDescription('Lists commands history')
 ->setHelp('The list of commands used recently in afrocana console')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroconsole($cmd,$input,$output))->history_list();
 });
 
@@ -46,7 +46,7 @@ use Symfony\Component\Console\ConsoleEvents;
 ->setName("history:clear")
 ->setDescription('Clears commands history')
 ->setHelp('Clears the list of commands used recently in afrocana console')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroconsole($cmd,$input,$output))->history_clear();
 });
 
@@ -56,7 +56,7 @@ use Symfony\Component\Console\ConsoleEvents;
 ->setDescription('Starts the afrocana command line interactive interface')
 ->setHelp('This interface shortens you command, you can do stuffs like ftp:status')
 ->setHidden(true)
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroconsole($cmd,$input,$output))->interactive();
 });
 

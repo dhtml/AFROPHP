@@ -25,7 +25,6 @@ $console = new Application(NAME,VERSION);
 
 $console->setAutoExit(false);
 
-include __DIR__."/afrocommand.php";
 include __DIR__."/afrocana.php";
 
 include __DIR__."/afroconsole.php";

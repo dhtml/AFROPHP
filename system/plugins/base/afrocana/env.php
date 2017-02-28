@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 ->setName("env:init")
 ->setDescription('initializes your environment variable')
 ->setHelp('This will create .environment in your root folder')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroenvironment($cmd,$input,$output))->init();
 });
 
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputArgument;
 ->setName("env:hta")
 ->setDescription('creates htaccess in the root of the installation')
 ->setHelp('This will create/recreate the .htaccess')
-->execute(function(InputInterface $input, OutputInterface $output, $cmd) {
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
   (new afroenvironment($cmd,$input,$output))->hta();
 });
 
