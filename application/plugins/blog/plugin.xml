@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<plugin>
+  <name>Blog</name>
+  <version>1</version>
+  <build>1</build>
+  <enable>0</enable>
+</plugin>

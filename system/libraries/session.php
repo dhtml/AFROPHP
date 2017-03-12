@@ -4,12 +4,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * Session Class
  *
- *
- * @author		David Pennington
- * @license		http://www.gnu.org/licenses/gpl-3.0.html
- ********************************** 80 Columns *********************************
  */
 class Session {
+
+
+	/**
+	* name of flash session vars
+	*
+	* @var array
+	*/
+	const ss_vars = '__ss_vars';
+
+
+
+	/**
+	* The current flash variables detected
+	*
+	* @var array
+	*/
+	private $flash_vars=array();
+
 	/**
 	 * Configure some default session setting and then start the session.
 	 * @param	array	$config
@@ -17,6 +31,9 @@ class Session {
 	 */
 	public function __construct() {
     static $init;
+
+		//session does not run in cli mode
+		if(is_cli()) {return;}
 
     if($init) {return;}
     $this->match_ip			      = config_item('session_match_ip',false,true);			//Require user IP to match?
@@ -63,6 +80,22 @@ class Session {
 
 		//Create a session (or get existing session)
 		$this->create();
+
+
+		if($this->has_userdata(self::ss_vars)) {
+			$vars=(array) $_SESSION[self::ss_vars];
+
+			foreach($vars as $name) {
+				if(isset($_SESSION[$name])) {
+					$this->flash_vars["$name"]=$_SESSION[$name];
+					unset($_SESSION[$name]);
+				}
+			}
+
+			$_SESSION[self::ss_vars] = null; //remove the sent flash vars from session
+		}
+		//var_dump($_SESSION);
+
 	}
 
 
@@ -100,11 +133,13 @@ class Session {
 		// Start the session!
 		session_start();
 
+
 		//Check the session to make sure it is valid
 		if( ! $this->check()) {
 			//Destroy invalid session and create a new one
 			return $this->create();
 		}
+
 
 	}
 
@@ -212,6 +247,112 @@ class Session {
 	}
 
 
+	public function userdata($item)
+	{
+		return $this->$item;
+	}
+
+	public function set_userdata($data)
+	{
+		if(is_array($data)) {
+			foreach($data as $key=>$value) {
+				$_SESSION["$key"]=$value;
+			}
+		}
+	}
+
+
+	public function unset_userdata($data)
+	{
+		if(is_array($data)) {
+			foreach($data as $value) {
+				$this->unset_userdata($value);
+			}
+		} else if(is_string($data)){
+			if(isset($_SESSION["$data"])) {unset($_SESSION["$data"]);}
+		}
+	}
+
+
+	public function mark_as_flash($data)
+	{
+			if(is_array($data)) {
+				foreach($data as $value) {
+					$this->mark_as_flash($value);
+				}
+			} else if(is_string($data)) {
+
+				$mkey=self::ss_vars;
+				if($this->has_userdata($mkey)) {
+					$vars=(array) $_SESSION[$mkey];
+				} else {
+					$vars=array();
+				}
+				if(!in_array($data,$vars)) {$vars[]=$data;}
+				$_SESSION[$mkey]=$vars;
+			}
+	}
+
+	public function set_flashdata($name,$value=null)
+	{
+		if(is_array($name)) {
+			foreach($name as $key=>$value) {
+			$this->set_flashdata($key,$value);
+			}
+		} else {
+		$_SESSION["$name"]=$value;
+		$this->mark_as_flash($name);
+		}
+
+	}
+
+	public function flashdata($name = null)
+	{
+		if(!is_null($name)) {
+			return isset($this->flash_vars["$name"]) ? $this->flash_vars["$name"] : null;
+		}
+
+		return $this->flash_vars;
+	}
+
+	public function keep_flashdata($data)
+	{
+		if(is_array($data)) {
+			foreach($data as $value) {
+				$this->keep_flashdata($value);
+			}
+		} else if(is_string($data)) {
+			if(!is_null($value=$this->flashdata($data))) {
+				$_SESSION["$data"]=$value;
+				$this->mark_as_flash($data);
+			}
+		}
+	}
+
+	public function has_userdata($key)
+	{
+		return isset($_SESSION["$key"]);
+	}
+
+	public function sess_destroy() {
+		session_destroy();
+	}
+
+
+	/**
+	* __get
+	*
+	* reroute variables in the framework
+	*
+	* @param $key the name of the required resource
+	*
+	* @return mixed
+	*/
+	public function __get($key)
+	{
+		return isset($_SESSION["$key"]) ? $_SESSION["$key"] : null;
+	}
+
 }
 
 
@@ -223,7 +364,7 @@ class Session {
  * then then set the session::$session_handler to FALSE and configure the
  * settings shown in http://php.net/manual/en/memcache.examples-overview.php
  */
-class dbase_session_handler  extends My_Model {
+class dbase_session_handler  extends model {
 
 	/**
 	* the table holding the session
@@ -265,18 +406,15 @@ class dbase_session_handler  extends My_Model {
 	*/
   public function create_schema()
   {
-        $create="
-        CREATE TABLE IF NOT EXISTS `{$this->table}` (
-          session_id varchar(40) DEFAULT '0' NOT NULL,
-          ip_address varchar(45) DEFAULT '0' NOT NULL,
-          user_agent varchar(120) NOT NULL,
-          last_activity int(10) unsigned DEFAULT 0 NOT NULL,
-          user_data text NOT NULL,
-          PRIMARY KEY (session_id),
-          KEY `last_activity_idx` (`last_activity`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        ";
-        $this->db->query($create);
+      parent::create_schema("
+			session_id varchar(40) DEFAULT '0' NOT NULL,
+			ip_address varchar(45) DEFAULT '0' NOT NULL,
+			user_agent varchar(120) NOT NULL,
+			last_activity int(10) unsigned DEFAULT 0 NOT NULL,
+			user_data text NOT NULL,
+			PRIMARY KEY (session_id),
+			KEY `last_activity_idx` (`last_activity`)
+      ");
   }
 
 
@@ -306,18 +444,16 @@ class dbase_session_handler  extends My_Model {
 	 */
 	public function read($id = NULL) {
 
-    $result=$this->db->select(
-    'user_data',
-    $this->table,
-    'session_id = ?',
-    array($id)
-    );
+		$query=$this->db
+			->select('user_data')
+			->from($this->table)
+			->where('session_id',$id)
+			->get();
 
-    if ($row = $result->fetch_assoc()) {
-      return ($row['user_data']);
-    }
+			$row=$query->unbuffered_row('array');
 
-		return '';
+
+			return isset($row['user_data']) ? $row['user_data'] : '';
 	}
 
 
@@ -328,7 +464,7 @@ class dbase_session_handler  extends My_Model {
 	 * @param	string	$id
 	 * @param	string 	$data
 	 */
-	public function write($id = NULL, $data = '') {
+	public function write($id = NULL, $user_data = '') {
 		/*
 		 * Case 1: The session we are now being told to write does not match
 		 * the session we were given at the start. This means that the ID was
@@ -336,15 +472,20 @@ class dbase_session_handler  extends My_Model {
 		 * old session id to this new value. The other choice is to delete
 		 * the old session first - but that wastes resources.
 		 */
+		 //$raw_data=unserialize($user_data);
+
+
+
 
 		//If the session was not empty at start && regenerated sometime durring the page
 		if($this->session_id && $this->session_id != $id) {
 
+
 			//Update the data and new session_id
-			$data = array('user_data' => $data, 'session_id' => $id);
+
 
 			//Then we need to update the row with the new session id (and data)
-			$this->db->update($this->table, $data, 'session_id = ? ', array($this->session_id));
+			$this->db->update($this->table, array('user_data' => $user_data, 'session_id' => $id,'last_activity'=>time()),array('session_id'=>$this->session_id));
 
 			return;
 		}
@@ -353,13 +494,14 @@ class dbase_session_handler  extends My_Model {
 		 * Case 2: We check to see if the session already exists. If it does
 		 * then we need to update it. If not, then we create a new entry.
 		 */
-     $result=$this->db->select('session_id',$this->table,'session_id=?',array($id));
-     $count = $this->db->num_rows();
+     $result=$this->db->select('session_id')->from($this->table)->where(array('session_id'=>$id))->get();
+     $count = $result->num_rows();
+
 
 		if($count>0) {
-			$this->db->update($this->table, array('user_data' => $data),'session_id = ?',array($id));
+			$this->db->update($this->table, array('user_data' => $user_data,'last_activity'=>time()),array('session_id'=>$id));
 		} else {
-			$this->db->insert($this->table, array('user_data' => $data,'session_id'=>$id));
+			$this->db->insert($this->table, array('user_data' => $user_data,'session_id'=>$id,'ip_address'=>ip_address(),'user_agent'=>$_SERVER['HTTP_USER_AGENT'],'last_activity'=>time()));
 		}
 
 	}
@@ -371,7 +513,7 @@ class dbase_session_handler  extends My_Model {
 	 * @return	boolean
 	 */
 	public function destroy($id) {
-		$this->db->delete($this->table,'session_id = ?', array($id));
+		$this->db->delete($this->table,array('session_id'=>$id));
 		return TRUE;
 	}
 
@@ -384,7 +526,7 @@ class dbase_session_handler  extends My_Model {
 		$time = date('Y-m-d H:i:s', time() - $this->expiration);
 
 		//Remove all old sessions
-		$this->db->del($this->table, 'last_activity < ?',array($time));
+		$this->db->delete($this->table,array('last_activity <'=>$time));
 
 		return TRUE;
 	}

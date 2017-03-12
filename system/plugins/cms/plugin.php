@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//trigger menu event here
+//load session
+$this->load->library("session");
+
+//include __DIR__."/models/user_model.php";
+//include __DIR__."/models/feed_model.php";
+//die();
+$this->load->model(array(__DIR__."/models/user_model.php",__DIR__."/models/feed_model.php"));
+
+//$this->load->model(array("user_model","feed_model"));
 
 
 

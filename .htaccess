@@ -1,6 +1,6 @@
 Options +FollowSymLinks
 
-<FilesMatch "\.(xml|conf)$">
+<FilesMatch "\.(xml|conf|info|ini|txt|inf|inc)$">
  Order allow,deny
 </FilesMatch>
 
@@ -15,7 +15,6 @@ Options +FollowSymLinks
         Options -MultiViews
     </IfModule>
     RewriteEngine On
-
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule (.*) index.php

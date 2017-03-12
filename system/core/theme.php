@@ -466,4 +466,60 @@ class Theme extends Smarty
       return theme_url . ltrim($uri,'/');
     }
 
+    /**
+    * fetches all available themes
+    *
+    * @return array
+    */
+    public function all()
+    {
+      $theme_info_paths=browse(APPPATH.'themes',array('/is','/sd'),'theme.info');
+
+
+      $front_path=APPPATH."themes/".config_item('front_theme');
+      $back_path=APPPATH."themes/".config_item('back_theme');
+
+
+      $pos=0;
+      $themes=array();
+      foreach($theme_info_paths as $theme_info_path) {
+        $tag= 'info';
+
+        $data=parse_info_format($theme_info_path);
+
+        $pos++;
+        $hash=str_pad($pos, 3, '0', STR_PAD_LEFT);
+        $theme=array();
+        $theme['path']=pathinfo($theme_info_path,PATHINFO_DIRNAME);
+        $theme['key']=$hash;
+
+        if($theme['path']==$front_path) {$status="front";}
+        else if($theme['path']==$back_path) {$status="back";}
+        else {$status='disabled';$tag='debug';}
+        $theme['status']=$status;
+
+        $theme['path'].="/";
+
+        $theme=array_merge($theme,$data);
+        $themes[]=$theme;
+      }
+      return $themes;
+    }
+
+    /**
+    * finds a theme by name
+    *
+    * @param string $name The name of the theme
+    *
+    * @return array
+    */
+    public function find_by_name($name)
+    {
+      $result=Array();
+      foreach($this->all() as $theme) {
+        if(strtolower($theme['name'])==strtolower($name)) {$result[]=$theme;}
+      }
+      return $result;
+    }
+
 }

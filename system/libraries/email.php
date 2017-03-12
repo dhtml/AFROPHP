@@ -5,7 +5,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once __DIR__."/vendor/autoload.php";
 
 class Email extends PHPMailer
 {
@@ -15,7 +14,6 @@ class Email extends PHPMailer
 */
 public function __construct()
     {
-
       //if sending of email is disabled
       if(!config_item('send_enabled',true,true)) {
         return;
@@ -24,14 +22,14 @@ public function __construct()
       parent::__construct();
 
       //check of smtp configuration
-      if(config_item('smtp_enabled',false,true)) {
+      if(config_item('email_smtp_enabled',false,true)) {
         $this->isSMTP();
-        $this->Host = config_item('smtp_host');
+        $this->Host = config_item('email_smtp_host');
         $this->SMTPAuth = true;
-        $this->Username = config_item('smtp_username');
-        $this->Password = config_item('smtp_password');
-        $this->SMTPSecure = config_item('smtp_secure');
-        $this->Port = config_item('smtp_port');;
+        $this->Username = config_item('email_smtp_username');
+        $this->Password = config_item('email_smtp_password');
+        $this->SMTPSecure = config_item('email_smtp_secure');
+        $this->Port = config_item('email_smtp_port');;
       }
     }
 
@@ -167,7 +165,7 @@ public function __construct()
             public function send($clear=true)
             {
               //if sending of email is disabled
-              if(!config_item('send_enabled',true,true)) {
+              if(!config_item('email_send_enabled',true,true)) {
                 return false;
               }
 

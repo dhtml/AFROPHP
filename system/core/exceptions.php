@@ -14,13 +14,15 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 
   $exception=new ErrorException($errstr, $errno, 0, $errfile, $errline);
 
-
+//die($errstr);
+//die();
 
   $stacktrace=array(); $html_report=""; $cli_report="";
 
 
-  if (config_item('exception_show_error',false,true)) {
+  if (config_item('exception_show_error',false)) {
     $_class=get_class($exception);
+
 
     $html_report.="<p>Type: $_class</p>\n";
     $html_report.="<p>Message: $errstr</p>\n";
@@ -34,8 +36,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
     $cli_report.="Line number: $errline\n\n";
   }
 
-
-    if (config_item('exception_enable_stack_trace',false,true)) {
+    if (config_item('exception_enable_stack_trace',false)) {
       $html_report.="<p>Backtrace:</p>\n";
       $cli_report.="Backtrace:\n";
       foreach ($exception->getTrace() as $error) {

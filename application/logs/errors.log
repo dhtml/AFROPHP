@@ -1,344 +1,175 @@
-[25-Feb-2017 14:30:36 UTC] error: 
+[12-Mar-2017 13:30:40 UTC] error: 
 Type: ErrorException
-Message: Uncaught  --> Smarty: 0():Missing '$template' parameter <-- 
-  thrown
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/sysplugins/smarty_internal_templatebase.php
-Line number: 154
+Message: Undefined variable: _current
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php
+Line number: 225
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 225 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[12-Mar-2017 13:53:54 UTC] error: 
+Type: ErrorException
+Message: include(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/my_model.php): failed to open stream: No such file or directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php
+Line number: 201
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 201 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 201 
+Function: run 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[12-Mar-2017 14:00:14 UTC] error: 
+Type: ErrorException
+Message: Only variable references should be returned by reference
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php
+Line number: 272
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 272 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 196 
+Function: instantiate 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/plugins/cms/plugin.php 
+Line: 5 
+Function: library 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 558 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 494 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 463 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 428 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 219 
+Function: plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[12-Mar-2017 14:10:18 UTC] error: 
+Type: ErrorException
+Message: Cannot redeclare class System\Core\Router
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php
+Line number: 255
 
 Backtrace:
 File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
-Line: 101 
+Line: 102 
 Function: exception_error_handler 
 
-[25-Feb-2017 23:29:28 UTC] error: 
+[12-Mar-2017 14:11:06 UTC] error: 
 Type: ErrorException
-Message: include_once(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/Smarty.class.php): failed to open stream: No such file or directory
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
-Line number: 8
+Message: Undefined variable: directory
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
+Line number: 63
 
 Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
+Line: 63 
 Function: exception_error_handler 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
-Function: include_once 
 File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 178 
+Line: 209 
+Function: load_class 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[12-Mar-2017 14:13:44 UTC] error: 
+Type: ErrorException
+Message: Argument 1 passed to Smarty_Internal_Method_RegisterPlugin::registerPlugin() must be an instance of Smarty_Internal_TemplateBase, instance of Smarty_Internal_Data given
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_method_registerplugin.php
+Line number: 38
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_method_registerplugin.php 
+Line: 38 
+Function: exception_error_handler 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_extension_handler.php 
+Line: 103 
+Function: call_user_func_array 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_data.php 
+Line: 283 
+Function: _callExternalMethod 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/plugins/base/bool/text.func.php 
+Line: 4 
+Function: __call 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/plugins/base/bool/text.func.php 
+Line: 4 
+Function: registerPlugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 551 
 Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 504 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 473 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 438 
+Function: parse_plugins 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 212 
+Function: plugins 
 File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
 Line: 111 
 Function: run 
 
-[25-Feb-2017 23:45:19 UTC] error: 
+[12-Mar-2017 14:14:52 UTC] error: 
 Type: ErrorException
-Message: include_once(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/Smarty.class.php): failed to open stream: No such file or directory
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
-Line number: 8
+Message: Argument 1 passed to Smarty_Internal_Method_RegisterPlugin::registerPlugin() must be an instance of Smarty_Internal_TemplateBase, instance of Smarty_Internal_Data given
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_method_registerplugin.php
+Line number: 38
 
 Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_method_registerplugin.php 
+Line: 38 
 Function: exception_error_handler 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
-Function: include_once 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 179 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_extension_handler.php 
+Line: 103 
+Function: call_user_func_array 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/3rdparty/vendor/smarty/smarty/libs/sysplugins/smarty_internal_data.php 
+Line: 283 
+Function: _callExternalMethod 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/plugins/base/bool/text.func.php 
+Line: 4 
+Function: __call 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/plugins/base/bool/text.func.php 
+Line: 4 
+Function: registerPlugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 551 
 Function: include 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:45:24 UTC] error: 
-Type: ErrorException
-Message: include_once(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/smarty/Smarty.class.php): failed to open stream: No such file or directory
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php
-Line number: 8
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
-Function: exception_error_handler 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 8 
-Function: include_once 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 504 
+Function: plugin_init 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 473 
+Function: plugin 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 438 
+Function: parse_plugins 
 File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 179 
-Function: include 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:46:53 UTC] error: 
-Type: ErrorException
-Message: include_once(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/stichoza/autoload.php): failed to open stream: No such file or directory
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
-Line number: 109
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 109 
-Function: exception_error_handler 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 109 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/translate.block.php 
-Line: 27 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/5cf30f78943bca62ab380662705250ba6028e947_0.file.default.html.php 
-Line: 40 
-Function: theme_translate_block 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_resource_base.php 
-Line: 128 
-Function: content_58b2176deed801_40621232 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_compiled.php 
-Line: 172 
-Function: getRenderedTemplateCode 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_template.php 
-Line: 206 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 216 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 107 
-Function: _execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 443 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 245 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
-Line: 179 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 211 
-Function: execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:46:56 UTC] error: 
-Type: ErrorException
-Message: include_once(/Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/stichoza/autoload.php): failed to open stream: No such file or directory
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php
-Line number: 109
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 109 
-Function: exception_error_handler 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 109 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/translate.block.php 
-Line: 27 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/5cf30f78943bca62ab380662705250ba6028e947_0.file.default.html.php 
-Line: 40 
-Function: theme_translate_block 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_resource_base.php 
-Line: 128 
-Function: content_58b2176deed801_40621232 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_compiled.php 
-Line: 172 
-Function: getRenderedTemplateCode 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_template.php 
-Line: 206 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 216 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 107 
-Function: _execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 443 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 245 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
-Line: 179 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 211 
-Function: execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:47:41 UTC] error: 
-Type: ErrorException
-Message: DOMDocument::createElement() expects parameter 2 to be string, array given
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
-Line number: 1057
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
-Line: 1057 
-Function: createElement 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 117 
-Function: array2xml 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/translate.block.php 
-Line: 27 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/5cf30f78943bca62ab380662705250ba6028e947_0.file.default.html.php 
-Line: 40 
-Function: theme_translate_block 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_resource_base.php 
-Line: 128 
-Function: content_58b2176deed801_40621232 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_compiled.php 
-Line: 172 
-Function: getRenderedTemplateCode 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_template.php 
-Line: 206 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 216 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 107 
-Function: _execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 443 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 245 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
-Line: 179 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 211 
-Function: execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:47:56 UTC] error: 
-Type: ErrorException
-Message: DOMDocument::createElement() expects parameter 2 to be string, array given
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
-Line number: 1057
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
-Line: 1057 
-Function: createElement 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 117 
-Function: array2xml 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/translate.block.php 
-Line: 27 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/5cf30f78943bca62ab380662705250ba6028e947_0.file.default.html.php 
-Line: 40 
-Function: theme_translate_block 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_resource_base.php 
-Line: 128 
-Function: content_58b2176deed801_40621232 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_compiled.php 
-Line: 172 
-Function: getRenderedTemplateCode 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_template.php 
-Line: 206 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 216 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 107 
-Function: _execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 443 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 245 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
-Line: 179 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 211 
-Function: execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[25-Feb-2017 23:49:04 UTC] error: 
-Type: ErrorException
-Message: DOMDocument::createElement() expects parameter 2 to be string, array given
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
-Line number: 1057
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
-Line: 1057 
-Function: createElement 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/lang.php 
-Line: 119 
-Function: array2xml 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/base/bool/translate.block.php 
-Line: 27 
-Function: translate 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/templates_c/5cf30f78943bca62ab380662705250ba6028e947_0.file.default.html.php 
-Line: 40 
-Function: theme_translate_block 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_resource_base.php 
-Line: 128 
-Function: content_58b2176deed801_40621232 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_template_compiled.php 
-Line: 172 
-Function: getRenderedTemplateCode 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_template.php 
-Line: 206 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 216 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatebase.php 
-Line: 107 
-Function: _execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 443 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/theme.php 
-Line: 245 
-Function: fetch 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
-Line: 179 
-Function: render 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 211 
-Function: execute 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
-Line: 111 
-Function: run 
-
-[27-Feb-2017 15:48:58 UTC] error: 
-Type: ErrorException
-Message: file_put_contents(/Users/dhtml/Sites/www/afrophp.com/sandbox/application/config/console/default/env.php): failed to open stream: Permission denied
-Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php
-Line number: 1948
-
-Backtrace:
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
-Line: 1948 
-Function: file_put_contents 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/common.php 
-Line: 1991 
-Function: file_force_contents 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 121 
-Function: array_put_contents 
-File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
-Line: 170 
-Function: bootstrap 
+Line: 214 
+Function: plugins 
 File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
 Line: 111 
 Function: run 

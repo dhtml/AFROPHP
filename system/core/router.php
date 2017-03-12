@@ -138,7 +138,7 @@ class Router extends \System\Base\Singleton
 
       //if system cannot match route, then run cli mode
       if((request_uri=='' && MODE=='cli') or ($this->_current==null && MODE=='cli')) {
-        include BASEPATH."afrocana/bootstrap.php";
+        include BASEPATH."core/afrocana.php";
       }
 
       if($this->_current==null) {

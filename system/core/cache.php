@@ -155,6 +155,44 @@ public function has($key)
     }
 }
 
+
+
+/**
+*  Forgets cache file if value matches
+*
+* @param  string   $key   The key of the cache
+*
+*  @return boolean  true if the cache is no more, else false
+*/
+public function forget($key)
+{
+    $cachefile=$this->keyfile($key);
+
+    if(file_exists($cachefile)) {
+      unlink($cachefile);
+      return true;
+    } else {
+      return false;
+    }
+}
+
+/**
+*  Flushes all cache files from disk
+*
+*  @return boolean
+*/
+public function flush()
+{
+$files=browse($this->cache_dir,array('/is','/sd'),'*.php');
+if(empty($files)) {return false;}
+foreach($files as $file)
+{
+  unlink($file);
+}
+
+return true;
+}
+
 /**
 *  Loads the cache file from disk and retrieves the array structure
 *

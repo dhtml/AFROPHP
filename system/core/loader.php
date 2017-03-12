@@ -122,6 +122,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
           }
       }
 
+      /**
+      * Similar to load_file except it returns the first class in the file
+      *
+      * <code>
+      * get_class('core','/config.php');
+      * </code>
+      *
+      * if the file exists as config.php, then it is loaded
+      * otherwise locate(core/config) is called to search for the file in the package paths
+      *
+      * @param	string	$sdir	  The partial directory e.g. views,libraries,models
+      * @param	string	$spath	The full path of the file or the subpath under app or system folders
+      * @param	boolean	$once		The directive whether to include or include_once
+      * @param	array	  $params	Set parameters to extract before the view is loaded
+      * @param	boolean	$return	Should the output of the file be returned?
+      * @return	mixed
+      */
+      public function find_class($sdir,$spath, $once=false, $params=array(), $return=false)
+      {
+        static $_file;
+
+        //attempt to evaluate path from here
+        $spath=file_exists($spath) ? $spath : $this->locate(rtrim($sdir,'/').'/'.ltrim($spath,'/'));
+
+        if(isset($_file["$spath"])) {return $_file["$spath"];}
+
+        $classes = get_declared_classes();
+        $this->load_file($sdir,$spath,$once,$params,$return);
+        $diff = array_diff(get_declared_classes(), $classes);
+
+        if(empty($diff)) {
+          show_error("Unable to find any class inside $spath",500,"Object cannot be instantiated");
+        }
+
+        $class = reset($diff);
+
+        $_file["$spath"]=$class;
+
+
+        return $class;
+      }
+
+      /**
+    	 * Class loader
+    	 *
+       * It loads a file from the disk and returns the object of the first class found
+    	 *
+    	 * @param	string	the path being requested
+    	 * @param	string	the directory where the class should be found
+    	 * @param	string	an optional argument to pass to the class constructor
+    	 * @return	object
+    	 */
+       public function load_class($path, $directory = 'libraries', $params = NULL)
+      {
+        $clsName=$this->find_class($directory,$path,true);
+        return $this->instantiate($clsName,null,$params);
+      }
+
 
     /**
      * Loads and instantiates libraries. Designed to be called from application controllers.
@@ -144,14 +202,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             return $this;
         }
 
-        $this->load_file("libraries","$library", true);
-
-        if ($object_name==null) {
-            $object_name=toClassName($library);
-        }
-
-        $obj = get_instance()->$object_name=load_class($library,$params);
-        return $obj;
+        $clsName=$this->find_class("libraries","$library", true);
+        return $this->instantiate($clsName,$object_name,$params);
     }
 
     /**
@@ -199,23 +251,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
     {
       foreach ($model as $key => $value)
       {
-        is_int($key) ? $this->model($value, $params,$value) : $this->model($key, $params, $value);
+        is_int($key) ? $this->model($value, $params) : $this->model($key, $params);
       }
       return $this;
     }
 
-    $this->load_file("models","$model", true);
 
-
-    if ($object_name==null) {
-        $object_name=toClassName($model);
+    $clsName=$this->find_class("models","$model", true);
+    return $this->instantiate($clsName,$object_name,$params);
     }
 
+/**
+* creates a new instance of an object
+*
+* @param string $class_name The name of the class e.g foo
+* @param string $object_name The name of the object in the framework e.g. bazz
+* @param array $object_params The parameters of the object constructor
+*
+* @return object
+*/
+public function instantiate($class_name,$object_name='',$params=null)
+{
+  $class_name=strtolower($class_name);
+  if ($object_name==null||empty($object_name)) {
+      $object_name=$class_name;
+  }
+  //writeln("$class_name => $object_name");
 
-    $obj = get_instance()->$object_name=load_class($model,$params);
-
-    return $obj;
-    }
+  $reflectionClass = new \ReflectionClass($class_name);
+  return get_instance()->$object_name=$reflectionClass->newInstanceArgs((array)$params);
+}
 
  /**
  * Loads "view" files.
@@ -372,6 +437,21 @@ public function views($view, $vars=array(), $return = false)
     public function plugins() {
       $this->parse_plugins(BASEPATH."plugins");
       $this->parse_plugins(APPPATH."plugins");
+
+      $pos=0;
+      foreach($this->plugins['enabled'] as $key=>$plugin)
+      {
+        $pos++;
+        $hash=str_pad($pos, 3, '0', STR_PAD_LEFT);
+        $this->plugins['enabled'][$key]['key']=$hash;
+      }
+
+      foreach($this->plugins['disabled'] as $key=>$plugin)
+      {
+        $pos++;
+        $hash=str_pad($pos, 3, '0', STR_PAD_LEFT);
+        $this->plugins['disabled'][$key]['key']=$hash;
+      }
       return $this;
     }
 
@@ -386,7 +466,7 @@ public function views($view, $vars=array(), $return = false)
     {
       if(!is_dir($dir)) {return;}
       //parse plugin
-      $plugins=browse($dir,array('/is','/sd','/sd'),'plugin.xml');
+      $plugins=browse($dir,array('/is','/sd'),'plugin.xml');
 
       //load each enabled plugin
       foreach($plugins as $plugin) {
@@ -404,10 +484,8 @@ public function views($view, $vars=array(), $return = false)
     * @return   object
     */
     public function plugin($plugin) {
-
       //load module xml config
-      $str=file_get_contents($plugin);
-      $config=xmlstring2array($str);
+      $config=xml_get_contents($plugin);
 
       $config=isset($config) ? $config : null;
       if(!$this->validate_plugin_config($plugin,$config)) {
@@ -420,11 +498,12 @@ public function views($view, $vars=array(), $return = false)
       $_mod=$config;
       $_mod['path']=rtrim(pathinfo($plugin,PATHINFO_DIRNAME),'/');
 
+      $key=$_mod['path'];
       if($enable==true) {
-        $this->plugins['enabled'][strtolower("$name")]=$_mod;
+        $this->plugins['enabled']["$key"]=$_mod;
         $this->plugin_init($_mod);
       } else {
-        $this->plugins['disabled'][strtolower("$name")]=$_mod;
+        $this->plugins['disabled']["$key"]=$_mod;
       }
     }
 
@@ -507,22 +586,24 @@ public function views($view, $vars=array(), $return = false)
     * Finds a plugin from the list of plugins
     *
     * @param  string    $name     The name of the plugin e.g. mage
+    * @param  boolean   $all      Should all matched be returned?
     *
     * @return array
     */
-    public function find_plugin($name)
+    public function find_plugin($name,$all=false,$field='name')
     {
       $plugins=$this->plugins;
 
-      if(isset($plugins['enabled']["$name"])) {
-        $plugin=$plugins['enabled']["$name"];
-      } else if(isset($plugins['disabled']["$name"])) {
-        $plugin=$plugins['disabled']["$name"];
-      } else {
-        $plugin=array();
+      $plugins=array_merge($plugins['enabled'],$plugins['disabled']);
+
+      $result=Array();
+      foreach($plugins as $plugin) {
+        if(strtolower($plugin[$field])==strtolower($name)) {$result[]=$plugin;}
       }
 
-      return $plugin;
+      if(!$all && !empty($result)) {$result=$result[0];}
+
+      return $result;
     }
 
 

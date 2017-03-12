@@ -47,20 +47,23 @@ function &get_instance()
     return $app;
 }
 
+
 /**
-* Loads a new instance of a class
-*
-* @param	string   clsName   The filename/class name to convert
-* @param	mixed    params    Optional parameters to pass to the class constructor
-*
-* @return object
-*/
-function &load_class($clsName, $params=null)
+ * Class loader
+ *
+ * It loads a file from the disk and returns the object of the first class found
+ *
+ * @param	string	the path being requested
+ * @param	string	the directory where the class should be found
+ * @param	string	an optional argument to pass to the class constructor
+ * @return	object
+ */
+ function &load_class($path, $directory = 'libraries', $params = NULL)
 {
-    $reflectionClass = new \ReflectionClass(toClassName($clsName));
-    $obj=$reflectionClass->newInstanceArgs((array)$params);
-    return $obj;
+  $obj=get_instance()->load->load_class($path,$directory,$params);
+  return $obj;
 }
+
 
 
 /**
@@ -91,15 +94,18 @@ function &get_config(array $replace = array(), $file_path=null)
 {
     static $config;
     if ($file_path!=null) {
-            //$replace= xmlstring2array($file_path);
             $replace= array_get_contents($file_path);
     }
   // Are any values being dynamically added or replaced?
   if(!empty($replace)) {
     foreach ($replace as $key => $val) {
-      if(is_array($val)&&empty($val)) {$val='';}
-      if($val=='null') {$val=null;}
-      $config[$key] = $val;
+      if(is_array($val)) {
+        foreach($val as $tok=>$tval) {
+          $config["{$key}_{$tok}"] = $tval;
+        }
+      } else {
+        $config[$key] = $val;
+      }
     }
   }
     return $config;
@@ -133,7 +139,8 @@ function config_item($item, $default=null, $eval=false)
 
     $response=isset($_config[0][$item]) ? $_config[0][$item] : $default;
 
-    if($eval && !empty($response)) {
+    //evaluate response
+    if(is_string($response) && $eval && !empty($response)) {
       @eval('$response= '.$response.';');
     }
 
@@ -350,6 +357,7 @@ function stdout($info,$exit=false)
     if($exit) {exit();}
 }
 
+
 /**
  * dhtmlconsole
  *
@@ -389,6 +397,12 @@ function dhtmlconsole($msg = '') {
 */
 function show_error($message, $status_code = 500, $heading='Error', $type=1)
 {
+
+if(!is_numeric($status_code)) {
+$heading=$status_code;
+$status_code=500;
+}
+
   $bt = debug_backtrace();
   $caller = array_shift($bt);
 
@@ -825,7 +839,7 @@ function is_cli()
 *
 * The example below will list only files recursively, and not list dotted files and subdirectories
 * <code>
-* browse('/wamp/www',array('/is','/sd','/sd'))
+* browse('/wamp/www',array('/is','/sd'))
 * </code>
 *
 * @param string  $pattern   The pattern matching the file e.g. * or *.* for all files, *.txt for text files etc
@@ -2000,6 +2014,28 @@ function array_get_contents($file)
   return (array) $result;
 }
 
+
+
+/**
+* loads xml file to arrays (assume content to be saved with xml_put_contents)
+*
+* @param string $file   The name of the file
+*
+* returns the array
+*/
+function xml_get_contents($file)
+{
+  $result=array();
+  if(file_exists($file)) {
+    $str=file_get_contents($file);
+    $result=xmlstring2array($str);
+  }
+  return (array) $result;
+}
+
+
+
+
 /**
 * Dumps an array of files to the output
 *
@@ -2018,6 +2054,35 @@ function stdout_files($files,$stop=false)
   stdout($files,$stop);
 }
 
+
+
+/**
+* saves array config data into xml file
+*
+* @param string $file    The name of the file
+* @param array  $array   (Optional) The array data
+* @param string  $root   (Optional) The root of the xml data
+*
+* returns the array
+*/
+function xml_put_contents($file,$array=array(),$root='root')
+{
+  $array= (array) $array;
+  $output = array2xmlstring($array,$root);
+
+  $domxml = new DOMDocument('1.0');
+  $domxml->preserveWhiteSpace = false;
+  $domxml->formatOutput = true;
+
+  $domxml->loadXML($output);
+  $output=$domxml->saveXML();
+
+  file_force_contents($file,$output);
+  return $array;
+}
+
+
+
 /**
 * Toggles a string based on os
 *
@@ -2032,6 +2097,27 @@ function toggle_os_command($os,$win)
       return $win;
   } else {
       return $os;
+  }
+}
+
+
+
+/**
+* Returns the short path of a file
+*
+* @param  array|string $path The short path
+*
+* return string
+*/
+function short_path($path,$trim=FCPATH)
+{
+  if(is_array($path)) {
+    foreach($path as $key=>$p) {
+      $path["$key"]=short_path($p,$trim);
+    }
+    return $path;
+  } else {
+    return str_replace($trim,'',$path);
   }
 }
 
@@ -2072,7 +2158,7 @@ $rewrite_base="RewriteBase $rewrite_base";
 $data=<<<end
 Options +FollowSymLinks
 
-<FilesMatch "\.(xml|conf)$">
+<FilesMatch "\.(xml|conf|info|ini|txt|inf|inc)$">
  Order allow,deny
 </FilesMatch>
 
@@ -2098,4 +2184,55 @@ file_force_contents($target,$data);
 
 if(file_exists($target)) {return true;} else {return false;}
 
+}
+
+
+/**
+* returns the end of line characters
+*
+* @return string
+*/
+function eol() {return PHP_SAPI === 'cli' ? "\n" : "<br/>";}
+
+/**
+* writes a string with |
+*
+* @param string $string the string to print
+*
+* @return void
+*/
+function write($string)
+{
+  echo "$string | ";
+}
+
+/**
+* writes a string with | and new lines
+*
+* @param string $string the string to print
+*
+* @return void
+*/
+function writeln($string)
+{
+  echo "$string ".eol();
+}
+
+/**
+* checks if a string contains strings in array
+*
+* @param string $str The target string
+* @param array|string $arr The strings array to match
+*
+*/
+function contains($str, $arr)
+{
+  $arr=(array) $arr;
+
+  $ptn = '';
+  foreach ($arr as $s) {
+    if ($ptn != '') $ptn .= '|';
+    $ptn .= preg_quote($s, '/');
+  }
+  return preg_match("/$ptn/i", $str);
 }

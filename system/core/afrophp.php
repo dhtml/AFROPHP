@@ -196,37 +196,21 @@ class Afrophp  extends \System\Base\Singleton
         $this->render_cache();
 
         //load mvc structrue
-        include FCPATH."3rdparty/vendor/autoload.php";
+        include BASEPATH."3rdparty/vendor/autoload.php";
         include __DIR__."/model.php";
-        include __DIR__."/my_model.php";
         include __DIR__."/controller.php";
 
-        include __DIR__."/security.php";
-        include __DIR__."/input.php";
         include __DIR__."/route.php";
-        include __DIR__."/router.php";
-        include __DIR__."/events.php";
         include __DIR__."/menu.php";
-        include __DIR__."/navigation.php";
-        include __DIR__."/lang.php";
         include __DIR__."/theme.php";
 
+        $this->router= load_class(__DIR__."/router.php");
+        $this->events= load_class(__DIR__."/events.php");
 
-        //initiallize system wide objects
-        $this->navigation =  \System\Core\navigation::instance();
-
-        $this->router =  \System\Core\router::instance();
-
-        $this->security =  \System\Core\security::instance();
-
-        $this->input =  new \System\Core\Input();
-
-        $this->events =  \System\Core\events::instance();
-
-        $this->lang =  \System\Core\lang::instance();
-
+        //load theme engine
         $this->theme =  new theme();
 
+        //load plugins
         $this->load->plugins();
 
         $this->events->trigger('ready');
@@ -261,7 +245,7 @@ class Afrophp  extends \System\Base\Singleton
       $data=array(
         'Benchmark'=>afro_benchmark . ' seconds',
         'Memory'=>bytes2string(memory_get_usage(true)),
-        'Files'=>get_included_files(),
+        'Includes'=>get_included_files(),
         'Constants'=>get_defined_constants(true)['user'],
         'Objects'=>array_keys(get_object_vars($this)),
         'Config'=>config_item('*'),

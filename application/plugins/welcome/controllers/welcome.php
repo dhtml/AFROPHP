@@ -7,4 +7,9 @@ class Welcome extends Controller {
 
           $this->assign('date','Today is '.date('F j, Y h:i:s'));
         }
+
+        public function test()
+        {
+          echo "This is a test page";
+        }
 }
