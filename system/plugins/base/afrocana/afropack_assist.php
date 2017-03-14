@@ -159,6 +159,26 @@ if(strlen($data)<2) {
 
 }
 
+
+
+public function smarty_clear()
+{
+  $path=APPPATH."templates_c";
+  $files=browse($path,array('/is','/sd'),'*.php');
+  if(empty($files)) {
+    $this->output->writeln("<debug>$path is empty</debug>");
+    return false;
+  }
+
+  foreach($files as $file)
+  {
+    unlink($file);
+  }
+
+  $this->output->writeln("<info>$path cleared</info>");
+}
+
+
 public function logs_clear()
 {
 $logfile=APPPATH."logs/errors.log";
@@ -174,11 +194,11 @@ $this->output->writeln("<info>Application logs flushed</info>");
     {
       file_force_contents(env_init,'');
       if(file_exists(env_data)) {unlink(env_data);}
-      $this->output->writeln("Please open the url of this app in your browser");
+      $this->output->writeln("<info>Please open the url of this app in your browser</info>");
       while(!file_exists(env_data)) {
         sleep(2);
       }
-      $this->output->writeln("Initialization complete");
+      $this->output->writeln("<info>Initialization complete</info>");
     }
 
     /**

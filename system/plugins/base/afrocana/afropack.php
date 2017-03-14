@@ -33,6 +33,15 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 });
 
 (new afrocana())
+->setName("smarty:clear")
+->setDescription('Clears smartys application/templates_c')
+->setHelp('This will delete the templates_c files')
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->smarty_clear();
+});
+
+
+(new afrocana())
 ->setName("menu:list")
 ->setDescription('Lists all available menus')
 ->setHelp('This will only affect enabled plugins')

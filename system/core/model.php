@@ -25,6 +25,16 @@ private $db_connected = false;
  */
 public $table = null;
 
+
+/**
+* The session key of users
+*
+* @var string
+* @access public
+*/
+public $sess_key="1234";
+
+
 /** @var string
 * stores the primary key of the table
 */
@@ -138,8 +148,6 @@ public $soft_deletes = false;
          }
 
     /**
-    * setup_table
-    *
     * preconfigure the table by prefixing, and making sure it exists
     *
     * @return object
@@ -167,9 +175,35 @@ public $soft_deletes = false;
         return $this;
     }
 
+    /**
+    * list all fields in table
+    *
+    * @return object
+    */
     public function list_fields()
     {
       return $this->db->list_fields($this->table);
+    }
+
+    /**
+    * encrypt string
+    *
+    * @return string
+    */
+    public function encrypt($string)
+    {
+      return encrypt($string,$this->sess_key);
+    }
+
+
+    /**
+    * decrypt string
+    *
+    * @return string
+    */
+    public function decrypt($string)
+    {
+      return decrypt($string,$this->sess_key);
     }
 
     /**
@@ -202,6 +236,11 @@ public $soft_deletes = false;
        ) ENGINE=$engine DEFAULT CHARSET=$char_set;
        ";
 
-        return $this->db->query($sql);
+       $response=$this->db->query($sql);
+       if(!$response) {
+         show_error("Unable to execute $sql because ".$this->db->last_error(),500,"Database Error");
+       }
+
+        return $response;
     }
 }

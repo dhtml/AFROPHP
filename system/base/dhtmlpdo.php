@@ -205,15 +205,23 @@ class DHTMLPDO
 
       $this->builder=array(); //reset directives
 
-  //store last generated sql query
-  $this->last_sql=$stmt->queryString;
+      //store last generated sql query
+      $this->last_sql=$stmt->queryString;
 
       $this->dhtmlpdo_result=new dhtmlpdo_result($stmt, $this);
 
       return $this->dhtmlpdo_result;
   }
 
-
+/**
+* reset query builder
+*
+*/
+public function reset_query()
+{
+  $this->builder=array(); //reset directives
+  return $this;
+}
 
 
  /*
@@ -316,9 +324,7 @@ class DHTMLPDO
      }
 
      try {
-         $this->con = new PDO($dsn,
-                     $username, $password, $options
-                     );
+         $this->con = new PDO($dsn, $username, $password, $options);
          $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
          if ($driver=='pgsql' || $driver=='odbc') {
@@ -1757,6 +1763,8 @@ public function dlookup($column, $table, $where = '', $replacements = '')
 
         if (isset($this->con->$name)) {
             return $this->con->$name;
+        } else if (isset($this->dhtmlpdo_result->$name)) {
+              return $this->dhtmlpdo_result->$name;
         } else {
             trigger_error("Call to undefined property ".get_class($this).'::'."$name", E_USER_ERROR);
             exit();
@@ -1769,12 +1777,13 @@ public function dlookup($column, $table, $where = '', $replacements = '')
         $this->connect();
         if (method_exists($this->con, $name)) {
             return call_user_func_array(array($this->con, $name), $arguments);
+        } else if (is_object($this->dhtmlpdo_result) && (method_exists($this->dhtmlpdo_result, $name))) {
+            return call_user_func_array(array($this->dhtmlpdo_result, $name), $arguments);
         } else {
             trigger_error("Call to undefined method ".get_class($this).'::'."$name", E_USER_ERROR);
         }
     }
 }
-
 
 
 

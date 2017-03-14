@@ -8,7 +8,7 @@ namespace System\Core;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-  class Loader extends \System\Base\Singleton
+  class Loader
   {
 
     /**
@@ -196,7 +196,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 if (is_int($key)) {
                     $this->library($value, $params);
                 } else {
-                    $this->library($key, $params, $value);
+                    $this->library($value, $params, $key);
                 }
             }
             return $this;
@@ -207,31 +207,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
     }
 
     /**
-     * Loads and instantiates libraries. Designed to be called from application controllers.
-     *
-     * @param	  mixed	    $library		  Name of library (or array of libraries)
-     * @param	  array	    $params		   Optional parameters to pass to the library class constructor
-     * @param	  string	 $object_name	An optional object name to assign to
-     * @return	library object
-     */
-    public function libraries($library, $params = null, $object_name = null)
-    {
-      return $this->library($library,$params,$object_name);
-    }
-
-
-    /**
-    * Loads and instantiates models.
+    * load database
     *
-    * @param	mixed	$model		Name of model (or array of models)
-    * @param	array	$params		Optional parameters to pass to the class constructor
-    * @param	string	$object_name		An optional object name to assign to
-    * @return	model object
+    * @return object
     */
-    public function models($model, $params = null, $object_name = '')
-    {
-      return $this->model($model,$params,$object_name);
+    public function database() {
+      if(isset(get_instance()->db)) {return get_instance()->db;}
+
+      include_once BASEPATH."base/dhtmlpdo.php";
+
+      $cfg['dsn']=config_item('dbase_dsn');
+      $cfg['driver']=config_item('dbase_driver');
+      $cfg['database']=config_item('dbase_name');
+      $cfg['hostname']=config_item('dbase_hostname');
+      $cfg['username']=config_item('dbase_username');
+      $cfg['password']=config_item('dbase_password');
+      $cfg['port']=config_item('dbase_port',null,true);
+      $cfg['char_set']=config_item('dbase_char_set','');
+      $cfg['dbcollat']=config_item('dbase_collat','');
+      $cfg['prefix']=config_item('dbase_prefix');
+      $cfg['schema']=config_item('dbase_schema','public');
+      $cfg['cache']=config_item('dbase_cache',false);
+      $cfg['persistent']=config_item('dbase_persistent',false);
+
+      return get_instance()->db =  new \DHTMLPDO($cfg);
     }
+
 
     /**
     * Loads and instantiates models.
@@ -251,7 +252,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     {
       foreach ($model as $key => $value)
       {
-        is_int($key) ? $this->model($value, $params) : $this->model($key, $params);
+        is_int($key) ? $this->model($value, $params) : $this->model($value, $params,$key);
       }
       return $this;
     }
@@ -302,24 +303,6 @@ public function view($view, $vars = array(), $return = false)
     }
 }
 
-/**
-* Loads "view" files.
-*
-* @param	string	$view	View name
-* @param	array	$vars	An associative array of data
-*				to be extracted for use in the view
-* @param	bool	$return	Whether to return the view output
-*				or leave it to the Output class
-* @return	object|string
-*/
-public function views($view, $vars=array(), $return = false)
-{
-  return $this->view($view,$vars,$return);
-}
-
-
-
-
 	/**
 	* Loads helper functions from file
 	*
@@ -346,18 +329,6 @@ public function views($view, $vars=array(), $return = false)
 
     return $this;
   }
-
-  /**
-	* Loads helper functions from file
-	*
-	* @param	mixed	$helper		Name of helper (or array)
-	* @return	object loader
-	*/
-  public function helpers($helper)
-  {
-    return $this->helper($helper);
-  }
-
 
     /**
   	 * Return a list of all package paths.
@@ -606,6 +577,40 @@ public function views($view, $vars=array(), $return = false)
       return $result;
     }
 
+    /**
+    * __call
+    *
+    * reroute method calls to the framework
+    *
+    * @return mixed
+    */
+    public function __call($name, $arguments)
+    {
+      switch($name) {
+        case 'libraries': $fx='library';break;
+        case 'models': $fx='model';break;
+        case 'views': $fx='view';break;
+        case 'helpers': $fx='helper';break;
+        default: $fx=null;
+      }
 
+      if(!is_null($fx) && method_exists($this,$fx)) {return call_user_func_array(array($this, $fx),$arguments);}
+      else return call_user_func_array(array(get_instance(), $name),$arguments);
+    }
+
+
+        /**
+        * __get
+        *
+        * reroute variables in the framework
+        *
+        * @param $key the name of the required resource
+        *
+        * @return mixed
+        */
+        public function __get($key)
+        {
+            return get_instance()->$key;
+        }
 
 }

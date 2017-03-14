@@ -24,7 +24,7 @@ class Afrophp  extends \System\Base\Singleton
       global $argc, $argv;
 
         //prepare loader
-        $this->load = $this->loader = \System\Core\loader::instance();
+        $this->load = $this->loader = new \System\Core\loader();
 
         //load config
         include __DIR__."/config.php";
@@ -199,9 +199,6 @@ class Afrophp  extends \System\Base\Singleton
         include BASEPATH."3rdparty/vendor/autoload.php";
         include __DIR__."/model.php";
         include __DIR__."/controller.php";
-
-        include __DIR__."/route.php";
-        include __DIR__."/menu.php";
         include __DIR__."/theme.php";
 
         $this->router= load_class(__DIR__."/router.php");

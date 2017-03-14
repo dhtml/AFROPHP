@@ -121,7 +121,7 @@ class Theme extends Smarty
       define('admin_mode',$admin_mode);
 
 
-      $theme=config_item(admin_mode?'back_theme':'front_theme');
+      $theme=config_item(admin_mode?'theme_back':'theme_front');
 
       define('current_theme',$theme);
 
@@ -390,7 +390,7 @@ class Theme extends Smarty
     */
     public function asset_cache_burster($link,$type)
     {
-      $version= $type=='css' ?  config_item('style_version',0,true) : config_item('script_version',0,true);
+      $version= $type=='css' ?  config_item('cache_style',0,true) : config_item('cache_script',0,true);
 
       if($version==0) {return;}
       else if($version==-1) {$version=mt_rand();}
@@ -476,8 +476,8 @@ class Theme extends Smarty
       $theme_info_paths=browse(APPPATH.'themes',array('/is','/sd'),'theme.info');
 
 
-      $front_path=APPPATH."themes/".config_item('front_theme');
-      $back_path=APPPATH."themes/".config_item('back_theme');
+      $front_path=APPPATH."themes/".config_item('theme_front');
+      $back_path=APPPATH."themes/".config_item('theme_back');
 
 
       $pos=0;
@@ -521,5 +521,138 @@ class Theme extends Smarty
       }
       return $result;
     }
+
+}
+
+
+
+
+
+
+
+class Menu
+{
+
+
+  /**
+   * Menu item data
+   *
+   * @var	array
+   */
+   private $data=array();
+
+  /**
+  * route class constructor, it also registers the menu with navigation
+  *
+  * @param  string    $key              The key of the menu (optional)
+  *
+  * @return void
+  */
+  public function __construct($key=null)
+  {
+
+    //set defaults
+    $this->data=array('key'=>$key,'priority'=>null,'parent'=>null,'title'=>'','uri'=>'','icons'=>array());
+
+
+    //register menu with navigation
+    get_instance()->navigation->register($this);
+  }
+
+ /**
+ * creates a new instance of the menu object
+ *
+ * @param   string    $key    The key of the menu
+ *
+ * @return object
+ */
+  private static function create($key)
+  {
+    return new Menu($key);
+  }
+
+
+   /**
+   * get
+   *
+   * gets an old instance with key else creates a new instance of the menu object
+   *
+   * @param  string $key  The unique key of the menu
+   *
+   * @param  boolean $overwrite  Should the menu be created afresh/overwritten if key exists?
+   *
+   *
+   * @return object
+   */
+   public static function get($key,$overwrite=false)
+   {
+     $obj= $overwrite==true ? null : get_instance()->navigation->find($key);
+
+     if($obj==null) {
+       $obj=self::create($key);
+       $obj->isNew=true;
+     } else {
+       $obj->isNew=false;
+     }
+
+     return $obj;
+   }
+
+   /**
+   * Retrieves the entire data of the menu item
+   *
+   * @return object
+   */
+   public function getData()
+   {
+     return $this->data;
+   }
+
+   /**
+   * Sets the entire data of the menu item
+   *
+   * @return voids
+   */
+   public function setData($data)
+   {
+     $this->data=$data;
+   }
+
+  /**
+  * This is used to set or get variables from the menu object
+  *
+  * setting property:
+  * menu::get('cms_home_dash_board')
+  *  ->setParent('cms_home')
+  *  ->setTitle('dashboard')
+  *  ->setUri('admin');
+  *
+  * how to retrieve property:
+  * echo menu::get('cms_home_dash_board')->getParent();
+  *
+  */
+  function __call($func,$args)
+  {
+    $par1=isset($args[0]) ? $args[0] : null;
+
+    $fx=strtolower($func);
+
+    $cmd=substr($fx,0,3);
+    $op=substr($fx,3);
+
+    switch($cmd) {
+    case 'set':
+    $this->data["$op"]=$par1;
+    break;
+    case 'get':
+    return isset($this->data["$op"]) ? $this->data["$op"] : null;
+    break;
+    default:
+    show_error("Menu item can only accept get or set directives");
+    break;
+    }
+
+    return $this;
+  }
 
 }

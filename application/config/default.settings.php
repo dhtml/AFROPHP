@@ -1,30 +1,44 @@
 <?php return array (
   'site_name' => 'AFROPHP Framework',
-	'uri_protocol' => 'REQUEST_URI',
-	'enable_query_strings' => false,
-	'controller_trigger' => 'q',
 	'language' => 'en',
 	'charset' => 'UTF-8',
-	'display_errors' => 1,
-	'error_reporting' => E_ALL,
 	'log_threshold' => '2',
-	'default_timezone' => 'UTC',
-	'csrf_protection' => 0,
   'autohtaccess' => false,
 	'profiling' => 0,
-  'front_theme' => 'default',
-  'back_theme' => 'gentele',
+
+  //php server-related settings
+  'display_errors' => 1,
+	'error_reporting' => E_ALL,
+  'default_timezone' => 'UTC',
+
+  //url related settings
+  'uri_protocol' => 'REQUEST_URI',
+	'enable_query_strings' => false,
+	'controller_trigger' => 'q',
   'admin_path' => 'admin',
-  'script_version' => '2',
-	'style_version' => '1',
-	'cache_time' => 0,
+
+  //theme configuration
+  'theme'=>[
+    'front' => 'default',
+    'back' => 'gentele',
+  ],
+
+  //cache configuration
+  'cache'=>[
+    'time' => 0,
+    'script' => '2',
+    'style' => '1',
+  ],
+
   //cookie configuration
-  'cookie'=>['prefix' => '',
+  'cookie'=>[
+    'prefix' => '',
   	'domain' => '',
   	'path' => '/',
   	'secure' => false,
   	'httponly' => false,
   ],
+
   //exception configuration
   'exception'=>[
     'sender_name' => 'AFROPHP',
@@ -35,6 +49,7 @@
     'enable_stack_trace' => true,
     'show_error' => true,
   ],
+
   //database configuration
   'dbase'=>[
     'dsn'=>'',
@@ -48,8 +63,9 @@
     'collat' => 'utf8_general_ci',
     'prefix' => 'afro_',
     'schema'=>'public',
-    'persistent'=>true,
+    'persistent'=>false,
   ],
+
   //session configuration
   'session'=>[
     'handler' => 'dbase',
@@ -65,6 +81,7 @@
   	'expiration' => 7200,
   	'gc_probability' => 100,
   ],
+
   //email settings
   'email'=>[
     'smtp_host' => 'smtp.gmail.com',
@@ -75,4 +92,5 @@
   	'smtp_enabled' => 0,
   	'send_enabled' => 1,
   ],
+
 );

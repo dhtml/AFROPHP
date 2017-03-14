@@ -41,9 +41,7 @@ class Prototype
       //instantiate dbase on demand
       switch($key) {
         case 'db':
-        if(isset(get_instance()->db)) {return get_instance()->db;}
-        include BASEPATH."core/dbase.php";
-        return get_instance()->db =  new \Dbase();
+        return get_instance()->load->database();
         break;
         case 'security':
         if(isset(get_instance()->security)) {return get_instance()->security;}
@@ -103,6 +101,48 @@ class Prototype
         //trigger_error("There is no method called ".get_class($this).'::'.$name, E_USER_ERROR);
         show_error("There is no method called: {$name}() currently loaded ",500,"Fatal Error");
       }
+    }
+
+}
+
+
+
+
+/**
+ * Singleton Pattern.
+ *
+ * Modern implementation.
+ */
+class Singleton extends \System\Base\Prototype
+{
+
+
+    /**
+     * Make constructor private, so nobody can call "new Class".
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Make clone magic method private, so nobody can clone instance.
+     */
+    private function __clone()
+    {
+    }
+
+    /**
+     * Make sleep magic method private, so nobody can serialize instance.
+     */
+    private function __sleep()
+    {
+    }
+
+    /**
+     * Make wakeup magic method private, so nobody can unserialize instance.
+     */
+    private function __wakeup()
+    {
     }
 
 }

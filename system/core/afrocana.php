@@ -1,6 +1,8 @@
 <?php
 namespace Console;
 
+defined('BASEPATH') or exit('No direct script access allowed');
+
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;

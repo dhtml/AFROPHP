@@ -26,7 +26,6 @@ HTML;
 define('time_start',microtime(true));
 
 include dirname(__DIR__)."/base/prototype.php";
-include dirname(__DIR__)."/base/singleton.php";
 
 
 //load core application class

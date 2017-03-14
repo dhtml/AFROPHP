@@ -527,95 +527,6 @@ function show_404($message='The page you requested was not found.', $heading='40
     exit(4); // EXIT_UNKNOWN_FILE
 }
 
- /**
- * set_status_header
- *
- * Set HTTP Status Header
- *
- * @param	int	the status code
- * @param	string   the status text
- *
- * @return	void
- */
-function set_status_header($code = 200, $text = '')
-{
-    if (is_cli()) {
-        return;
-    }
-
-    if (empty($code) or ! is_numeric($code)) {
-        show_error('Status codes must be numeric', 500);
-    }
-
-    if (empty($text)) {
-        is_int($code) or $code = (int) $code;
-        $stati = array(
-      100    => 'Continue',
-      101    => 'Switching Protocols',
-
-      200    => 'OK',
-      201    => 'Created',
-      202    => 'Accepted',
-      203    => 'Non-Authoritative Information',
-      204    => 'No Content',
-      205    => 'Reset Content',
-      206    => 'Partial Content',
-
-      300    => 'Multiple Choices',
-      301    => 'Moved Permanently',
-      302    => 'Found',
-      303    => 'See Other',
-      304    => 'Not Modified',
-      305    => 'Use Proxy',
-      307    => 'Temporary Redirect',
-
-      400    => 'Bad Request',
-      401    => 'Unauthorized',
-      402    => 'Payment Required',
-      403    => 'Forbidden',
-      404    => 'Not Found',
-      405    => 'Method Not Allowed',
-      406    => 'Not Acceptable',
-      407    => 'Proxy Authentication Required',
-      408    => 'Request Timeout',
-      409    => 'Conflict',
-      410    => 'Gone',
-      411    => 'Length Required',
-      412    => 'Precondition Failed',
-      413    => 'Request Entity Too Large',
-      414    => 'Request-URI Too Long',
-      415    => 'Unsupported Media Type',
-      416    => 'Requested Range Not Satisfiable',
-      417    => 'Expectation Failed',
-      422    => 'Unprocessable Entity',
-      426    => 'Upgrade Required',
-      428    => 'Precondition Required',
-      429    => 'Too Many Requests',
-      431    => 'Request Header Fields Too Large',
-
-      500    => 'Internal Server Error',
-      501    => 'Not Implemented',
-      502    => 'Bad Gateway',
-      503    => 'Service Unavailable',
-      504    => 'Gateway Timeout',
-      505    => 'HTTP Version Not Supported',
-      511    => 'Network Authentication Required',
-    );
-
-        if (isset($stati[$code])) {
-            $text = $stati[$code];
-        } else {
-            show_error('No status text available. Please check your status code number or supply your own message text.', 500);
-        }
-    }
-
-    if (strpos(PHP_SAPI, 'cgi') === 0) {
-        header('Status: '.$code.' '.$text, true);
-    } else {
-        $server_protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
-        header($server_protocol.' '.$code.' '.$text, true, $code);
-    }
-}
 
 /**
 * secondsToTime
@@ -2235,4 +2146,47 @@ function contains($str, $arr)
     $ptn .= preg_quote($s, '/');
   }
   return preg_match("/$ptn/i", $str);
+}
+
+
+
+/**
+* encrypts a string
+*
+* @param string $string The string to encode
+* @param string $key The key for encoding the string
+*
+* @return encrypted string
+*/
+function encrypt($string, $key) {
+$result = '';
+for($i=0; $i<strlen($string); $i++) {
+$char = substr($string, $i, 1);
+$keychar = substr($key, ($i % strlen($key))-1, 1);
+$char = chr(ord($char)+ord($keychar));
+$result.=$char;
+}
+return base64_encode($result);
+}
+
+
+
+/**
+* decrypts a string
+*
+* @param string $string The string to encode
+* @param string $key The key for encoding the string
+*
+* @return decrypted string
+*/
+function decrypt($string, $key) {
+$result = '';
+$string = base64_decode($string);
+for($i=0; $i<strlen($string); $i++) {
+$char = substr($string, $i, 1);
+$keychar = substr($key, ($i % strlen($key))-1, 1);
+$char = chr(ord($char)-ord($keychar));
+$result.=$char;
+}
+return $result;
 }
