@@ -17,7 +17,8 @@ class Config
      */
     public function __construct()
     {
-        $this->load(APPPATH."config");
+      $this->load(APPPATH."config/default.settings.php");
+      $this->load(APPPATH."config/settings.php");
 
         //constant to determine state of UTF-8 compatibility
         define('UTF8_ENABLED',config_item('charset','UTF-8')=='UTF-8'?true:false);
@@ -44,7 +45,9 @@ class Config
         return;
       } else {
         //load a single xml config file
-        $this->config = &get_config(array(),$path);
+        if(file_exists($path)) {
+          $this->config = &get_config(array(),$path);
+        }
       }
 
     }

@@ -120,6 +120,9 @@ class Afrophp  extends \System\Base\Singleton
         // e.g. cache/clear?v=10 (can contain query string)
         define('request_url', $request_uri);
 
+        // e.g. cache/clear?v=10 (can contain query string)
+        define('asset_url', base_url . trim(config_item('asset_path','assets'),'/').'/');
+
         //the full url e.g. http://localhost/afrophp.com/cache/clear?v=1
         define('current_url', $current_url);
 
@@ -159,7 +162,7 @@ class Afrophp  extends \System\Base\Singleton
         if(!is_cli()) {
           if($this->cache->has($key)) {
             $result=$this->cache->get($key,true);
-            echo "Cache!";
+            //echo "Cache!";
             echo $result;
             exit();
           }
@@ -170,13 +173,14 @@ class Afrophp  extends \System\Base\Singleton
   /**
   * run
   *
-  * @param  string  $mode   The running mode, cli or normal (default)
   *
   * @return   void
   */
-    public function run($mode='normal')
+    public function run()
     {
-        define('MODE', strtolower($mode));
+      if(!defined('MODE')) {
+        define('MODE', 'normal');
+      }
 
 
         //instantiate loader
@@ -189,20 +193,21 @@ class Afrophp  extends \System\Base\Singleton
             exit(1);
         }
 
-        //load bootstrap files
-        include __DIR__."/cache.php";
-
         //attempts to render output from cache here
         $this->render_cache();
 
         //load mvc structrue
-        include BASEPATH."3rdparty/vendor/autoload.php";
         include __DIR__."/model.php";
         include __DIR__."/controller.php";
         include __DIR__."/theme.php";
 
         $this->router= load_class(__DIR__."/router.php");
         $this->events= load_class(__DIR__."/events.php");
+
+        $this->security= load_class(__DIR__."/security.php");
+        $this->input= load_class(__DIR__."/input.php");
+
+
 
         //load theme engine
         $this->theme =  new theme();
@@ -222,7 +227,10 @@ class Afrophp  extends \System\Base\Singleton
 
         $this->events->trigger('theme');
 
+        if(MODE=='test') {return;}
+
         $this->router->execute();
+
 
         $this->events->trigger('execute');
 
@@ -239,6 +247,7 @@ class Afrophp  extends \System\Base\Singleton
     */
     public function profiling()
     {
+      if(!defined('afro_benchmark')) {define('afro_benchmark',0);}
       $data=array(
         'Benchmark'=>afro_benchmark . ' seconds',
         'Memory'=>bytes2string(memory_get_usage(true)),

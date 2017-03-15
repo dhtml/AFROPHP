@@ -10,6 +10,37 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Input\InputOption;
+
+
+
+(new afrocana())
+->setName("test:list")
+->setDescription('List all available tests')
+->setHelp('Your tests are normally stored in tests folder')
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->test_list();
+});
+
+
+(new afrocana())
+->setName("test:make")
+->setDescription('Makes a new test')
+->setHelp('Your tests are normally stored in tests folder')
+->addArgument('name', InputArgument::REQUIRED, 'The name of the test e.g. email')
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->test_make($input->getArgument('name'));
+});
+
+
+(new afrocana())
+->setName("test:run")
+->setDescription('Runs a new test')
+->setHelp('Your tests are normally stored in tests folder')
+->addArgument('name', InputArgument::REQUIRED, 'The name of the test e.g. email')
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->test_run($input->getArgument('name'));
+});
 
 
 
@@ -357,7 +388,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 (new afrocana())
 ->setName("composer")
 ->setDescription('Accepts composer commands for afrophp')
-->setHelp('This command targets your third party folder')
+->setHelp('This command targets your BASEPATH folder')
 ->addArgument(
         'params',
         InputArgument::IS_ARRAY | InputArgument::REQUIRED,
@@ -367,6 +398,18 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
   (new afropack($cmd,$input,$output))->composer();
 });
 
+(new afrocana())
+->setName("phpunit")
+->setDescription('Accepts phpunit commands')
+->setHelp('This command targets your BASEPATH folder')
+->addArgument(
+        'params',
+        InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+        'This allows you to run regular composer commands e.g. ./afrocana phpunit version'
+    )
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->phpunit();
+});
 
 
 (new afrocana())

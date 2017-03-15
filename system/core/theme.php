@@ -5,6 +5,7 @@
 */
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
 /**
 * Theme class
 */
@@ -220,6 +221,8 @@ class Theme extends Smarty
 
       $this->assign('theme_url',theme_url);
       $this->assign('template_url',template_url);
+
+      $this->assign('asset_url',asset_url);
 
       $this->assign('theme_path',theme_path);
       $this->assign('template_path',template_path);

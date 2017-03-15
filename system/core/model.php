@@ -130,6 +130,7 @@ public $soft_deletes = false;
         }
 
 
+        public function last_error() {return $this->db->last_error();}
 
          /**
          * insert data
@@ -159,20 +160,25 @@ public $soft_deletes = false;
                 $this->create_schema();
             }
 
-            //get fields
-            $all_fields=$this->list_fields();
-
-            $default_fields=array('created_at','created_by','updated_at','updated_by','deleted_at','deleted_by');
-
-            $missing_fields=array_diff($default_fields,$all_fields);
-
-            //create default fields if they do not exist
-            foreach($missing_fields as $field) {
-              $sql="ALTER TABLE `{$this->table}` ADD `$field` INT NOT NULL DEFAULT '0';";
-              $this->db->query($sql);
-            }
+            $this->setup_table_fields();
 
         return $this;
+    }
+
+    public function setup_table_fields()
+    {
+      //get fields
+      $all_fields=$this->list_fields();
+
+      $default_fields=array('created_at','created_by','updated_at','updated_by','deleted_at','deleted_by');
+
+      $missing_fields=array_diff($default_fields,$all_fields);
+
+      //create default fields if they do not exist
+      foreach($missing_fields as $field) {
+        $sql="ALTER TABLE `{$this->table}` ADD `$field` INT NOT NULL DEFAULT '0';";
+        $this->db->query($sql);
+      }
     }
 
     /**
@@ -240,6 +246,9 @@ public $soft_deletes = false;
        if(!$response) {
          show_error("Unable to execute $sql because ".$this->db->last_error(),500,"Database Error");
        }
+
+       $this->setup_table_fields();
+
 
         return $response;
     }

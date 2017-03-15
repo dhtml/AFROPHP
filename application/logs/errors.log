@@ -1,0 +1,93 @@
+[14-Mar-2017 21:03:32 UTC] error: 
+Type: ErrorException
+Message: Call to undefined property DHTMLPDO::stmt
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php
+Line number: 1775
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 1775 
+Function: trigger_error 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 1955 
+Function: __get 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 1401 
+Function: __get 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/views/setup/setup_html.php 
+Line: 14 
+Function: list_tables 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 116 
+Function: include 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 322 
+Function: load_file 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 251 
+Function: view 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 340 
+Function: call_user_func_array 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 179 
+Function: connect 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/base/dhtmlpdo.php 
+Line: 1416 
+Function: query 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/model.php 
+Line: 158 
+Function: table_exists 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/model.php 
+Line: 57 
+Function: setup_table 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/libraries/session.php 
+Line: 398 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/libraries/session.php 
+Line: 116 
+Function: __construct 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/libraries/session.php 
+Line: 82 
+Function: create 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 307 
+Function: newInstanceArgs 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/loader.php 
+Line: 206 
+Function: instantiate 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/toast/controllers/Toast.php 
+Line: 45 
+Function: library 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/router.php 
+Line: 173 
+Function: invokeArgs 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php 
+Line: 228 
+Function: execute 
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php 
+Line: 111 
+Function: run 
+
+[14-Mar-2017 21:14:19 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected ')'
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/views/setup/setup_html.php
+Line number: 28
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 102 
+Function: exception_error_handler 
+
+[15-Mar-2017 14:00:42 UTC] error: 
+Type: ErrorException
+Message: The use statement with non-compound name 'System' has no effect
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/application.php
+Line number: 32
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 102 
+Function: exception_error_handler 
+

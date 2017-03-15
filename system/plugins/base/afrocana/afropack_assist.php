@@ -228,11 +228,24 @@ $this->output->writeln("<info>Application logs flushed</info>");
     */
     public function composer()
     {
-      chdir(BASEPATH.'3rdparty');
+      chdir(BASEPATH);
       $args = implode(' ',$this->input->getArgument('params'));
       system("composer $args");
       chdir(FCPATH.'bin');
     }
+
+    /**
+    * allows running of phpunit commands for afrophp
+    */
+    public function phpunit()
+    {
+      chdir(BASEPATH);
+      $args = implode(' ',$this->input->getArgument('params'));
+      if(trim($args)=='version') {$args="--version";}
+      system("php vendor/bin/phpunit $args");
+      chdir(FCPATH.'bin');
+    }
+
 
     /**
     * Send a test email
@@ -273,6 +286,56 @@ $this->output->writeln("<info>Application logs flushed</info>");
     $this->command->io->listing($commands);
 
     //$this->output->writeln("List commands");
+  }
+
+  public function test_list()
+  {
+     $files=browse(FCPATH.'tests/',array('/is','/sd','/ss'),'*.php');
+     //$files=short_path($files);
+     $this->command->io->listing($files);
+  }
+
+  public function test_run($name)
+  {
+    $file=FCPATH.'tests/'.$name;
+
+    $command="php ".BASEPATH."vendor/bin/phpunit $vb $file";
+    system($command);
+  }
+
+
+  /**
+  * Make test
+  *
+  */
+    public function test_make($name)
+    {
+      $file=FCPATH.'tests/'.$name.".php";
+
+
+      if(file_exists($file)) {
+        $this->output->writeln("<debug>`$file` exist</debug>");
+        return;
+      }
+
+      $output='<?php
+      class '.$name.'Test extends System\Base\Afrotest
+      {
+          /**
+          * A basic test example.
+          *
+          * @return void
+          */
+          public function testBasicTest()
+          {
+              $this->assertTrue(false);
+          }
+      }
+  ';
+
+      file_force_contents($file,$output);
+
+      $this->output->writeln("<info>Test `$file` created.</info>");
   }
 
 public function list_routes()
@@ -1630,7 +1693,7 @@ public function find_theme_by_name($name)
      $invalid_file_list=array('.ds_store','.log','.zip');
 
      //list of folders to accept
-     $valid_folder_list=array(APPPATH,FCPATH.'bin',FCPATH.'3rdparty',BASEPATH);
+     $valid_folder_list=array(APPPATH,FCPATH.'bin',BASEPATH.'vendor',BASEPATH);
 
      //list of folders to ignore
      $invalid_folder_list=array(APPPATH.'config/console',APPPATH.'templates_c',APPPATH.'cache',APPPATH.'logs');

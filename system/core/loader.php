@@ -206,19 +206,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
         return $this->instantiate($clsName,$object_name,$params);
     }
 
-    /**
-    * load database
-    *
-    * @return object
-    */
-    public function database() {
-      if(isset(get_instance()->db)) {return get_instance()->db;}
-
-      include_once BASEPATH."base/dhtmlpdo.php";
-
+    public function _compile_db_config() {
       $cfg['dsn']=config_item('dbase_dsn');
       $cfg['driver']=config_item('dbase_driver');
-      $cfg['database']=config_item('dbase_name');
+      $cfg['database']=config_item('dbase_database');
       $cfg['hostname']=config_item('dbase_hostname');
       $cfg['username']=config_item('dbase_username');
       $cfg['password']=config_item('dbase_password');
@@ -229,8 +220,42 @@ defined('BASEPATH') or exit('No direct script access allowed');
       $cfg['schema']=config_item('dbase_schema','public');
       $cfg['cache']=config_item('dbase_cache',false);
       $cfg['persistent']=config_item('dbase_persistent',false);
+      return $cfg;
+    }
 
-      return get_instance()->db =  new \DHTMLPDO($cfg);
+    /**
+    * load database
+    *
+    * @return object
+    */
+    public function database() {
+      if(isset(get_instance()->db)) {return get_instance()->db;}
+
+
+      $cfg=$this->_compile_db_config();
+
+      $db=new \System\Base\DHTMLPDO($cfg);
+      $db->onConnectError=function($e) {
+        //stdout($e);
+
+        $data['error_message']=$e->getMessage();
+
+        if(!file_exists(APPPATH."config/settings.php")) {
+          if (PHP_SAPI === 'cli') {
+              $view="setup/setup_cli.php";
+          } else {
+              $view="setup/setup_html.php";
+          }
+
+          get_instance()->load->view("$view",$data);
+        } else {
+          get_instance()->load->view("setup/setup_db.php",$data);
+        }
+        exit();
+
+      };
+
+      return get_instance()->db =  $db;
     }
 
 

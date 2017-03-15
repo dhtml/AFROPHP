@@ -122,4 +122,18 @@ public function xss_clean($string, $strip_base64 = false)
         return $output;
     }
 
+    /**
+    * password hashing
+    *
+    * @param string $string The password text
+    *
+    * @return string
+    */
+    public function password($string)
+    {
+      $fx=config_item('security_password_func','md5');
+      if(!function_exists($fx)) {$fx='md5';}
+      return call_user_func($fx, $string);
+    }
+
 }

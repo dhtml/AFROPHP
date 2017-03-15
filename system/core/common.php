@@ -1659,6 +1659,8 @@ function ip_address() {
 		$ip = '0.0.0.0';
 	}
 
+  if($ip=='::1') {$ip="127.0.0.1";}
+
 	//Clean the IP and return it
 	return sanitize_text($ip, 2);
 }

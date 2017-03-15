@@ -1,4 +1,6 @@
 <?php
+namespace System\Base;
+
  /**
  *  DHTMLPDO
  *
@@ -198,7 +200,7 @@ class DHTMLPDO
           }
 
           $stmt->execute();
-      } catch (PDOException $e) {
+      } catch (\PDOException $e) {
           $this->exception=$e;
           return false;
       }
@@ -238,10 +240,15 @@ public function reset_query()
 * Attempts to open a connection if one is not opened
 * and returns the status of the connection
 *
+* @param array $config (optional) The configuration data of the database
+*
 * @return boolean
 */
- public function connect()
+ public function connect($config=null)
  {
+   if (!is_null($config)) {
+       self::configure($config);
+   }
 
    //if connection is still active, then dont bother to reconnect
    if ($this->con!=null) {
@@ -316,22 +323,23 @@ public function reset_query()
      $options=array();
 
      if (($driver=='mysql' || $driver=='mysqli') && $char_set!='' && $collat!='') {
-         $options[PDO::MYSQL_ATTR_INIT_COMMAND]="SET NAMES {$char_set} COLLATE $collat";
+         $options[\PDO::MYSQL_ATTR_INIT_COMMAND]="SET NAMES {$char_set} COLLATE $collat";
      }
 
      if ($persistent==true) {
-         $options[PDO::ATTR_PERSISTENT] = true;
+         $options[\PDO::ATTR_PERSISTENT] = true;
      }
 
      try {
-         $this->con = new PDO($dsn, $username, $password, $options);
-         $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+         $this->con = new \PDO($dsn, $username, $password, $options);
+         $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
          if ($driver=='pgsql' || $driver=='odbc') {
              $this->con->exec("SET search_path TO $schema");
          }
-     } catch (PDOException $e) {
+     } catch (\PDOException $e) {
          $this->exception=$e;
+         if(isset($this->onConnectError) && is_callable($this->onConnectError)) {call_user_func_array($this->onConnectError,[$e]);$this->onConnectError=null;}
          return false;
      }
 
@@ -377,7 +385,7 @@ public function db_version()
 
     try {
         $version = $this->con->query('select version()')->fetchColumn();
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         $this->exception=$e;
         $version='';
     }
@@ -396,8 +404,8 @@ public function db_driver()
     }
 
     try {
-        $driver=$this->con->getAttribute(PDO::ATTR_DRIVER_NAME);
-    } catch (PDOException $e) {
+        $driver=$this->con->getAttribute(\PDO::ATTR_DRIVER_NAME);
+    } catch (\PDOException $e) {
         $this->exception=$e;
         $driver='';
     }
@@ -679,7 +687,7 @@ public function db_driver()
    public function platform()
    {
        $this->connect();
-       return $this->con->getAttribute(PDO::ATTR_DRIVER_NAME);
+       return $this->con->getAttribute(\PDO::ATTR_DRIVER_NAME);
    }
 
    /**
@@ -697,7 +705,7 @@ public function db_driver()
    public function version()
    {
        $this->connect();
-       return $this->con->getAttribute(PDO::ATTR_SERVER_VERSION);
+       return $this->con->getAttribute(\PDO::ATTR_SERVER_VERSION);
    }
 
    /**
@@ -1334,7 +1342,7 @@ public function db_driver()
    */
    public function drivers($print=false)
    {
-       $drivers=PDO::getAvailableDrivers();
+       $drivers=\PDO::getAvailableDrivers();
 
        if ($print) {
            $this->stdout($drivers);
@@ -1392,7 +1400,7 @@ public function db_driver()
    */
    public function list_tables()
    {
-       $data=$this->query("show tables")->stmt->fetchAll();
+       $data=$this->query("show tables")->fetchAll();
 
        $tables=array();
        foreach ($data as $t) {
@@ -1429,7 +1437,7 @@ public function db_driver()
    *
    * @return object
    */
-   public function pdo($db=null)
+   public function PDO($db=null)
    {
        if ($db!=null) {
            $this->con=$db;

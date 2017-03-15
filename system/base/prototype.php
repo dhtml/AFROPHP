@@ -1,5 +1,6 @@
 <?php
 namespace System\Base;
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * Base Pattern.
@@ -9,7 +10,6 @@ namespace System\Base;
 class Prototype
 {
 
-
   /**
    * Call this method to get singleton
    */
@@ -17,28 +17,23 @@ class Prototype
   {
       static $instance = false;
       if ($instance === false) {
-          // Late static binding (PHP 5.3+)
-      $instance = new static();
+        $instance = new static();
       }
-
       return $instance;
   }
 
-    /**
-    * __get
-    *
-    * reroute variables in the framework
-    *
-    * @param $key the name of the required resource
-    *
-    * @return mixed
-    */
-    public function __get($key)
-    {
-
-
-
-      //instantiate dbase on demand
+  /**
+  * __get
+  *
+  * reroute variables in the framework
+  *
+  * @param $key the name of the required resource
+  *
+  * @return mixed
+  */
+  public function __get($key)
+  {
+    //instantiate dbase on demand
       switch($key) {
         case 'db':
         return get_instance()->load->database();
@@ -76,18 +71,18 @@ class Prototype
           show_error("There is no object called $key currently loaded",500,"Fatal Error");
         }
       }
-    }
+  }
 
 
-    /**
-    * __call
-    *
-    * reroute method calls to the framework
-    *
-    * @return mixed
-    */
-    public function __call($name, $arguments)
-    {
+  /**
+  * __call
+  *
+  * reroute method calls to the framework
+  *
+  * @return mixed
+  */
+  public function __call($name, $arguments)
+  {
       $lname=strtolower($name);
 
       if(method_exists(get_instance()->theme,$lname)) {$result=call_user_func_array(array(get_instance()->theme, $lname),$arguments);}
@@ -96,53 +91,10 @@ class Prototype
       else if(method_exists(get_instance()->theme,$name)) {$result=call_user_func_array(array(get_instance()->theme, $name),$arguments);}
       else if(method_exists(get_instance()->loader,$name)) {$result=call_user_func_array(array(get_instance()->loader, $name),$arguments);}
       else if(method_exists(get_instance(),$name)) {$result=call_user_func_array(array(get_instance(), $name),$arguments);}
-
       else {
         //trigger_error("There is no method called ".get_class($this).'::'.$name, E_USER_ERROR);
         show_error("There is no method called: {$name}() currently loaded ",500,"Fatal Error");
       }
-    }
-
-}
-
-
-
-
-/**
- * Singleton Pattern.
- *
- * Modern implementation.
- */
-class Singleton extends \System\Base\Prototype
-{
-
-
-    /**
-     * Make constructor private, so nobody can call "new Class".
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Make clone magic method private, so nobody can clone instance.
-     */
-    private function __clone()
-    {
-    }
-
-    /**
-     * Make sleep magic method private, so nobody can serialize instance.
-     */
-    private function __sleep()
-    {
-    }
-
-    /**
-     * Make wakeup magic method private, so nobody can unserialize instance.
-     */
-    private function __wakeup()
-    {
-    }
+  }
 
 }

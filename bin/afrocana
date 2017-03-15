@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+define('MODE','cli');
+
  /**
   * AfroPHP
   *
@@ -109,4 +111,4 @@ require_once BASEPATH.'core/application.php';
  * --------------------------------------------------------------------
  *
  */
-Afrophp::instance()->run('CLI');
+Afrophp::instance()->run();

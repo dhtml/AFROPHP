@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Console\Input\InputOption;
 
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\ConsoleEvents;
@@ -41,6 +42,7 @@ class afrocana extends Command
 {
     public $fx='';
     public $arguments=array();
+    public $options=array();
 
     /**
     * initializes everywhere
@@ -63,8 +65,12 @@ class afrocana extends Command
 
         $console->setAutoExit(false);
 
+
+        ini_set("display_errors", 0);
+
         //error_reporting(0);
         //error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
@@ -94,6 +100,7 @@ class afrocana extends Command
             $output = $event->getOutput();
 
             $command = $event->getCommand();
+
 
             //$output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
 
@@ -130,7 +137,21 @@ class afrocana extends Command
         });
         $console->setDispatcher($dispatcher);
         $console->setCatchExceptions(false);
-        $console->run(null,$output);
+
+
+
+
+          try {
+            $console->run(null,$output);
+          } catch(CommandNotFoundException $e)
+          {
+            $output->writeLn($err->getMessage());
+          }  catch(InvalidArgumentException $e)
+          {
+            $output->writeLn($err->getMessage());
+          } catch(\Exception $err){
+            $output->writeLn($err->getMessage());
+          }
         exit();
       }
     }
@@ -151,6 +172,26 @@ class afrocana extends Command
       $this->arguments[]=array($name, $mode, $description, $default);
       return $this;
     }
+
+
+
+      /**
+       * Adds an option.
+       *
+       * @param string $name        The option name
+       * @param string $shortcut    The shortcut (can be null)
+       * @param int    $mode        The option mode: One of the InputOption::VALUE_* constants
+       * @param string $description A description text
+       * @param mixed  $default     The default value (must be null for InputOption::VALUE_NONE)
+       *
+       * @return $this
+       */
+      public function addOption($name, $shortcut = null, $mode = null, $description = '', $default = null)
+      {
+            $this->options[]=array($name, $shortcut, $mode, $description, $default);
+
+            return $this;
+      }
 
     /**
     * execute the command
@@ -190,6 +231,15 @@ class afrocana extends Command
                 parent::addArgument($name, $mode, $description, $default);
             }
         }
+
+
+        if (!empty($this->options)) {
+            foreach ($this->options as $opt) {
+                list($name, $shortcut, $mode, $description, $default) = $opt;
+                parent::addOption($name, $shortcut, $mode, $description, $default);
+            }
+        }
+
     }
 
     public function write($var)
@@ -428,7 +478,7 @@ class afroconsole {
 
     $this->save_history($string);
 
-    } catch(CommandNotFoundException $e)
+  } catch(CommandNotFoundException $e)
   {
     //system($string);
     //$this->save_history($string);

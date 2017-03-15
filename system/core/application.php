@@ -25,7 +25,8 @@ HTML;
 
 define('time_start',microtime(true));
 
-include dirname(__DIR__)."/base/prototype.php";
+require BASEPATH."vendor/autoload.php";
+
 
 
 //load core application class
