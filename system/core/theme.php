@@ -1,7 +1,6 @@
 <?php
 /**
 * system/core/theme.php contains a list of functions are used for theming
-* the class is an extension of smarty 3 template engine
 */
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -9,8 +8,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /**
 * Theme class
 */
-class Theme extends Smarty
+class Theme
 {
+
+
+  /**
+  * assigned variables
+  */
+  public $theme_vars=array();
+
+  /**
+  * compiled search for assigned and defined vars
+  */
+  public $search_vars=array();
+
+  /**
+  * compiled replacement for assigned and defined vars
+  */
+  public $replace_vars=array();
+
+  /**
+  * theme plugins
+  *
+  */
+  public $theme_plugins=array();
 
 
   /**
@@ -40,6 +61,7 @@ class Theme extends Smarty
   *  @var  string
   */
    public $footData='';
+
 
    /**
    *  Assets that goes into the head/footer section are stored from from inline to external styles and scripts
@@ -75,17 +97,19 @@ class Theme extends Smarty
     */
     public function __construct()
     {
-      directory_usable(APPPATH.'templates_c');
 
-      //set directories
-      $this->setCompileDir(APPPATH.'templates_c');
+      $this->registerPlugin("function","text", "theme_text_func");
 
-      parent::__construct();
+      $this->registerPlugin("block","translate", "theme_translate_block");
 
+      $this->registerPlugin("function","cycle", "theme_cycle_func");
+
+      $this->registerPlugin("function","include", "theme_include_func");
+
+      $this->registerPlugin("block","strip", "theme_strip_block");
 
       // registering the object (will be by reference)
       //$this->registerObject('afrophp', $this);
-
       //$this->registerPlugin("block","translate", [$this,"do_translation"]);
     }
 
@@ -134,6 +158,9 @@ class Theme extends Smarty
 
       define('template_path',theme_path.'templates/'.$template.'/');
       define('template_url',theme_url.'templates/'.$template.'/');
+
+      define('site_name',config_item('site_name'));
+
 
 
       if(!is_cli() || !is_null(current_theme)) {
@@ -202,6 +229,14 @@ class Theme extends Smarty
       $theme=current_theme;
 
 
+      $ext=pathinfo($vpath,PATHINFO_EXTENSION);
+
+      if($ext!='php' && $ext!='html') {
+        if(file_exists("{$vpath}.php")) {$vpath="{$vpath}.php";}
+        else if(file_exists("{$vpath}.html")) {$vpath="{$vpath}.html";}
+      }
+
+
       if(!file_exists($vpath)) {$vpath=null;}
 
       //if no theme is getting used
@@ -210,7 +245,7 @@ class Theme extends Smarty
         if($vpath==null) {
           $view="";
         } else {
-         $view=$this->fetch($vpath);
+         $view=$this->load_file($vpath);
         }
 
         $this->render_output($view);
@@ -218,11 +253,17 @@ class Theme extends Smarty
       }
 
 
+      $this->assign('system_messages',system_render_messages());
 
       $this->assign('theme_url',theme_url);
       $this->assign('template_url',template_url);
 
       $this->assign('asset_url',asset_url);
+
+      $this->assign('site_name',config_item('site_name','my site'));
+      $this->assign('charset',config_item('charset'));
+
+
 
       $this->assign('theme_path',theme_path);
       $this->assign('template_path',template_path);
@@ -231,7 +272,6 @@ class Theme extends Smarty
       $this->assign('page_title',set_title());
       $this->assign('headData',$this->headData);
       $this->assign('footData',$this->footData);
-
 
 
       if ($this->getTemplateVars('page_direction') === null)
@@ -245,7 +285,7 @@ class Theme extends Smarty
       }
 
       //load view and assign
-      $page_content= $vpath==null ? "" : $this->fetch($vpath);
+      $page_content= $vpath==null ? "" : $this->load_file($vpath);
 
 
       //attempt to pass things through the current template.html if it exists
@@ -255,10 +295,10 @@ class Theme extends Smarty
 
       if(file_exists($template_file)) {
         //load template
-        $pageBody=$this->fetch($template_file);
+        $pageBody=$this->load_file($template_file);
       } else if(file_exists(theme_path."page.html")) {
         //load normal page.html
-        $pageBody=$this->fetch(theme_path."page.html");
+        $pageBody=$this->load_file(theme_path."page.html");
       } else {
         $pageBody=$page_content;
       }
@@ -267,7 +307,7 @@ class Theme extends Smarty
       $this->assign('pageBody',$pageBody);
 
       if(file_exists(theme_path."master.html")) {
-        $output=$this->fetch(theme_path."master.html");
+        $output=$this->load_file(theme_path."master.html");
       } else {
         $output=$pageBody;
       }
@@ -295,6 +335,10 @@ class Theme extends Smarty
 
         get_instance()->cache->save($key,$response);
       }
+
+      //$format=new htmlformater();
+      //$response = $format->HTML($response);
+
 
       echo $response;
     }
@@ -348,7 +392,9 @@ class Theme extends Smarty
     {
       $response='';
 
+
       if(!is_array($assets)) {
+
         $assets=trim($assets);
         //assets is a string
         if(!empty($assets)) {
@@ -357,6 +403,7 @@ class Theme extends Smarty
           $response.= $type=='js' ? "</script>\n" : "</style>\n";
         }
       } else if(!empty($assets)){
+        $assets=array_unique($assets);
         switch($type) {
           case "css":
           $response="<style type=\"text/css\" media=\"all\">\n";
@@ -419,6 +466,8 @@ class Theme extends Smarty
       $type= $type=='js' ? $type : 'css';
 
 
+
+
       foreach($array as $link) {
         $link=$this->expand_url($link);
         if($type=='js') {
@@ -430,20 +479,27 @@ class Theme extends Smarty
       return $this;
     }
 
+
     /**
-    * fetches a smarty template and returns the content
-    * it also sets the current directory to that view path
+    * load view and returns the response
     *
-    * @param string $template  the template path
-    * @param string $cache_id  the cache id
-    * @param string $compile_id  the compile id
-    * @param string $parent  the parent
+    * @param string $file the path of the template
+    * @param array $vars the associative array containing view data
     *
     * @return string
     */
-    function fetch($template = NULL, $cache_id = NULL, $compile_id = NULL, $parent = NULL) {
-    $this->setTemplateDir(pathinfo($template,PATHINFO_DIRNAME));
-    return parent::fetch($template,$cache_id,$compile_id,$parent);
+    function load_file($file,$vars=array()) {
+      if(pathinfo($file,PATHINFO_EXTENSION)!='html') {
+        $response=get_instance()->load->view($file,$vars,true);
+      } else {
+      if(!empty($vars) && is_array($vars)) {
+        foreach($vars as $name=>$value) {
+          $this->assign($name,$value);
+        }
+      }
+      $response=$this->fetch($file);
+      }
+      return $response;
     }
 
     /**
@@ -525,137 +581,409 @@ class Theme extends Smarty
       return $result;
     }
 
-}
 
 
 
-
-
-
-
-class Menu
-{
-
-
-  /**
-   * Menu item data
-   *
-   * @var	array
-   */
-   private $data=array();
-
-  /**
-  * route class constructor, it also registers the menu with navigation
-  *
-  * @param  string    $key              The key of the menu (optional)
-  *
-  * @return void
-  */
-  public function __construct($key=null)
-  {
-
-    //set defaults
-    $this->data=array('key'=>$key,'priority'=>null,'parent'=>null,'title'=>'','uri'=>'','icons'=>array());
-
-
-    //register menu with navigation
-    get_instance()->navigation->register($this);
-  }
-
- /**
- * creates a new instance of the menu object
- *
- * @param   string    $key    The key of the menu
- *
- * @return object
- */
-  private static function create($key)
-  {
-    return new Menu($key);
-  }
-
-
-   /**
-   * get
-   *
-   * gets an old instance with key else creates a new instance of the menu object
-   *
-   * @param  string $key  The unique key of the menu
-   *
-   * @param  boolean $overwrite  Should the menu be created afresh/overwritten if key exists?
-   *
-   *
-   * @return object
-   */
-   public static function get($key,$overwrite=false)
-   {
-     $obj= $overwrite==true ? null : get_instance()->navigation->find($key);
-
-     if($obj==null) {
-       $obj=self::create($key);
-       $obj->isNew=true;
-     } else {
-       $obj->isNew=false;
-     }
-
-     return $obj;
-   }
-
-   /**
-   * Retrieves the entire data of the menu item
-   *
-   * @return object
-   */
-   public function getData()
-   {
-     return $this->data;
-   }
-
-   /**
-   * Sets the entire data of the menu item
-   *
-   * @return voids
-   */
-   public function setData($data)
-   {
-     $this->data=$data;
-   }
-
-  /**
-  * This is used to set or get variables from the menu object
-  *
-  * setting property:
-  * menu::get('cms_home_dash_board')
-  *  ->setParent('cms_home')
-  *  ->setTitle('dashboard')
-  *  ->setUri('admin');
-  *
-  * how to retrieve property:
-  * echo menu::get('cms_home_dash_board')->getParent();
-  *
-  */
-  function __call($func,$args)
-  {
-    $par1=isset($args[0]) ? $args[0] : null;
-
-    $fx=strtolower($func);
-
-    $cmd=substr($fx,0,3);
-    $op=substr($fx,3);
-
-    switch($cmd) {
-    case 'set':
-    $this->data["$op"]=$par1;
-    break;
-    case 'get':
-    return isset($this->data["$op"]) ? $this->data["$op"] : null;
-    break;
-    default:
-    show_error("Menu item can only accept get or set directives");
-    break;
-    }
+    /**
+    * registers a block or function
+    *
+    * @param string $plugin_type The type of plugin i.e. function or block
+    * @param string $plugin_name The name of the plugin e.g. cycle
+    * @param string $plugin_func The name of the plugin function e.g. theme_circle
+    * @param object $plugin_obj The name of the object with the plugin_func
+    *
+    * @return object
+    */
+    function registerPlugin($plugin_type,$plugin_name,$plugin_func,$plugin_obj=null)
+    {
+    $this->theme_plugins[$plugin_name]=array(
+    'type'=> $plugin_type=='function' ? 'function' : 'block',
+    'func'=>$plugin_func,
+    'obj'=>$plugin_obj,
+    );
 
     return $this;
-  }
+    }
+
+    function assign($name,$value)
+    {
+    $this->theme_vars[$name]=$value;
+    return $this;
+    }
+
+    function display($file) {
+    $output=$this->fetch($file);
+    echo $output;
+    }
+
+    function fetch($file) {
+    $this->current_dir=pathinfo($file,PATHINFO_DIRNAME);
+
+
+
+    //load file from disk
+    $source=file_get_contents($file);
+
+    //get search and replace vars
+    $this->search=array();
+    $this->replace=array();
+
+    //get assigned vars
+    foreach($this->theme_vars as $key=>$value)
+    {
+      if(is_array($value)) {continue;}
+      $this->search_vars[]='{$'.$key.'}';
+      $this->replace_vars[]=$value;
+    }
+
+    //get defined vars
+    $k=get_defined_constants(true);
+    if(isset($k['user'])) {
+      foreach($k['user'] as $key=>$value)
+      {
+        $this->search_vars[]='{'.$key.'}';
+        $this->replace_vars[]=$value;
+      }
+    }
+
+
+
+
+
+    $source=$this->exec_for_each($source);
+
+    $source=$this->parse_block($source);
+
+    $source=str_replace(array('{*','*}'),array('<!--','-->'),$source);
+
+    //preg_match_all('/{(.*?)}/', $source, $matches);
+
+    //var_dump($matches);
+
+    return $source;
+    }
+
+    /**
+    * parses a block of string and returns the response
+    *
+    * @param string $output The template output
+    *
+    * @return string
+    */
+    public function parse_block($output)
+    {
+      $search=$this->search_vars;
+      $replace=$this->replace_vars;
+
+
+      $output=$this->parse_plugins($output);
+
+      return str_replace($search,$replace,$output);
+    }
+
+    /**
+    * fetch parameters from contents
+    *
+    * <code>
+    * {cycle values="lagos,ibadan"}
+    * </code>
+    *
+    * @return array
+    */
+    protected function fetch_params($raw='')
+    {
+      $xml=str_replace(array('{','}'),array('<','/>'),$raw);
+      $array = (array) json_decode(json_encode((array)simplexml_load_string($xml)),1);
+
+      return isset($array['@attributes']) ? $array['@attributes']: array();
+    }
+
+
+    protected function parse_plugins($output)
+    {
+    foreach($this->theme_plugins as $name=>$opt) {
+    //var_dump($opt);
+
+    $object=$opt['obj'];
+    $callback=$opt['func'];
+
+
+    if($opt['type']=='function') {
+
+      while(true) {
+      if(!$i=stripos($output,'{'.$name)) {break;}
+      if(!$j=stripos($output,'}',$i+1)) {break;}
+
+      //plugin implementation
+      $raw=substr($output,$i,$j-$i+1);
+
+      $params=$this->fetch_params($raw);
+
+
+      $result='';
+      if(is_object($object)) {
+        $result=call_user_func(array($object, $callback),$params,$this);
+      } else if(is_string($callback)) {
+        $result=call_user_func($callback,$params,$this);
+      } else if(is_object($callback)) {
+        $result=call_user_func($callback,$params,$this);
+      }
+
+      $output=substr($output,0,$i).$result.substr($output,$i+strlen($raw));
+      }
+
+
+    } else {
+    //process block
+    while(true) {
+    if(!$i=stripos($output,'{'.$name)) {break;}
+    if(!$j=stripos($output,'}',$i+1)) {break;}
+    if(!$k=stripos($output,'{/'.$name,$j+1)) {break;}
+
+    //plugin implementation
+    $start=substr($output,$i,$j-$i+1);
+    $content=substr($output,$j+1,$k-$j-1);
+
+    $raw=substr($output,$i,$k-$i+strlen($name)+3);
+
+    $params=$this->fetch_params($start);
+
+
+      $result='';
+      if(is_object($object)) {
+        $result=call_user_func(array($object, $callback),$params,$content,$this);
+      } else if(is_string($callback)) {
+        $result=call_user_func($callback,$params,$content,$this);
+      } else if(is_object($callback)) {
+        $result=call_user_func($callback,$params,$content,$this);
+      }
+
+      $output=substr($output,0,$i).$result.substr($output,$i+strlen($raw));
+    }
+
+    }
+
+    }
+
+    return $output;
+    }
+
+    function parse_content($content,$name,$value) {
+    $search=array();$replace=array();
+
+    if(is_array($value)) {
+    foreach($value as $k=>$v) {
+    $search[]='{$'.$name.'.'.$k.'}';
+    $replace[]=$v;
+    }
+    } else {
+    $search[]='{$'.$name.'}';
+    $replace[]=$value;
+    }
+    $content=str_replace($search,$replace,$content);
+
+    return $content;
+    }
+
+    function exec_for_each($source)
+    {
+
+    while(true) {
+    if(!$i=stripos($source,'{foreach')) {break;}
+    if(!$j=stripos($source,'{/foreach}')) {break;}
+
+    $raw=substr($source,$i,$j-$i+10);
+
+    $block=$raw;
+
+    preg_match_all('/{(.*?)}/', $block, $matches);
+
+
+    //var_dump($this->theme_vars);
+
+    $result='';
+    if (!empty($matches[1])) {
+        $search=array();
+        $replace=array();
+        foreach ($matches[1] as $item) {
+
+          if(substr($item,0,8)=='foreach ') {
+            $i=strpos($item,'$');
+            $j=strpos($item,'as');
+            $var=trim(substr($item,$i+1,$j-$i-2));
+            $item2=$this->str_replace_once($var,'this->theme_vars[\''.$var.'\']',$item);
+
+            //get alias
+            $i=strpos($item,'as');
+            $j=strpos($item,'$',$i);
+            $alias=trim(substr($item,$j+1));
+
+            $search[]='{'.$item.'}';
+            $replace[]=str_replace('foreach ','<?php foreach(',$item2).') { $alias=$'.$alias.';  ob_start();?>';
+          } else if($item=='/foreach') {
+            $search[]='{'.$item.'}';
+            $replace[]='<?php $content=ob_get_contents(); ob_end_clean(); $result.=$this->parse_content($content,"'.$alias.'",$alias); } ?>';
+          }
+        }
+        $block=str_replace($search, $replace, $block);
+    }
+
+    eval(' ?>'.$block.'<?php ');
+
+    //var_dump($block);
+    //var_dump($result);
+
+    $source=$this->str_replace_once($raw,$result,$source);
+    }
+
+
+    return $source;
+    }
+
+    function getTemplateVars($var=null)
+    {
+      if($var==null) {return $this->theme_vars;}
+      else if(isset($this->theme_vars["$var"])) {
+        return $this->theme_vars["$var"];
+      }
+    }
+
+    function str_replace_once($str_pattern, $str_replacement, $string){
+
+        if (strpos($string, $str_pattern) !== false){
+            $occurrence = strpos($string, $str_pattern);
+            return substr_replace($string, $str_replacement, strpos($string, $str_pattern), strlen($str_pattern));
+        }
+
+        return $string;
+    }
+
 
 }
+
+
+
+/**
+* translate a text from inside the template file using language files found in a plugin
+*
+* <code>
+* {text key="base+greet"}
+* </code>
+*
+* @param  array     $params     array of parameters
+* @param  object    $theme     template object
+*
+* @return   the translated string
+*/
+function theme_text_func($params, $theme) {
+        if (empty($params["key"])) {
+            return "";
+        } else {
+            $key = explode('+',$params["key"]);
+            return get_instance()->lang->text($key[0], $key[1]);
+        }
+}
+
+/**
+* translate a text from inside the template file using language files found in a plugin
+*
+* <code>
+* {translate from="en" to="fr" }I am single{/translate}
+* </code>
+* if from is not specified, auto will be assumed
+* if to is not specified, default is the current language being used
+*
+* @param  array     $params     array of parameters
+* @param  string    $content    the content of the block (between the tags)
+* @param  object    $theme     template object
+* @param  integer   $repeat     The current repeat value. A block function is called twice.
+*
+* @return   the translated string
+*/
+function theme_translate_block($params, $content, $theme) {
+  if (isset($content)) {
+    $to = isset($params["to"]) ? $params["to"] : null;
+    $from = isset($params["from"]) ? $params["from"] : null;
+    // do some translation with $content
+    $translation=get_instance()->lang->translate($content,$to,$from);
+    return $translation;
+  }
+}
+
+
+/**
+* cycles through a string
+*
+* <code>
+* {cycle values="#eeeeee,#dddddd"}
+* </code>
+*
+* @param  array     $params     array of parameters
+* @param  object    $theme      theme object
+*
+* @return   the return string
+*/
+function theme_cycle_func($params,$theme)
+{
+static $_values;
+static $_pos;
+
+$values=isset($params['values']) ? $params['values'] : array();
+$items=explode(',',$values);
+
+
+$_pos=is_null($_pos) ? 0 : $_pos;
+
+if($_values==$values) {$_pos++;}
+
+$_values=$values;
+
+if(!isset($items[$_pos])) {$_pos=0;}
+
+return isset($items[$_pos]) ? $items[$_pos] : '';
+}
+
+
+
+/**
+* translate a text from inside the template file using language files found in a plugin
+*
+* <code>
+* {strip from="en" to="fr" }I am single{/strip}
+* </code>
+* if from is not specified, auto will be assumed
+* if to is not specified, default is the current language being used
+*
+* @param  array     $params     array of parameters
+* @param  string    $content    the content of the block (between the tags)
+* @param  object    $theme     theme object
+*
+* @return   the string
+*/
+function theme_strip_block($params, $content, $theme) {
+  $content=$theme->parse_block($content);
+  return $content;
+}
+
+
+/**
+* include an external template file
+*
+* <code>
+* {include file="side_profile.html"}
+* </code>
+*
+* @param  array     $params     array of parameters
+* @param  object    $theme     theme object
+*
+* @return   the string
+*/
+function theme_include_func($params, $theme) {
+  $file=$theme->current_dir.'/'.$params['file'];
+  $source=file_get_contents($file);
+  return $source;
+  //$content=$theme->parse_block($content);
+  //return $content;
+}
+
+//stdout($this->current_dir);

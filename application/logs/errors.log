@@ -91,3 +91,110 @@ File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php
 Line: 102 
 Function: exception_error_handler 
 
+[17-Mar-2017 23:21:14 UTC] error: 
+Type: ErrorException
+Message: Uncaught  --> Smarty Compiler: Syntax error in template "file:/Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/helloworld/views/default.html"  on line 2 "{text key="base+greet"}" unknown tag "text" <-- 
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/vendor/smarty/smarty/libs/sysplugins/smarty_internal_templatecompilerbase.php
+Line number: 2
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 103 
+Function: exception_error_handler 
+
+[17-Mar-2017 23:28:57 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected 'toast' (T_STRING)
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/toast/plugin.php
+Line number: 2
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 103 
+Function: exception_error_handler 
+
+[17-Mar-2017 23:29:06 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected 'toast' (T_STRING)
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/application/plugins/toast/plugin.php
+Line number: 2
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 103 
+Function: exception_error_handler 
+
+[19-Mar-2017 18:15:11 UTC] error: 
+Type: ErrorException
+Message: Uncaught exception 'Exception' with message 'Unable to load theme.' in /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/autoload.php:13
+Stack trace:
+#0 [internal function]: {closure}('theme')
+#1 /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/afrophp.php(219): spl_autoload_call('theme')
+#2 /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/application.php(85): Afrophp->run()
+#3 /Users/dhtml/Sites/www/afrophp.com/sandbox/index.php(41): require_once('/Users/dhtml/Si...')
+#4 {main}
+  thrown
+Filename: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/autoload.php
+Line number: 13
+
+Backtrace:
+File: /Users/dhtml/Sites/www/afrophp.com/sandbox/system/core/exceptions.php 
+Line: 103 
+Function: exception_error_handler 
+
+[21-Mar-2017 09:30:26 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '['
+Filename: C:\wamp2\www\afrophp\system\core\router.php
+Line number: 120
+
+Backtrace:
+File: C:\wamp2\www\afrophp\system\core\common.php 
+Line: 112 
+Function: exception_error_handler 
+
+[21-Mar-2017 09:31:17 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '['
+Filename: C:\wamp2\www\afrophp\system\core\events.php
+Line number: 35
+
+Backtrace:
+File: C:\wamp2\www\afrophp\system\core\common.php 
+Line: 112 
+Function: exception_error_handler 
+
+[21-Mar-2017 09:31:45 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '['
+Filename: C:\wamp2\www\afrophp\system\core\events.php
+Line number: 55
+
+Backtrace:
+File: C:\wamp2\www\afrophp\system\core\common.php 
+Line: 112 
+Function: exception_error_handler 
+
+[21-Mar-2017 09:32:04 UTC] error: 
+Type: ErrorException
+Message: syntax error, unexpected '['
+Filename: C:\wamp2\www\afrophp\system\core\route.php
+Line number: 51
+
+Backtrace:
+File: C:\wamp2\www\afrophp\system\core\common.php 
+Line: 112 
+Function: exception_error_handler 
+
+[21-Mar-2017 09:32:41 UTC] error: 
+Type: ErrorException
+Message: Can't use function return value in write context
+Filename: C:\wamp2\www\afrophp\system\core\theme.php
+Line number: 633
+
+Backtrace:
+File: C:\wamp2\www\afrophp\system\core\common.php 
+Line: 112 
+Function: exception_error_handler 
+

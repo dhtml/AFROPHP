@@ -2,13 +2,127 @@
 /**
 *  AFROPHP Legacy class
 */
-defined('BASEPATH') or exit('No direct script access allowed');
-
 define('NAME','AfroPHP Content Management Framework');
 define('VERSION','1.0.0');
 
 define('afro_version',VERSION);
 
+/**
+* Check to make sure minimum requirement is met
+*/
+if (version_compare(PHP_VERSION, '5.3.0') <= 0) {
+  if (PHP_SAPI == 'cli') {
+       echo 'AFROPHP supports PHP 5.3 and above.' .
+           'Please read http://afrophp.com/user_guide/';
+   } else {
+       echo <<<HTML
+<div style="font:12px/1.35em arial, helvetica, sans-serif;">
+   <p>AFROPHP supports PHP 5.3 and above. Please read
+   <a target="_blank" href="http://afrophp.com/user_guide/">
+   AFROPHP User Guide</a>.
+</div>
+HTML;
+   }
+   exit(1);
+}
+
+
+
+
+//defined('BASEPATH') OR exit('No direct script access allowed');
+if(!isset($system_path)) {
+  $system_path = 'system';
+}
+
+if(!isset($application_folder)) {
+  $application_folder = 'application';
+}
+
+
+
+	if (($_temp = realpath($system_path)) !== FALSE)
+	{
+		$system_path = $_temp.DIRECTORY_SEPARATOR;
+	}
+  else 	if (($_temp = realpath('../'.$system_path)) !== FALSE) {
+    $system_path = $_temp.DIRECTORY_SEPARATOR;
+  }
+	else
+	{
+		// Ensure there's a trailing slash
+		$system_path = strtr(
+			rtrim($system_path, '/\\'),
+			'/\\',
+			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+		).DIRECTORY_SEPARATOR;
+	}
+
+
+
+
+	// Is the system path correct?
+	if ( ! is_dir($system_path))
+	{
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
+		exit(3); // EXIT_CONFIG
+	}
+
+/*
+ * -------------------------------------------------------------------
+ *  Now that we know the path, set the main path constants
+ * -------------------------------------------------------------------
+ */
+	// The name of THIS file
+	define('SELF', basename($_SERVER['PHP_SELF']));
+
+  // Path to the loading directory
+  if(php_sapi_name() == "cli") {
+    define('LPATH',str_replace('\\','/',dirname(dirname(dirname(__FILE__)))).'/');
+  } else {
+    define('LPATH',str_replace('\\','/',dirname($_SERVER['SCRIPT_FILENAME'])).'/');
+  }
+
+
+  // Set the current directory correctly for CLI requests
+	if (defined('STDIN'))
+	{
+		chdir(LPATH);
+	}
+
+	// Path to the system directory
+	define('BASEPATH',str_replace('\\','/', $system_path));
+
+	// Path to the front controller (this file) directory
+	define('FCPATH', LPATH);
+
+
+	define('APPPATH', FCPATH.strtr(
+    trim($application_folder, '/\\'),
+    '/\\',
+    DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
+  ).'/');
+
+
+//load composer automatically in cli mode
+if(php_sapi_name() == "cli") {
+  require BASEPATH."vendor/autoload.php";
+}
+
+
+//define start time
+define('time_start',microtime(true));
+
+
+
+require BASEPATH."base/prototype.php";
+require BASEPATH."core/common.php";
+
+
+/**
+* afrophp class
+*
+*/
 class Afrophp  extends \System\Base\Singleton
 {
 
@@ -27,8 +141,7 @@ class Afrophp  extends \System\Base\Singleton
         $this->load = $this->loader = new \System\Core\loader();
 
         //load config
-        include __DIR__."/config.php";
-        $this->config=new Config();
+        $this->config=new \System\Core\config();
 
         //define environment
         define('env_init',APPPATH.'config/console/default/env.init.php');
@@ -104,6 +217,15 @@ class Afrophp  extends \System\Base\Singleton
 
         //the url of the front controller e.g. http://localhost/afrophp.com/
         define('base_url', $base_url);
+
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+          $ajax_submission=true;
+        } else {
+          $ajax_submission=false;
+        }
+
+        //detect if we are running in ajax mode or not
+        define('ajax_submission',$ajax_submission);
 
         //e.g. http or https
         define('protocol', $protocol);
@@ -196,30 +318,25 @@ class Afrophp  extends \System\Base\Singleton
         //attempts to render output from cache here
         $this->render_cache();
 
-        //load mvc structrue
-        include __DIR__."/model.php";
-        include __DIR__."/controller.php";
-        include __DIR__."/theme.php";
-
+        //if no cache, continue loading mvc application
         $this->router= load_class(__DIR__."/router.php");
         $this->events= load_class(__DIR__."/events.php");
 
-        $this->security= load_class(__DIR__."/security.php");
-        $this->input= load_class(__DIR__."/input.php");
 
 
-
-        //load theme engine
-        $this->theme =  new theme();
 
         //load plugins
         $this->load->plugins();
+
+        //load theme engine
 
         $this->events->trigger('ready');
 
         $this->router->match();
 
         $this->events->trigger('match');
+
+        $this->theme =  new theme();
 
         $this->theme->theme_init();
 
@@ -248,11 +365,13 @@ class Afrophp  extends \System\Base\Singleton
     public function profiling()
     {
       if(!defined('afro_benchmark')) {define('afro_benchmark',0);}
+
+      $const=get_defined_constants(true);
       $data=array(
         'Benchmark'=>afro_benchmark . ' seconds',
         'Memory'=>bytes2string(memory_get_usage(true)),
         'Includes'=>get_included_files(),
-        'Constants'=>get_defined_constants(true)['user'],
+        'Constants'=>$const['user'],
         'Objects'=>array_keys(get_object_vars($this)),
         'Config'=>config_item('*'),
         'Server'=>$_SERVER,
@@ -262,3 +381,7 @@ class Afrophp  extends \System\Base\Singleton
     }
 
 }
+
+
+//run the application
+Afrophp::instance()->run();

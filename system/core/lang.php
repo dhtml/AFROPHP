@@ -3,8 +3,6 @@ namespace System\Core;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use Stichoza\GoogleTranslate\TranslateClient;
-
 
 class lang extends \System\Base\Singleton
 {
@@ -14,6 +12,8 @@ class lang extends \System\Base\Singleton
      * @var	array
      */
     public $data=Array();
+
+    public $loaded=Array();
 
 
     /**
@@ -33,6 +33,8 @@ class lang extends \System\Base\Singleton
       $plugin=strtolower(trim($plugin));
 
       if(!file_exists($path)) {return;}
+
+      $this->loaded["$plugin"][]=$path;
 
       $xmlstr=file_get_contents($path);
 
@@ -70,56 +72,6 @@ class lang extends \System\Base\Singleton
       if($default==null) {$default="$key";}
 
       return isset($this->data[$key]) ? $this->data[$key] : $default;
-    }
-
-    /**
-    * translate
-    *
-    * Translate a block of text from one language to another
-    *
-    * This translation uses internet
-    *
-    * @param  string  $text     The text to translate
-    * @param  string  $to       The language to translate to (default is current language)
-    * @param  string  $from     The language to translate from (default is auto)
-    *
-    * @return   string
-    */
-    public function translate($text,$to=null,$from='auto')
-    {
-
-      $langfile=APPPATH."config/lang/translation.xml";
-      static $_data;
-      if (empty($_data) && file_exists($langfile)) {
-        $_data= xmlstring2array($langfile);
-      }
-
-      if(!is_array($_data)) {$_data=array();}
-
-
-
-
-
-      $from= is_null($from) ? 'auto': $from;
-      $to= is_null($to) ? config_item('language'): $to;
-
-      //if data exist in cache, just return it
-      $key=base64_encode("{$from}{$to}{$text}");
-      if(isset($_data[$key])) {return $_data[$key];}
-
-      //initiate translation
-      $tr = new TranslateClient(); // Default is from 'auto' to 'en'
-      $tr->setSource($from);
-      $tr->setTarget($to);
-
-      //get value from internet
-      $value=$tr->translate($text);
-
-      $_data["$key"]=$value;
-      $str=array2xml($_data,'resources');
-      file_force_contents($langfile,$str);
-
-      return $value;
     }
 
 

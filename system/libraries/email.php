@@ -5,6 +5,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+//start composer autoload
+require_once BASEPATH."vendor/autoload.php";
+
 
 class Email extends PHPMailer
 {

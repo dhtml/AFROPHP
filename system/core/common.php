@@ -5,6 +5,158 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
+/**
+* Exception handling
+*
+*/
+
+if(!is_cli()) {
+
+/**
+* catch php exceptions and displays error page
+* the behaviour of this error page depends on your configurations
+*
+* @return void
+*/
+function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+
+  $report="$errstr in $errfile on line $errline with code $errno";
+
+  $exception=new ErrorException($errstr, $errno, 0, $errfile, $errline);
+
+//die($errstr);
+//die();
+
+  $stacktrace=array(); $html_report=""; $cli_report="";
+
+
+  if (config_item('exception_show_error',false)) {
+    $_class=get_class($exception);
+
+
+    $html_report.="<p>Type: $_class</p>\n";
+    $html_report.="<p>Message: $errstr</p>\n";
+    $html_report.="<p>Filename: $errfile</p>\n";
+    $html_report.="<p>Line number: $errline</p><br/>\n";
+
+
+    $cli_report.="\nType: $_class\n";
+    $cli_report.="Message: $errstr\n";
+    $cli_report.="Filename: $errfile\n";
+    $cli_report.="Line number: $errline\n\n";
+  }
+
+    if (config_item('exception_enable_stack_trace',false)) {
+      $html_report.="<p>Backtrace:</p>\n";
+      $cli_report.="Backtrace:\n";
+      foreach ($exception->getTrace() as $error) {
+        if (isset($error['file']) && isset($error['line']) && isset($error['function']) ) {
+          $stacktrace[]=$error;
+
+          $html_report.="<p style=\"margin-left:10px\">\n";
+          $html_report.="File: {$error['file']} <br />\n";
+          $html_report.="Line: {$error['line']} <br />\n";
+          $html_report.="Function: {$error['function']} <br />\n";
+          //$html_report.="Trace: {$error['trace']} \n";
+          $html_report.="</p>";
+
+          $cli_report.="File: {$error['file']} \n";
+          $cli_report.="Line: {$error['line']} \n";
+          $cli_report.="Function: {$error['function']} \n";
+          //$cli_report.="Trace: {$error['trace']} \n\n";
+        }
+      }
+  }
+
+
+if(!empty($html_report)) {
+  log_message('error', "$cli_report");
+  mail_message('error', "$html_report");
+} else {
+  log_message('error',$report);
+  mail_message('error',$report);
+}
+
+  $data = array(
+          'trace' => is_cli() ? $cli_report : $html_report,
+  );
+
+
+  if (PHP_SAPI === 'cli') {$view="errors/cli/error_exception";} else {$view="errors/html/error_exception";}
+
+
+  get_instance()->load->view("$view",$data);
+  exit();
+}
+
+/**
+* catch fatal errors
+*
+*/
+function exception_fatal_handler() {
+  $errfile = "unknown file";
+  $errstr  = "shutdown";
+  $errno   = E_CORE_ERROR;
+  $errline = 0;
+
+
+
+  $error = error_get_last();
+
+  if( $error !== NULL) {
+    $errno   = $error["type"];
+    $errfile = $error["file"];
+    $errline = $error["line"];
+    $errstr  = $error["message"];
+
+    exception_error_handler($errno, $errstr, $errfile, $errline );
+  }
+}
+
+
+set_error_handler("exception_error_handler");
+
+register_shutdown_function( "exception_fatal_handler" );
+
+}
+
+
+/**
+* autoload files for the framework
+*/
+spl_autoload_register(function ($clsname) {
+  if(spl_autoload_register_file($clsname,'System\Base',BASEPATH.'base')) {
+  } else if(spl_autoload_register_file($clsname,'System\Core',BASEPATH.'core')) {
+  } else {
+    $file=BASEPATH.'core/'.strtolower($clsname).'.php';
+    if(file_exists($file)) {include($file);}
+  }
+});
+
+/**
+* includes a file if it matches
+*
+* @param string $clsname The full name of the class incl. namespaces if any e.g.  System\Base\Singleton
+* @param string $namespace The namespace to match class with e.g. System\Base
+* @param string $path The path where the namespace should be matched with
+*
+* @return boolean
+*/
+function spl_autoload_register_file($clsname,$namespace,$path)
+{
+$clsname=trim(strtolower($clsname),'\\');
+$namespace=strtolower($namespace);
+
+if(strpos($clsname,$namespace)!==false) {
+  $file=str_replace($namespace,$path,$clsname);
+  $file=str_replace('\\','/',$file).'.php';
+
+  include $file;
+  return true;
+}
+
+return false;
+}
 
 
 /**
@@ -529,6 +681,36 @@ function show_404($message='The page you requested was not found.', $heading='40
 
 
 /**
+* checks if an array is an associative one
+*
+* @param array $arr The array to test
+*
+* @return boolean
+*/
+function isAssoc($arr)
+{
+  return array_keys($arr) !== range(0, count($arr) - 1);
+}
+
+/**
+* xss_clean
+*
+* cleans xss from a string
+*
+* @param string   $string   The string that requires cleaninf
+*
+* @return  string  $output     Modified $input string
+*
+* @param   boolean            $strip_base64  Enables stripping of base64 characters
+*
+* @return string
+*/
+function xss_clean($string)
+{
+return get_instance()->security->xss_clean($string);
+}
+
+/**
 * secondsToTime
 *
 * converts time to a more readable format
@@ -967,6 +1149,10 @@ function array2xmlstring($array, $root='root', $xml = false)
 function array2xml($array, $root='root')
 {
     $domtree = new DOMDocument('1.0', 'UTF-8');
+
+    $domtree->preserveWhiteSpace = false;
+    $domtree->formatOutput = true;
+
     $xmlRoot = $domtree->createElement($root);
     $xmlRoot = $domtree->appendChild($xmlRoot);
 
@@ -987,7 +1173,7 @@ function array2xml($array, $root='root')
 /**
 *  parse_info_format
 *
-* parses drupal style info formats
+* parses style info formats
 *
 * @param    string    $data       The raw content of the information (or file name)
 *
@@ -1353,6 +1539,9 @@ function site_url($uri = '')
  */
 function redirect($uri = '', $method = 'auto', $code = null)
 {
+  if($uri=='' && defined('current_url')) {
+    $uri=current_url;
+  } else
     if (! preg_match('#^(\w+:)?//#i', $uri)) {
         $uri = site_url($uri);
     }
@@ -1378,6 +1567,21 @@ function redirect($uri = '', $method = 'auto', $code = null)
       break;
   }
     exit;
+}
+
+/**
+* set_title
+*
+* sets or retrieves the title of the current page
+*
+* @param  string  $title    The title of the page to set
+*                           If title of null, nothing will be set
+*
+* @return the title of the page
+*/
+function setTitle($title=null)
+{
+return set_title($title);
 }
 
 
@@ -1437,7 +1641,7 @@ function check_plain($text)
 *
 * Adds a script to the theme
 *
-* @param  string    $string     The name of the file or the source code
+* @param  string|array    $string     The name of the file or the source code
 *
 * @param  string    $placement  The placement of the script
 *                               top - the top of the page
@@ -1447,6 +1651,7 @@ function check_plain($text)
 *                               inline - treats as inline
 *                               plugin - the current plugin folder
 *                               theme  - the current theme folder
+*                               asset  - the current asset folder
 *                               anyname  - the name of a plugin e.g. forums
 *
 * <code>
@@ -1463,6 +1668,14 @@ function check_plain($text)
 */
 function addScript($string, $placement='top', $scope='plugin')
 {
+if(defined('ajax_submission') && ajax_submission) {return;}
+
+if(is_array($string)) {
+  foreach($string as $item) {
+      addScript($item,$placement,$scope);
+  }
+  return;
+} else {
     $placement= $placement=='top' ? $placement : 'bottom';
 
     if ($scope=='inline') {
@@ -1474,13 +1687,18 @@ function addScript($string, $placement='top', $scope='plugin')
             switch ($scope) {
     case "plugin":
     $key = array_search(__FUNCTION__, array_column(debug_backtrace(), 'function'));
-    $file=debug_backtrace()[$key]['file']; //the file that called the function
+    $dbg=debug_backtrace();
+    $file=$dbg[$key]['file']; //the file that called the function
     $dir=pathinfo($file, PATHINFO_DIRNAME);
     $dir=str_replace('/controllers', '', $dir);
     $dir=str_replace(FCPATH, base_url, $dir);
     break;
     case "theme":
     $dir=trim(theme_url, '/');
+    break;
+    case "asset":
+    case "assets":
+    $dir=trim(asset_url, '/');
     break;
     default:
     $plugin=get_instance()->loader->find_plugin($scope);
@@ -1494,7 +1712,7 @@ function addScript($string, $placement='top', $scope='plugin')
 
         Theme::$inserts['js_src_'.$placement][]=$target;
     }
-
+}
   //var_dump($dir);
   //stdout($script);
 }
@@ -1505,7 +1723,7 @@ function addScript($string, $placement='top', $scope='plugin')
 *
 * Adds a stylesheet to the theme
 *
-* @param  string    $string     The name of the file or the source code
+* @param  string|array    $string     The name of the file or the source code
 *
 * @param  string    $placement  The placement of the stylesheet
 *                               top - the top of the page
@@ -1515,6 +1733,7 @@ function addScript($string, $placement='top', $scope='plugin')
 *                               inline - treats as inline
 *                               plugin - the current plugin folder
 *                               theme  - the current theme folder
+*                               asset  - the current asset folder
 *                               anyname  - the name of a plugin e.g. forums
 *
 * <code>
@@ -1529,6 +1748,15 @@ function addScript($string, $placement='top', $scope='plugin')
 */
 function addStyle($string, $placement='top', $scope='plugin')
 {
+  if(defined('ajax_submission') && ajax_submission) {return;}
+
+  if(is_array($string)) {
+    foreach($string as $item) {
+        addStyle($item,$placement,$scope);
+    }
+    return;
+  } else {
+
     $placement= $placement==null ? 'top' : $placement;
     $placement= $placement=='top' ? $placement : 'bottom';
 
@@ -1541,13 +1769,18 @@ function addStyle($string, $placement='top', $scope='plugin')
             switch ($scope) {
       case "plugin":
       $key = array_search(__FUNCTION__, array_column(debug_backtrace(), 'function'));
-      $file=debug_backtrace()[$key]['file']; //the file that called the function
+      $dbg=debug_backtrace();
+      $file=$dbg[$key]['file']; //the file that called the function
       $dir=pathinfo($file, PATHINFO_DIRNAME);
       $dir=str_replace('/controllers', '', $dir);
       $dir=str_replace(FCPATH, base_url, $dir);
       break;
       case "theme":
       $dir=trim(theme_url, '/');
+      break;
+      case "asset":
+      case "assets":
+      $dir=trim(asset_url, '/');
       break;
       default:
       $plugin=get_instance()->loader->find_plugin($scope);
@@ -1561,6 +1794,8 @@ function addStyle($string, $placement='top', $scope='plugin')
 
         Theme::$inserts['css_src_'.$placement][]=$target;
     }
+
+  }
 }
 
 
@@ -1625,15 +1860,37 @@ function is_absolute_url($url)
 *
 * @param    string    $name         The name of the event
 * @param    mixed     $callback     The event callback
+* @param    object    (optional)   $object     The object holding the callback
 *
 * @return object
 */
-function bind($name, $callback)
+function bind($name, $callback,$object=null)
 {
-    return get_instance()->events->bind($name,$callback);
+    return get_instance()->events->bind($name,$callback,$object);
 }
 
 
+/**
+* unbinds an event
+*
+* <code>
+* bind('menu', 'core_output_actions4');
+*
+* bind('menu', function() {
+*      echo "Menu Init Stub 3<br/>";
+* });
+* </code>
+*
+* @param    string    $name         The name of the event
+* @param    mixed     $callback     The event callback
+* @param    object    (optional)   $object     The object holding the callback
+*
+* @return object
+*/
+function unbind($name, $callback,$object=null)
+{
+    return get_instance()->events->unbind($name,$callback,$object);
+}
 
 
 
@@ -2191,4 +2448,328 @@ $char = chr(ord($char)-ord($keychar));
 $result.=$char;
 }
 return $result;
+}
+
+/**
+* generates a password hash
+*
+* @param string $salt the salt to hash
+* @param string $name the name of the session data
+*
+* @return string
+*/
+function generateFormHash($salt,$name='csrf_hash')
+{
+    $hash = md5(mt_rand(1,1000000) . $salt);
+    $_SESSION[$name] = $hash;
+    return $hash;
+}
+
+/**
+* checks if a hash is valid
+*
+* @param string $hash the salt to hash
+* @param string $name the name of the session data
+*
+* @return boolean
+*/
+function isValidFormHash($hash,$name='csrf_hash')
+{
+    return isset($_SESSION[$name]) ? $_SESSION[$name] === $hash : false;
+}
+
+
+  /**
+  * Tests email sending by using AfroPHP Email library
+  *
+  * @param string $to The recipient of the message
+  * @param string $from (optional) The sender of the message
+  * @param string $subject (optional) The subject of the message
+  * @param string $message (optional) The message body
+  * @param boolean $verbose (optional) Should messages be displayed on the output? (default is true)
+  *
+  * @return boolean
+  */
+  function test_email($to,$from='test@afrophp.com',$subject='Email Test',$message='Testing the email class.',$verbose=true) {
+    $that=get_instance();
+    $that->load->library('email');
+
+    $that->email->from($from);
+    $that->email->to($to);
+
+
+    $that->email->subject($subject);
+    $that->email->message($message);
+
+    if($verbose) {
+      writeln("<info>Attempting to send test mail to $to...</info>");
+    }
+
+    if(!$that->email->send()) {
+      $error=$that->email->ErrorInfo;
+      if($verbose) {
+        writeln("<debug>$error</debug>");
+      }
+      return false;
+    } else {
+      if($verbose) {
+        writeln("<info>success</info>");
+      }
+      return true;
+    }
+  }
+
+
+
+
+
+  /**
+  * Sort a multidimensional array by weight
+  *
+  * @return array
+  */
+  function array_recursive_order($data,$root=true) {
+    static $count;
+
+    if($root) {$count=0;}
+
+    if(is_array($data)) {
+    foreach($data as $key=>$item) {
+      if(is_array($item)) {
+
+        if(!isset($item['weight'])) {
+          $count++;
+          $data[$key]['weight']=$count/1000;
+        }
+
+        $data[$key]=array_recursive_order($data[$key],false);
+      }
+    }
+    uasort($data, "element_sort");
+    }
+
+
+
+  return $data;
+  }
+
+
+  /**
+   * Function used by uasort to sort structured arrays by weight.
+   */
+  function element_sort($a, $b) {
+    $a_weight = (is_array($a) && isset($a['weight'])) ? $a['weight'] : 0;
+    $b_weight = (is_array($b) && isset($b['weight'])) ? $b['weight'] : 0;
+    if ($a_weight == $b_weight) {
+      return 0;
+    }
+    return ($a_weight < $b_weight) ? -1 : 1;
+  }
+
+
+
+
+
+
+  /**
+   * File an error against a form element.
+   *
+   * @param $name
+   *   The name of the form element. If the #parents property of your form
+   *   element is array('foo', 'bar', 'baz') then you may set an error on 'foo'
+   *   or 'foo][bar][baz'. Setting an error on 'foo' sets an error for every
+   *   element where the #parents array starts with 'foo'.
+   * @param $message
+   *   The error message to present to the user.
+   * @param $type
+   *   The type of the message. One of the following values are possible:
+   *   - 'status'
+   *   - 'warning'
+   *   - 'error'
+   * @param $reset
+   *   Reset the form errors static cache.
+   * @return
+   *   Never use the return value of this function, use form_get_errors and
+   *   form_get_error instead.
+   */
+  function form_set_error($name = NULL, $message = '',$type = 'error', $reset = FALSE) {
+    static $form = array();
+    if ($reset) {
+      $form = array();
+    }
+    if (isset($name) && !isset($form[$name])) {
+      $form[$name] = $message;
+      if ($message) {
+        system_set_message($message, $type);
+      }
+    }
+    return $form;
+  }
+
+
+  /**
+   * File an error against a form element.
+   *
+   * @param $message
+   *   The error message to present to the user.
+   * @param $type
+   *   The type of the message. One of the following values are possible:
+   *   - 'status'
+   *   - 'warning'
+   *   - 'error'
+   * @param $reset
+   *   Reset the form errors static cache.
+   * @return
+   *   Never use the return value of this function, use form_get_errors and
+   *   form_get_error instead.
+   */
+  function form_push_message($message = '',$type = 'success', $reset = FALSE) {
+    static $form = array();
+    if ($reset) {
+      $form = array();
+    }
+
+      if ($message) {
+        $form[] = array('t'=>$type,'m'=>$message);
+        system_set_message($message, $type);
+      }
+
+    return $form;
+  }
+
+
+
+
+
+  /**
+   * Set a message which reflects the status of the performed operation.
+   *
+   * If the function is called with no arguments, this function returns all set
+   * messages without clearing them.
+   *
+   * @param $message
+   *   The message should begin with a capital letter and always ends with a
+   *   period '.'.
+   * @param $type
+   *   The type of the message. One of the following values are possible:
+   *   - 'status'
+   *   - 'warning'
+   *   - 'error'
+   * @param $repeat
+   *   If this is FALSE and the message is already set, then the message won't
+   *   be repeated.
+   */
+  function system_set_message($message = NULL, $type = 'status', $repeat = TRUE) {
+    if ($message) {
+      if (!isset($_SESSION['messages'])) {
+        $_SESSION['messages'] = array();
+      }
+
+      if (!isset($_SESSION['messages'][$type])) {
+        $_SESSION['messages'][$type] = array();
+      }
+
+      if ($repeat || !in_array($message, $_SESSION['messages'][$type])) {
+        $_SESSION['messages'][$type][] = $message;
+      }
+    }
+
+    // messages not set
+    return isset($_SESSION['messages']) ? $_SESSION['messages'] : NULL;
+  }
+
+  /**
+   * Return all messages that have been set.
+   *
+   * @param $type
+   *   (optional) Only return messages of this type.
+   * @param $clear_queue
+   *   (optional) Set to FALSE if you do not want to clear the messages queue
+   * @return
+   *   An associative array, the key is the message type, the value an array
+   *   of messages. If the $type parameter is passed, you get only that type,
+   *   or an empty array if there are no such messages. If $type is not passed,
+   *   all message types are returned, or an empty array if none exist.
+   */
+  function system_get_messages($type = NULL, $clear_queue = TRUE) {
+    if ($messages = system_set_message()) {
+      if ($type) {
+        if ($clear_queue) {
+          unset($_SESSION['messages'][$type]);
+        }
+        if (isset($messages[$type])) {
+          return array($type => $messages[$type]);
+        }
+      }
+      else {
+        if ($clear_queue) {
+          unset($_SESSION['messages']);
+        }
+        return $messages;
+      }
+    }
+    return array();
+  }
+
+
+
+  /**
+   * Return a themed set of status and/or error messages. The messages are grouped
+   * by type.
+   *
+   * @param $display
+   *   (optional) Set to 'status' or 'error' to display only messages of that type.
+   *
+   * @return
+   *   A string containing the messages.
+   */
+  function theme_status_messages($display = NULL) {
+    $output = '';
+    foreach (system_get_messages($display) as $type => $messages) {
+      $output .= "<div class=\"messages $type\">\n";
+      if (count($messages) > 1) {
+        $output .= " <ul>\n";
+        foreach ($messages as $message) {
+          $output .= '  <li>'. $message ."</li>\n";
+        }
+        $output .= " </ul>\n";
+      }
+      else {
+        $output .= $messages[0];
+      }
+      $output .= "</div>\n";
+    }
+    return $output;
+  }
+
+  /**
+  * Retrieve all set messages whether status, info etc
+  *
+  * @return string
+  */
+  function system_render_messages()
+  {
+    static $output;
+
+    if($output) {return $output;}
+
+    $keys=isset($_SESSION['messages']) ? array_keys($_SESSION['messages']) : array();
+    foreach($keys as $mtype) {
+      $output.=theme_status_messages($mtype);
+    }
+
+    return $output;
+  }
+
+/**
+* translates based on language file
+*
+* @param string $token A token with name of entity plus key e.g. base+form_invalid_token
+*
+* @return string
+*/
+function t($token,$default='')
+{
+$e=explode('+',$token);$plugin=$e[0];unset($e[0]);$name=implode('+',$e);
+return get_instance()->lang->text($plugin, $name,$default);
 }

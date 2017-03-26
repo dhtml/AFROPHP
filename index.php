@@ -35,77 +35,9 @@
  *
  *
  */
-	$application_folder = 'application';
+$application_folder = 'application';
 
-
-
-	// Set the current directory correctly for CLI requests
-	if (defined('STDIN'))
-	{
-		chdir(dirname(__FILE__));
-	}
-
-	if (($_temp = realpath($system_path)) !== FALSE)
-	{
-		$system_path = $_temp.DIRECTORY_SEPARATOR;
-	}
-	else
-	{
-		// Ensure there's a trailing slash
-		$system_path = strtr(
-			rtrim($system_path, '/\\'),
-			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-		).DIRECTORY_SEPARATOR;
-	}
-
-	// Is the system path correct?
-	if ( ! is_dir($system_path))
-	{
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
-		exit(3); // EXIT_CONFIG
-	}
-
-/*
- * -------------------------------------------------------------------
- *  Now that we know the path, set the main path constants
- * -------------------------------------------------------------------
- */
-	// The name of THIS file
-	define('SELF', str_replace('\\','/',pathinfo(__FILE__, PATHINFO_BASENAME)));
-
-  // Path to the loading directory
-  define('LPATH',str_replace('\\','/',dirname(__FILE__)).'/');
-
-
-	// Path to the system directory
-	define('BASEPATH',str_replace('\\','/', $system_path));
-
-	// Path to the front controller (this file) directory
-	define('FCPATH', str_replace('\\','/',dirname(__FILE__).DIRECTORY_SEPARATOR));
-
-
-	define('APPPATH', FCPATH.strtr(
-    trim($application_folder, '/\\'),
-    '/\\',
-    DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-  ).'/');
-
-/*
- * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILE
- * --------------------------------------------------------------------
- *
- */
-require_once BASEPATH.'core/application.php';
-
-
-
-/*
- * --------------------------------------------------------------------
- * LOAD THE APPLICATION IN NORMAL MODE
- * --------------------------------------------------------------------
- *
- */
-Afrophp::instance()->run();
+/**
+* Start the application
+*/
+require_once __DIR__.'/system/core/afrophp.php';

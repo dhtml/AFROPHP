@@ -156,7 +156,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
           show_error("Unable to find any class inside $spath",500,"Object cannot be instantiated");
         }
 
-        $class = reset($diff);
+
+        $class = end($diff);
 
         $_file["$spath"]=$class;
 
@@ -234,7 +235,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
       $cfg=$this->_compile_db_config();
 
-      $db=new \System\Base\DHTMLPDO($cfg);
+      $db=new \System\Base\dhtmlpdo($cfg);
       $db->onConnectError=function($e) {
         //stdout($e);
 
@@ -282,6 +283,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
       return $this;
     }
 
+    static $ready;
+    if(!$ready) {
+      include_once __DIR__."/model.php";
+    }
+    $ready=true;
 
     $clsName=$this->find_class("models","$model", true);
     return $this->instantiate($clsName,$object_name,$params);
@@ -320,7 +326,19 @@ public function instantiate($class_name,$object_name='',$params=null)
  */
 public function view($view, $vars = array(), $return = false)
 {
-    $response=$this->load_file("views","$view", false, $vars,$return);
+if(pathinfo($view,PATHINFO_EXTENSION)=='html') {
+  $spath=$view; $sdir="views";
+  $path=file_exists($spath) ? $spath : $this->locate(rtrim($sdir,'/').'/'.ltrim($spath,'/'));
+  $response=$this->theme->load_file($path,$vars);
+} else {
+	if(defined('theme_engine_loaded')) {
+		$tpl_vars = get_instance()->theme->smarty->getTemplateVars();
+		$vars = is_array($vars) ?  array_merge($tpl_vars,$vars) : $tpl_vars;
+	}
+
+  $response=$this->load_file("views","$view", false, $vars,$return);
+}
+
     if ($return) {
         return $response;
     } else {

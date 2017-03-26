@@ -1,16 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-  <key name="greet">
-     <value>Hello</value>
-  </key>
-
-  <key name="cache_clear">
-     <value>Your cache has been cleared successfully</value>
-  </key>
-  <key name="cache_list">
-     <value>You have 20 items in your cache</value>
-  </key>
-  <key name="response">
-     <value>Response</value>
+  <key name="form_invalid_token">
+    <value>Your form has expired, please re-submit</value>
   </key>
 </resources>

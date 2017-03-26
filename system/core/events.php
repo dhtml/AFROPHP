@@ -30,9 +30,9 @@ class events extends \System\Base\Singleton
     *
     * @return object
     */
-    public function bind($name, $callback)
+    public function bind($name, $callback,$object=null)
     {
-        $this->events["$name"][]=$callback;
+        $this->events["$name"][]=array('callback'=>$callback,'object'=>$object);
         return $this;
     }
 
@@ -48,11 +48,12 @@ class events extends \System\Base\Singleton
     *
     * @return object
     */
-    public function unbind($name, $callback)
+    public function unbind($name, $callback, $object=null)
     {
       if(!isset($this->events["$name"])) {return $this;}
       $e=$this->events["$name"];
-      $k=array_search($callback,$e);
+      $s=array('callback'=>$callback,'object'=>$object);
+      $k=array_search($s,$e);
       unset($this->events["$name"]["$k"]);
       return $this;
     }
@@ -75,17 +76,28 @@ class events extends \System\Base\Singleton
     public function trigger($name,$params=array())
     {
       if(!isset($this->events["$name"])) {return $this;}
+
+      if(!is_array($params)) {$params=array();}
+
+      return $this->_trigger($name,$params);
+    }
+
+    public function _trigger($name,&$params=array())
+    {
       $e=$this->events["$name"];
-      $params=(array) $params;
       foreach($e as $evt) {
-        if(is_string($evt)) {
-          call_user_func_array($evt,$params);
-        } else if(is_object($evt)) {
-          call_user_func_array($evt,$params);
+        $callback=$evt['callback'];
+        $object=$evt['object'];
+
+        if(is_object($object)) {
+          call_user_func_array(array($object, $callback),$params);
+        } else if(is_string($callback)) {
+          call_user_func_array($callback,$params);
+        } else if(is_object($callback)) {
+          call_user_func_array($callback,$params);
         }
       }
 
       return $this;
-
     }
 }

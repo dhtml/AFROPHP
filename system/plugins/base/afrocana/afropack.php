@@ -300,6 +300,16 @@ use Symfony\Component\Console\Input\InputOption;
 });
 
 (new afrocana())
+->setName("plugin:make")
+->setDescription('Creates a new plugin')
+->setHelp('This will create a new plugin')
+->addArgument('name', InputArgument::REQUIRED, 'The name of the plugin?')
+->exec(function(InputInterface $input, OutputInterface $output, $cmd) {
+  (new afropack($cmd,$input,$output))->make_plugin($input->getArgument('name'));
+});
+
+
+(new afrocana())
 ->setName("cache:clear")
 ->setDescription('Flush the application cache')
 ->setHelp('This will empty the application/cache folder')

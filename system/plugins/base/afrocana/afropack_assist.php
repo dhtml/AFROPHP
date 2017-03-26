@@ -252,23 +252,7 @@ $this->output->writeln("<info>Application logs flushed</info>");
     *
     */
     public function test_email($to) {
-      $that=get_instance();
-      $that->load->library('email');
-
-      $that->email->from('test@afrophp.com');
-      $that->email->to($to);
-
-      $that->email->subject('Email Test');
-      $that->email->message('Testing the email class.');
-
-      $this->output->write("<info>Attempting to send test mail to $to...</info>");
-
-      if(!$that->email->send()) {
-        $error=$that->email->ErrorInfo;
-        $this->output->writeln("<debug>$error</debug>");
-      } else {
-        $this->output->writeln("<info>success</info>");
-      }
+      test_email($to);
     }
 
   /**
@@ -299,7 +283,13 @@ $this->output->writeln("<info>Application logs flushed</info>");
   {
     $file=FCPATH.'tests/'.$name;
 
-    $command="php ".BASEPATH."vendor/bin/phpunit $vb $file";
+    define('MODE','test');
+
+    $vb=BASEPATH.'base/afrotest.php';
+
+    $command="php ".BASEPATH."vendor/bin/phpunit --bootstrap $vb $file";
+
+    //writeln($command);
     system($command);
   }
 

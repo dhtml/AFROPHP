@@ -1,4 +1,7 @@
 <?php
+namespace System\Core;
+
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Config

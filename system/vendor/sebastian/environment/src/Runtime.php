@@ -57,7 +57,7 @@ class Runtime
 
         // PHP < 5.4.0
         if (self::$binary === null) {
-            if (PHP_SAPI == 'CLI' && isset($_SERVER['_'])) {
+            if (PHP_SAPI == 'cli' && isset($_SERVER['_'])) {
                 if (strpos($_SERVER['_'], 'phpunit') !== false) {
                     $file = file($_SERVER['_']);
 
